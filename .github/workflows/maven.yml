@@ -22,7 +22,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-        server-id: is2-insign # value of repository/id field of the pom.xml
+        server-id: is2-insign-api-repository # value of repository/id field of the pom.xml
         server-username: insign-customer  # env variable name for username
         server-password: gCozbY5cViEJhv-wSRZH # env variable name for GitHub Personal Access Token
     - name: Build with Maven
