@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<servers>
+		<server>
+			<id>is2-insign</id>
+			<username>insign-customer</username>
+			<password>gCozbY5cViEJhv-wSRZH</password>
+		</server>
+	</servers>
+
+	<profiles>
+		<profile>
+			<id>is2-insign</id>
+			<repositories>
+				<repository>
+					<id>is2-insign</id>
+					<name>iS2 AG inSign Repository</name>
+					<url>https://nexus.is2.de/repository/maven-insign</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>is2-insign</activeProfile>
+	</activeProfiles>
+</settings>
