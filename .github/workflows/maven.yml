@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
         server-id: is2-insign-api-repository # value of repository/id field of the pom.xml
-        server-username: IS2-REPO-USER
-        server-password: IS2-REPO-PASSWORD
+        server-username: IS2_REPO_USER
+        server-password: IS2_REPO_PASSWORD
     - name: Build with Maven
       run: mvn -B package --file pom.xml
