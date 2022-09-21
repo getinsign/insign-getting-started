@@ -27,3 +27,6 @@ jobs:
         server-password: IS2_REPO_PASSWORD
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      env:
+        IS2_REPO_USER: ${{secrets.IS2_REPO_USER}}
+        IS2_REPO_PASSWORD: ${{secrets.IS2_REPO_PASSWORD}}
