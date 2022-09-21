@@ -37,8 +37,12 @@ public class SimpleDemoTest {
 		// A session handler is returned to be able to access the process later on.
 		final InSignSessionHandle inSignSessionHandle = adapter.createinSignSession(configData);
 
-		System.out.println(adapter.createStartURL(inSignSessionHandle));
+		System.out.println("**************************************************************************************************************************************************");
+		System.out.println("**************************************************************************************************************************************************");
+		System.out.println("Click this link to jump into inSign: "+adapter.createStartURL(inSignSessionHandle));
+		System.out.println("**************************************************************************************************************************************************");
+		System.out.println("**************************************************************************************************************************************************");
 		// Step 4: Redirect the user to the inSign website in a browser.
-		Runtime.getRuntime().exec("cmd.exe /c start " + adapter.createStartURL(inSignSessionHandle));
+		//Runtime.getRuntime().exec("cmd.exe /c start " + adapter.createStartURL(inSignSessionHandle));
 	}
 }
