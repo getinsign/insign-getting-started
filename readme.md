@@ -28,6 +28,13 @@ Insert the version number to the `insign.version` property in the pom.xml file:
 
 <img src="./DEV/setup_version.png" width="850" />
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <insign.version>X.XX-SNAPSHOT</insign.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
 Next open the `SimpleDemo` java class and paste the URL from the email above into the `insignURL` variable.<br/>
 Do the same for the `controllerPassword`.
 
