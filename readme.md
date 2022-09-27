@@ -28,20 +28,21 @@ Insert the version number to the `insign.version` property in the pom.xml file:
 
 <img src="./DEV/setup_version.png" width="850" />
 
-    ```xml
+```xml
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <insign.version>X.XX-SNAPSHOT</insign.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+```
 
 Next open the `SimpleDemo` java class and paste the URL from the email above into the `insignURL` variable.<br/>
 Do the same for the `controllerPassword`.
 
 <img src="./DEV/setup_authentication.png" width="850" />
 
-    ```java
+```java
     public class SimpleDemo {
     
         private static String insignURL = "http://X-XX-snapshot.insign.is2.show/";
@@ -50,6 +51,7 @@ Do the same for the `controllerPassword`.
         
         ...
     }
+```
 
 Now you can run a maven build to download and use the required artifacts from the private iS2 repository.<br/>
 If you are using Eclipse, this is done by right-clicking on the project ➜ `Run As` ➜ `Maven install`.<br/>
@@ -61,7 +63,7 @@ examples you have to input the same data as above in `ApiData.java`.
 
 <img src="./DEV/setup_test_api_data.png" width="850" />
 
-    ```java
+```java
     public class ApiData {
         public static final String insignURL = "YOUR_INSTANCE_URL_HERE";
         public static final String controllerName = "controller";
@@ -69,6 +71,7 @@ examples you have to input the same data as above in `ApiData.java`.
         public static final String userID = "USER_ID_OF_SESSION_OWNER";
         public static final String userEMail = "YOUR_EMAIL_HERE";
     }
+```
 
 ## Usage
 
