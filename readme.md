@@ -28,6 +28,7 @@ Insert the version number to the `insign.version` property in the pom.xml file:
 
 <img src="./DEV/setup_version.png" width="850" />
 
+    ```xml
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <insign.version>X.XX-SNAPSHOT</insign.version>
@@ -40,6 +41,7 @@ Do the same for the `controllerPassword`.
 
 <img src="./DEV/setup_authentication.png" width="850" />
 
+    ```java
     public class SimpleDemo {
     
         private static String insignURL = "http://X-XX-snapshot.insign.is2.show/";
@@ -59,6 +61,7 @@ examples you have to input the same data as above in `ApiData.java`.
 
 <img src="./DEV/setup_test_api_data.png" width="850" />
 
+    ```java
     public class ApiData {
         public static final String insignURL = "YOUR_INSTANCE_URL_HERE";
         public static final String controllerName = "controller";
