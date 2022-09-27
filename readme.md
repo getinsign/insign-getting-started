@@ -40,6 +40,15 @@ Do the same for the `controllerPassword`.
 
 <img src="./DEV/setup_authentication.png" width="850" />
 
+    public class SimpleDemo {
+    
+        private static String insignURL = "http://X-XX-snapshot.insign.is2.show/";
+        private static String controllerName = "controller";
+        private static String controllerPassword = "YOUR_PASSWORD_HERE";
+        
+        ...
+    }
+
 Now you can run a maven build to download and use the required artifacts from the private iS2 repository.<br/>
 If you are using Eclipse, this is done by right-clicking on the project ➜ `Run As` ➜ `Maven install`.<br/>
 After that right click again and run ➜ `Maven` ➜ `Update project`.
@@ -49,6 +58,14 @@ This package includes several java classes demonstrating advanced usage. In orde
 examples you have to input the same data as above in `ApiData.java`.
 
 <img src="./DEV/setup_test_api_data.png" width="850" />
+
+    public class ApiData {
+        public static final String insignURL = "YOUR_INSTANCE_URL_HERE";
+        public static final String controllerName = "controller";
+        public static final String controllerPassword = "YOUR_PASSWORD_HERE";
+        public static final String userID = "USER_ID_OF_SESSION_OWNER";
+        public static final String userEMail = "YOUR_EMAIL_HERE";
+    }
 
 ## Usage
 
