@@ -18,40 +18,7 @@ The following steps are required for the setup:
 First copy the `settings.xml` into you local `C:\Users\YOUR.USERNAME\.m2\` folder if it does not exist yet. If you already have a config file make sure to add the content of `settings.xml` to your already existing file.<br />
 This lets you access the inSign dependencies from the private iS2 maven repository.
 
-Second, open the email you received for the desired test instance.<br/>
-There you will find an `URL` and the `password` for the controller.<br/>
-To get the `current version` log into your instance with the provided `roadadmin` credentials. There you will find build information on the bottom left.
-
-<img src="./DEV/inSign-mail.png" width="800" />
-
-Insert the version number to the `insign.version` property in the pom.xml file:
-
-<img src="./DEV/setup_version.png" width="850" />
-
-```xml
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <insign.version>X.XX-SNAPSHOT</insign.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-```
-
-Next open the `SimpleDemo` java class and paste the URL from the email above into the `insignURL` variable.<br/>
-Do the same for the `controllerPassword`.
-
-<img src="./DEV/setup_authentication.png" width="850" />
-
-```java
-    public class SimpleDemo {
-    
-        private static String insignURL = "http://X-XX-snapshot.insign.is2.show/";
-        private static String controllerName = "controller";
-        private static String controllerPassword = "YOUR_PASSWORD_HERE";
-        
-        ...
-    }
-```
+The Demo will call the API on the inSign-Sandbox demo system located at https://sandbox.insign.is2.show/
 
 Now you can run a maven build to download and use the required artifacts from the private iS2 repository.<br/>
 If you are using Eclipse, this is done by right-clicking on the project ➜ `Run As` ➜ `Maven install`.<br/>
@@ -75,7 +42,6 @@ examples you have to input the same data as above in `ApiData.java`.
 
 ## Run it
 
-[![Run Action](https://github-action-button.web.app/buttons/simple.svg?name=Run%20Demo&eventType=&type=simple&action=deployment)](https://github-action-button.web.app/repos/iS2-inSign/inSign-getting-started/button?name=Run%20Demo&eventType=&type=simple&action=deployment)
 
 ## Usage
 
