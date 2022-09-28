@@ -73,6 +73,10 @@ examples you have to input the same data as above in `ApiData.java`.
     }
 ```
 
+## Run it
+
+[![Run Action](https://github-action-button.web.app/buttons/simple.svg?name=Run%20Demo&eventType=&type=simple&action=deployment)](https://github-action-button.web.app/repos/iS2-inSign/inSign-getting-started/button?name=Run%20Demo&eventType=&type=simple&action=deployment)
+
 ## Usage
 
 Now you should be able to run the SimpleDemo as a java application. If everything was set up correctly your browser will be opened and show the test document.
