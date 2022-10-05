@@ -18,20 +18,7 @@ Die folgenden Schritte sind für die Einrichtung erforderlich:
 Kopieren Sie zunächst das `settings.xml` in den lokalen `C:\Users\YOUR.USERNAME\.m2\` Ordner, falls die Datei dort noch nicht existiert. Wenn es bereits eine Konfigurationsdatei gibt, müssen Sie den Inhalt von `settings.xml` in die bereits bestehende Datei hinzufügen.<br />
 Dies ermöglicht Ihnen den Zugriff auf die inSign-Abhängigkeiten aus dem privaten iS2-Maven-Repository.
 
-Öffnen Sie danach die E-Mail, die Sie für die angeforderte Testinstanz erhalten haben.<br />
-Dort befindet sich eine `URL` und das `Passwort` für den Controller.
-Um die `aktuelle Version` abzurufen, melden Sie sich mit den `roadadmin` Zugangsdaten bei Deiner Instanz an. Dort befinden sich unten links die Build-Informationen.
-
-<img src="./DEV/inSign-mail.png" width="800" />
-
-Die Versionsnummer müssen Sie in das Property `insign.version` in der Datei pom.xml einfügen:
-
-<img src="./DEV/setup_version.png" width="850" />
-
-Öffnen Sie als Nächstes die Java-Klasse "SimpleDemo" und fügen Sie dort die URL aus der obigen E-Mail in die Variable "insignURL" ein.<br/>
-Dasselbe gilt für das `controllerPassword`.
-
-<img src="./DEV/setup_authentication.png" width="850" />
+Die Demo ruft die API auf dem inSign-Sandbox-Demosystem auf, das sich unter https://sandbox.insign.is2.show/ befindet.
 
 Nun kann der Maven-Build ausgeführt werden, um die erforderlichen Artefakte aus dem privaten iS2-Repository herunterzuladen und einzubinden.<br/>
 Wenn Eclipse verwendet wird, geschieht dies durch einen Rechtsklick auf das Projekt ➜ `Run As` ➜ `Maven install`.<br/>
@@ -42,6 +29,18 @@ Dieses Package enthält mehrere Java-Klassen, die die erweiterte Nutzung zeigen.
 müssen Sie die gleichen Daten wie oben in `ApiData.java` eingeben.
 
 <img src="./DEV/setup_test_api_data.png" width="850" />
+
+```java
+    public class ApiData {
+        public static final String insignURL = "YOUR_INSTANCE_URL_HERE";
+        public static final String controllerName = "controller";
+        public static final String controllerPassword = "YOUR_PASSWORD_HERE";
+        public static final String userID = "USER_ID_OF_SESSION_OWNER";
+        public static final String userEMail = "YOUR_EMAIL_HERE";
+    }
+```
+
+## Run it
 
 ## Verwendung
 
