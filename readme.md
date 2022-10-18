@@ -30,6 +30,12 @@ examples you have to input the same data as above in `ApiData.java`.
 
 ## Run it
 
+Find the complete Swagger API documentation here:
+https://sandbox.insign.is2.show/docs
+
+Login as controller:pwd.insign.sandbox.4561
+
+
 ## API calls
 
 ### Authentication
