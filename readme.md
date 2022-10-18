@@ -46,7 +46,10 @@ Authentication is done via basic auth Authorization Http Header.
 
 #### /configure/session
 
-payload:
+##### Docs: 
+https://sandbox.insign.is2.show/docs/swagger-ui/index.html#/Most%20common/configuredocumentsUsingPOST
+
+##### payload:
 
 ```json
 {
