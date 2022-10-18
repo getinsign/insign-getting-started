@@ -1,6 +1,5 @@
 [<img src="./DEV/inSign_logo.svg" width="300" />](https://www.getinsign.com/)
 ------
-**Languages: English (this file), [German](readme_DE.md).**
 
 # Getting started
 
@@ -28,20 +27,34 @@ After the `Maven install` command execution there will be a second package in yo
 This package includes several java classes demonstrating advanced usage. In order to be able to run these
 examples you have to input the same data as above in `ApiData.java`.
 
-<img src="./DEV/setup_test_api_data.png" width="850" />
-
-```java
-    public class ApiData {
-        public static final String insignURL = "YOUR_INSTANCE_URL_HERE";
-        public static final String controllerName = "controller";
-        public static final String controllerPassword = "YOUR_PASSWORD_HERE";
-        public static final String userID = "USER_ID_OF_SESSION_OWNER";
-        public static final String userEMail = "YOUR_EMAIL_HERE";
-    }
-```
 
 ## Run it
 
+## API calls
+
+### Authentication
+
+Authentication is done via basic auth Authorization Http Header.
+
+### API Endpoints
+
+#### /configure/session
+
+payload:
+
+```json
+{
+    "foruser":"session-owner-userid",
+    "displayname":"demo session",
+    "documents":[
+        {
+            "id":"document-id-1",
+            "displayname":"my document"
+            "file":"<base64> data"
+        }
+    ]
+}
+```
 
 ## Usage
 
