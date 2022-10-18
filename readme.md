@@ -58,11 +58,16 @@ https://sandbox.insign.is2.show/docs/swagger-ui/index.html#/Most%20common/config
     "documents":[
         {
             "id":"document-id-1",
-            "displayname":"my document"
-            "file":"<base64> data"
+            "displayname":"my document",
+            "fileURL":"https://github.com/iS2-inSign/inSign-getting-started/raw/main/src/main/resources/test.pdf"
         }
     ]
 }
+```
+##### CURL
+
+```
+curl -X POST "https://sandbox.insign.is2.show/configure/session" -H "accept: application/json" -H "authorization: Basic Y29udHJvbGxlcjpwd2QuaW5zaWduLnNhbmRib3guNDU2MQ==" -H "Content-Type: application/json" -d "{ \"foruser\":\"session-owner-userid\", \"displayname\":\"demo session\", \"documents\":[ { \"id\":\"document-id-1\", \"displayname\":\"my document\", \"fileURL\":\"https://github.com/iS2-inSign/inSign-getting-started/raw/main/src/main/resources/test.pdf\" } ]}"
 ```
 
 ## Usage
@@ -72,19 +77,3 @@ Now you should be able to run the SimpleDemo as a java application. If everythin
 ## Developed By
 
 [iS2 Intelligent Solution Services AG](https://www.is2.de/)
-
-## License
-
-    Copyright 2021 iS2 Intelligent Solution Services AG
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
