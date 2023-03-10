@@ -5,7 +5,7 @@ import de.is2.sign.service.rest.json.JSONConfigureSession;
 
 public class SimpleDemo {
 
-	private static String insignURL = "https://sandbox.insign.is2.show/";
+	private static String insignURL = "https://sandbox.test.getinsign.show/";
 	private static String controllerName = "controller";
 	private static String controllerPassword = "pwd.insign.sandbox.4561";
 
