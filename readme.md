@@ -17,7 +17,7 @@ The following steps are required for the setup:
 First copy the `settings.xml` into you local `C:\Users\YOUR.USERNAME\.m2\` folder if it does not exist yet. If you already have a config file make sure to add the content of `settings.xml` to your already existing file.<br />
 This lets you access the inSign dependencies from the private iS2 maven repository.
 
-The Demo will call the API on the inSign-Sandbox demo system located at https://sandbox.insign.is2.show/
+The Demo will call the API on the inSign-Sandbox demo system located at https://sandbox.test.getinsign.show/
 
 Now you can run a maven build to download and use the required artifacts from the private iS2 repository.<br/>
 If you are using Eclipse, this is done by right-clicking on the project ➜ `Run As` ➜ `Maven install`.<br/>
@@ -47,7 +47,7 @@ Authentication is done via basic auth Authorization Http Header.
 #### /configure/session
 
 ##### Docs: 
-https://sandbox.insign.is2.show/docs/swagger-ui/index.html#/Most%20common/configuredocumentsUsingPOST
+https://sandbox.test.getinsign.show/docs/swagger-ui/index.html#/Most%20common/configuredocumentsUsingPOST
 
 ##### payload:
 
@@ -67,7 +67,7 @@ https://sandbox.insign.is2.show/docs/swagger-ui/index.html#/Most%20common/config
 ##### CURL
 
 ```
-curl -X POST "https://sandbox.insign.is2.show/configure/session" -H "accept: application/json" -H "authorization: Basic Y29udHJvbGxlcjpwd2QuaW5zaWduLnNhbmRib3guNDU2MQ==" -H "Content-Type: application/json" -d "{ \"foruser\":\"session-owner-userid\", \"displayname\":\"demo session\", \"documents\":[ { \"id\":\"document-id-1\", \"displayname\":\"my document\", \"fileURL\":\"https://github.com/iS2-inSign/inSign-getting-started/raw/main/src/main/resources/test.pdf\" } ]}"
+curl -X POST "https://sandbox.test.getinsign.show/configure/session" -H "accept: application/json" -H "authorization: Basic Y29udHJvbGxlcjpwd2QuaW5zaWduLnNhbmRib3guNDU2MQ==" -H "Content-Type: application/json" -d "{ \"foruser\":\"session-owner-userid\", \"displayname\":\"demo session\", \"documents\":[ { \"id\":\"document-id-1\", \"displayname\":\"my document\", \"fileURL\":\"https://github.com/iS2-inSign/inSign-getting-started/raw/main/src/main/resources/test.pdf\" } ]}"
 ```
 
 ## Usage
@@ -76,4 +76,4 @@ Now you should be able to run the SimpleDemo as a java application. If everythin
 
 ## Developed By
 
-[iS2 Intelligent Solution Services AG](https://www.is2.de/)
+[inSign GmbH](https://www.getinsign.de/)
