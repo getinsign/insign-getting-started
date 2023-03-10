@@ -15,7 +15,7 @@ import de.is2.sign.service.rest.json.JSONExternUserResult;
 
 public class MultiExternSimpleDemo extends DemoBase {
 
-	private static String insignURL = "https://sandbox.insign.is2.show/";
+	private static String insignURL = "https://sandbox.test.getinsign.show/";
 	private static String controllerName = "controller";
 	private static String controllerPassword = "pwd.insign.sandbox.4561";
 
@@ -39,7 +39,7 @@ public class MultiExternSimpleDemo extends DemoBase {
 		final InSignConfigurationData configData = InSignConfigurationBuilder.createSessionConfiguration();
 		final JSONConfigureSession cfg = configData.getConfigureSession();
 
-		cfg.setCallbackURL("http://www.is2.de/callback");
+		cfg.setCallbackURL("http://www.getinsign.de/callback");
 		// Status messages are sent to the serversidecallbackURL if it is set.
 		// This should be the ID of the logged-in user, so that
 		// the pairing to the smartphone can be stored permanently for each user.
