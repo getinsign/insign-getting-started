@@ -70,6 +70,12 @@ https://sandbox.test.getinsign.show/docs/swagger-ui/index.html#/Most%20common/co
 curl -X POST "https://sandbox.test.getinsign.show/configure/session" -H "accept: application/json" -H "authorization: Basic Y29udHJvbGxlcjpwd2QuaW5zaWduLnNhbmRib3guNDU2MQ==" -H "Content-Type: application/json" -d "{ \"foruser\":\"session-owner-userid\", \"displayname\":\"demo session\", \"documents\":[ { \"id\":\"document-id-1\", \"displayname\":\"my document\", \"fileURL\":\"https://github.com/iS2-inSign/inSign-getting-started/raw/main/src/main/resources/test.pdf\" } ]}"
 ```
 
+##### Postman
+
+You can use a postman collection to make the API calls. Find the collection here [Getting started with inSign Postnman Collection](DEV/Getting%20started%20with%20inSign%20Postnman%20Collection.postman_collection.json).
+You can use the configured envirement [InsinEnv](DEV/inSign%20Env.postman_environment.json). Or create your own envirement.
+The collection is already configured with authentication and API calls.
+
 ## Usage
 
 Now you should be able to run the SimpleDemo as a java application. If everything was set up correctly your browser will be opened and show the test document.

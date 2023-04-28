@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "c55967de-6917-4e9f-87c8-45aa2589724f",
+		"name": "Getting started with inSign Postnman Collection",
+		"description": "inSign most common API operations (create session, make extern, get session info, download documents )\n\nchange the envirement to: inSign Env",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26322479"
+	},
+	"item": [
+		{
+			"name": "/configure/session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Creating session\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.environment.set(\"sessionid\", response.sessionid);\r",
+							"    console.log(\"sessionid: \"+response.sessionid)\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"displayname\": \"demo session\",\r\n    \"documents\": [\r\n        {\r\n            \"displayname\": \"demo document\",\r\n            \"id\": \"docid1\",\r\n            \"scanSigTags\": true,\r\n            \"file\": null,\r\n            \"fileURL\":\"https://github.com/getinsign/insign-getting-started/raw/main/src/main/resources/test.pdf\"\r\n        }\r\n\r\n    ],\r\n    \"foruser\": \"owninguserid1234\",\r\n    \"userFullName\": \"John Doe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/configure/session?",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"configure",
+						"session"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Session status\", function () {\r",
+							"   \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "javascript"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/status?sessionid={{sessionid}}&withImages=false",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"status"
+					],
+					"query": [
+						{
+							"key": "sessionid",
+							"value": "{{sessionid}}"
+						},
+						{
+							"key": "withImages",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/documents/download",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Download single doc\", function () {\r",
+							"   \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "javascript"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/documents/download?auditreport=false&incBioData=true&sessionid={{sessionid}}",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"documents",
+						"download"
+					],
+					"query": [
+						{
+							"key": "auditreport",
+							"value": "false"
+						},
+						{
+							"key": "incBioData",
+							"value": "true"
+						},
+						{
+							"key": "sessionid",
+							"value": "{{sessionid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Download single doc\", function () {\r",
+							"   \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "javascript"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/document?includebiodata=false&sessionid={{sessionid}}&docid=docid1",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"document"
+					],
+					"query": [
+						{
+							"key": "includebiodata",
+							"value": "false"
+						},
+						{
+							"key": "sessionid",
+							"value": "{{sessionid}}"
+						},
+						{
+							"key": "docid",
+							"value": "docid1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/extern/beginmulti",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Begin Multi Exter\", function () {\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"externUsers\": [\n        {\n            \"recipient\": \"person1@example.org\",\n            \"recipientsms\": \"11111111\",\n            \"singleSignOnEnabled\": true,\n            \"roles\": [\n                \"Signature01\"\n            ],\n            \"sendEmails\": false,\n            \"sendSMS\": false,\n            \"mailLanguage\": \"en\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/extern/beginmulti?sessionid={{sessionid}}&skipLandingPage=true",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"extern",
+						"beginmulti"
+					],
+					"query": [
+						{
+							"key": "sessionid",
+							"value": "{{sessionid}}"
+						},
+						{
+							"key": "skipLandingPage",
+							"value": "true"
+						}
+					]
+				},
+				"description": "Make multi extern. This is an example for 2 users"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "username",
+				"value": "controller",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "pwd.insign.sandbox.4561",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
