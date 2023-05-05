@@ -3,14 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>is2</groupId>
+	<groupId>insign</groupId>
 	<artifactId>insign-getting-started</artifactId>
 	<version>1.0</version>
 	<description>inSign electronic signature getting started sample project</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <insign.version>3.41.8</insign.version>
+        <insign.version>3.43.6</insign.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -18,9 +18,9 @@
 
 	<repositories>
 		<repository>
-			<id>is2-insign-api-repository</id>
-			<name>is2-insign-api-repository</name>
-			<url>https://nexus.is2.de/repository/maven-insign</url>
+			<id>insign-releases</id>
+			<name>inSign Releases</name>
+			<url>https://scout.bsiag.com/repository/insign-release-local</url>
 		</repository>
 	</repositories>
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import de.is2.insign.javapi.DemoBase;
 import de.is2.insign.javapi.InSignAdapter;
 import de.is2.insign.javapi.InSignConfigurationBuilder;
 import de.is2.insign.javapi.InSignConfigurationData;
@@ -13,14 +12,14 @@ import de.is2.insign.javapi.InSignTransPortAdapterFactoryJod;
 import de.is2.insign.javapi.InsignExternUser;
 import de.is2.sign.service.rest.json.JSONConfigureSession;
 
-public class MultiExternSimpleDemoTest extends DemoBase {
+public class MultiExternSimpleDemoTest{
 
 	private static String insignURL = "https://sandbox.test.getinsign.show/";
 	private static String controllerName = "controller";
 	private static String controllerPassword = "pwd.insign.sandbox.4561";
 
-	public static void main(final String[] args) throws Exception {
-		final MultiExternSimpleDemo multiExternSimpleDemo = new MultiExternSimpleDemo();
+	public static void main(final String[] args) {
+		final MultiExternSimpleDemoTest multiExternSimpleDemo = new MultiExternSimpleDemoTest();
 		try {
 			multiExternSimpleDemo.run();
 		} catch (Exception ex) {
@@ -53,7 +52,7 @@ public class MultiExternSimpleDemoTest extends DemoBase {
 
 		// Add a document to the configuration
 		InSignConfigurationBuilder.addDokument(configData, "test_roles_sigtags.pdf",
-				MultiExternSimpleDemo.class.getClassLoader().getResourceAsStream("test_roles_sigtags.pdf"));
+				MultiExternSimpleDemoTest.class.getClassLoader().getResourceAsStream("test_roles_sigtags.pdf"));
 
 		// Step 3: Now send the configuration to inSign. Returns a session
 		// handle which can be used to access this process again later on

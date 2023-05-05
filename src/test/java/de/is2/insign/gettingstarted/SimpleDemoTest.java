@@ -11,7 +11,7 @@ public class SimpleDemoTest {
 	private static String controllerPassword = "pwd.insign.sandbox.4561";
 
 	public static void main(final String[] args) throws Exception {
-		final SimpleDemo simpleDemo = new SimpleDemo();
+		final SimpleDemoTest simpleDemo = new SimpleDemoTest();
 		try {
 			simpleDemo.executeApiCall();
 		} catch (Exception ex) {
@@ -19,7 +19,6 @@ public class SimpleDemoTest {
 		}
 	}
 
-	@Test
 	public void executeApiCall() throws Exception {
 		// Step 1: Create an inSign adapter.
 		InSignTransPortAdapterFactoryJod factory = new InSignTransPortAdapterFactoryJod(insignURL, controllerName, controllerPassword);
@@ -43,6 +42,6 @@ public class SimpleDemoTest {
 		System.out.println("**************************************************************************************************************************************************");
 		System.out.println("**************************************************************************************************************************************************");
 		// Step 4: Redirect the user to the inSign website in a browser.
-		//Runtime.getRuntime().exec("cmd.exe /c start " + adapter.createStartURL(inSignSessionHandle));
+		Runtime.getRuntime().exec("cmd.exe /c start " + adapter.createStartURL(inSignSessionHandle));
 	}
 }

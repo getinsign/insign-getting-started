@@ -16,15 +16,15 @@
 			<id>is2-insign</id>
 			<repositories>
 				<repository>
-					<id>is2-insign</id>
-					<name>iS2 AG inSign Repository</name>
-					<url>https://nexus.is2.de/repository/maven-insign</url>
+					<id>insign-releases</id>
+					<name>InSign Repository</name>
+					<url>https://scout.bsiag.com/repository/insign-release-local</url>
 				</repository>
 			</repositories>
 		</profile>
 	</profiles>
 
 	<activeProfiles>
-		<activeProfile>is2-insign</activeProfile>
+		<activeProfile>insign</activeProfile>
 	</activeProfiles>
 </settings>
