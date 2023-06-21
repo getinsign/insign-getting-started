@@ -24,11 +24,5 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-        server-id: is2-insign-api-repository # value of repository/id field of the pom.xml
-        server-username: ${{ github.actor }}
-        server-password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build with Maven
       run: mvn -B clean package --file pom.xml
-      env:
-        IS2_REPO_USER: insign-customer
-        IS2_REPO_PASSWORD: gCozbY5cViEJhv-wSRZH
