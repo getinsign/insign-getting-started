@@ -16,13 +16,7 @@
 	</properties>
 
 
-	<repositories>
-		<repository>
-			<id>github</id>
-			<name>inSign Releases</name>
-			<url>https://maven.pkg.github.com/getinsign/insign-getting-started</url>
-		</repository>
-	</repositories>
+	
 
 
 	<!-- Import BOM -->
