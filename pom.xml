@@ -20,7 +20,7 @@
 		<repository>
 			<id>insign-releases</id>
 			<name>inSign Releases</name>
-			<url>https://scout.bsiag.com/repository/insign-release-local</url>
+			<url>https://maven.pkg.github.com/getinsign/insign-getting-started</url>
 		</repository>
 	</repositories>
 
