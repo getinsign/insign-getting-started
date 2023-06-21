@@ -18,7 +18,7 @@
 
 	<repositories>
 		<repository>
-			<id>insign-releases</id>
+			<id>github</id>
 			<name>inSign Releases</name>
 			<url>https://maven.pkg.github.com/getinsign/insign-getting-started</url>
 		</repository>
