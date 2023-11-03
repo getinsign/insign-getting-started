@@ -14,8 +14,7 @@ It consists of the following parts:
 
 The following steps are required for the setup:
 
-First copy the `settings.xml` into you local `C:\Users\YOUR.USERNAME\.m2\` folder if it does not exist yet. If you already have a config file make sure to add the content of `settings.xml` to your already existing file.<br />
-This lets you access the inSign dependencies from the private iS2 maven repository.
+Add the Github Package Registry to your settings.xml file and adjust the repository in the pom.xml accordingly.
 
 The Demo will call the API on the inSign-Sandbox demo system located at https://sandbox.test.getinsign.show/
 
