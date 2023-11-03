@@ -15,6 +15,7 @@ It consists of the following parts:
 The following steps are required for the setup:
 
 Add the Github Package Registry to your settings.xml file and adjust the repository in the pom.xml accordingly.
+See: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry
 
 The Demo will call the API on the inSign-Sandbox demo system located at https://sandbox.test.getinsign.show/
 
