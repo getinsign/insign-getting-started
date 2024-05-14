@@ -41,6 +41,7 @@ Login as controller:pwd.insign.sandbox.4561
 ### Authentication
 
 Authentication is done via basic auth Authorization Http Header.
+Hint: fileURL may have changed
 
 ### API Endpoints
 
@@ -48,7 +49,6 @@ Authentication is done via basic auth Authorization Http Header.
 
 ##### Docs: 
 https://sandbox.test.getinsign.show/docs/swagger-ui/index.html#/Most%20common/configuredocumentsUsingPOST
-Hint: fileURL may have changed
 
 ##### payload:
 
