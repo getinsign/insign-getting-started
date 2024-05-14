@@ -30,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"displayname\": \"demo session\",\r\n    \"documents\": [\r\n        {\r\n            \"displayname\": \"demo document\",\r\n            \"id\": \"docid1\",\r\n            \"scanSigTags\": true,\r\n            \"file\": null,\r\n            \"fileURL\":\"https://github.com/getinsign/insign-getting-started/raw/main/src/main/resources/test.pdf\"\r\n        }\r\n\r\n    ],\r\n    \"foruser\": \"owninguserid1234\",\r\n    \"userFullName\": \"John Doe\"\r\n}",
+					"raw": "{\r\n    \"displayname\": \"demo session\",\r\n    \"documents\": [\r\n        {\r\n            \"displayname\": \"demo document\",\r\n            \"id\": \"docid1\",\r\n            \"scanSigTags\": true,\r\n            \"file\": null,\r\n            \"fileURL\":\"https://github.com/getinsign/insign-getting-started/blob/8e7b3eebe8e7a75200fb5fd06956fea49365af40/src/test/resources/test.pdf\"\r\n        }\r\n\r\n    ],\r\n    \"foruser\": \"owninguserid1234\",\r\n    \"userFullName\": \"John Doe\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
