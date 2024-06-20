@@ -61,7 +61,7 @@ https://sandbox.test.getinsign.show/docs/swagger-ui/index.html#/Most%20common/co
         {
             "id":"document-id-1",
             "displayname":"my document",
-            "fileURL":"https://github.com/getinsign/insign-getting-started/blob/8e7b3eebe8e7a75200fb5fd06956fea49365af40/src/test/resources/test.pdf?raw=true"
+            "fileURL":"https://raw.githubusercontent.com/getinsign/insign-getting-started/8e7b3eebe8e7a75200fb5fd06956fea49365af40/src/test/resources/test.pdf"
         }
     ]
 }
@@ -88,7 +88,7 @@ https://sandbox.test.getinsign.show/docs/swagger-ui/index.html#/Quickstart/confi
 ##### CURL
 
 ```
-curl -X POST "https://sandbox.test.getinsign.show/configure/session" -H "accept: application/json" -H "authorization: Basic Y29udHJvbGxlcjpwd2QuaW5zaWduLnNhbmRib3guNDU2MQ==" -H "Content-Type: application/json" -d "{ \"foruser\":\"session-owner-userid\", \"displayname\":\"demo session\", \"documents\":[ { \"id\":\"document-id-1\", \"displayname\":\"my document\", \"fileURL\":\"https://github.com/getinsign/insign-getting-started/blob/8e7b3eebe8e7a75200fb5fd06956fea49365af40/src/test/resources/test.pdf\" } ]}"
+curl -X POST "https://sandbox.test.getinsign.show/configure/session" -H "accept: application/json" -H "authorization: Basic Y29udHJvbGxlcjpwd2QuaW5zaWduLnNhbmRib3guNDU2MQ==" -H "Content-Type: application/json" -d "{ \"foruser\":\"session-owner-userid\", \"displayname\":\"demo session\", \"documents\":[ { \"id\":\"document-id-1\", \"displayname\":\"my document\", \"fileURL\":\"https://raw.githubusercontent.com/getinsign/insign-getting-started/8e7b3eebe8e7a75200fb5fd06956fea49365af40/src/test/resources/test.pdf\" } ]}"
 ```
 
 ##### Postman
