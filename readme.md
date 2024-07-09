@@ -93,9 +93,19 @@ curl -X POST "https://sandbox.test.getinsign.show/configure/session" -H "accept:
 
 ##### Postman
 
-You can use a postman collection to make the API calls. Find the collection here [Getting started with inSign Postnman Collection](DEV/Getting%20started%20with%20inSign%20Postnman%20Collection.postman_collection.json).
-You can use the configured envirement [InsinEnv](DEV/inSign%20Env.postman_environment.json). Or create your own envirement.
-The collection is already configured with authentication and API calls.
+You can use a postman collection to make the API calls. You can find the collection here [Getting started with inSign API Sandbox](DEV/Getting%20started%20with%20inSign%20API%20Sandbox.postman_collection.json).
+You can use the pre-configured envirement [InsinEnv](DEV/inSign%20environment%20sandbox.postman_environment.json), or create your own envirement.
+The collection is already configured with authentication and API calls. As well as scripts that will populate specific values. Check Scripts tab in "/configure/session" API request for an example.
+If you choose the supplied envirement [InsinEnv](DEV/inSign%20environment%20sandbox.postman_environment.json) then make sure to change the values of:
+1. foruser
+2. userFullName
+3. docid
+4. recipient1
+5. recipientsms1
+
+Leave sessionid, displayname, and document empty. They will be filled automatically from relevant API Scripts
+
+Note for using our envirement :Many API calls has some variables syntax like {{sessionid}}, these variales are taken from [InsinEnv](DEV/inSign%20environment%20sandbox.postman_environment.json). If you create your own envirement then make sure to update those variables
 
 ## Usage
 

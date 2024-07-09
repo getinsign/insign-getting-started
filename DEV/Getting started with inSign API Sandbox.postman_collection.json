@@ -1,0 +1,1082 @@
+{
+	"info": {
+		"_postman_id": "2a4c946c-c9fe-4579-bcac-381b761cef7d",
+		"name": "Getting started with inSign API",
+		"description": "inSign most common API operations (create session, upload documents, make extern, abort extern, get session info, download documents and more)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26322479"
+	},
+	"item": [
+		{
+			"name": "/configure/session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"pm.environment.set(\"sessionid\", response.sessionid);\r",
+							"console.log(\"sessionid: \"+response.sessionid)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"displayname\": \"Postman Session Body 11\",\r\n    \"documents\": [\r\n        {\r\n            \"displayname\": \"DocumentPostmanTest Body1 \",\r\n            \"id\": \"{{docid}}\",\r\n            \"scanSigTags\": true,\r\n            \"file\": null,\r\n            \"allowFormEditing\": true\r\n        }\r\n    ],\r\n    \"foruser\": {{foruser}},\r\n    \"userFullName\": \"fullname\",\r\n    \"uploadEnabled\": \"true\",\r\n    \"guiProperties\": {\r\n        \"guiAllowChangeSmsEmail\": false,\r\n        \"exitAvailable\": true,\r\n        \"externmultiavailable\": true\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/configure/session",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"configure",
+						"session"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/configure/uploaddocument",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/sel/OneDrive - BSI Business Systems Integration AG/Documents/simple-doc.pdf"
+						},
+						{
+							"key": "sessionid",
+							"value": "{{sessionid}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/configure/uploaddocument?docid={{docid}}&filename=simple-doc.pdf",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"configure",
+						"uploaddocument"
+					],
+					"query": [
+						{
+							"key": "docid",
+							"value": "{{docid}}"
+						},
+						{
+							"key": "filename",
+							"value": "simple-doc.pdf"
+						},
+						{
+							"key": "sessionid",
+							"value": "{{sessionid}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/documents/full",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify array values\", function () {\r",
+							"    // Get all response variable, here you can update the data\r",
+							"    let resArray = pm.response.json();\r",
+							"\r",
+							"   console.log(resArray);\r",
+							"   resArray.displayname = \"new displayname\"\r",
+							"\r",
+							"    pm.environment.set(\"document\", JSON.stringify(resArray.documents));\r",
+							"    pm.environment.set(\"displayname\", resArray.displayname);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionid\":\"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/documents/full",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"documents",
+						"full"
+					],
+					"query": [
+						{
+							"key": "sessionid",
+							"value": "{{sessionid}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/rest/store/documents",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// const session = pm.environment.get(\"sessionid\");\r",
+							"// pm.sendRequest(`http://localhost:8080/insign/get/documents/full?sessionid=${session}`, function (err, response) {\r",
+							"//     console.log(response.json());\r",
+							"// });\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"console.log(\"response: \"+JSON.stringify(response))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"documents\": {{document}},\r\n    \"displayname\": \"{{displayname}}\",\r\n    \"sessionid\":\"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/rest/store/documents",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"rest",
+						"store",
+						"documents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/extern/beginmulti",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sessionid\":\"{{sessionid}}\",\n    \"externUsers\": [\n        {\n            \"recipient\": {{recipient1}},\n            \"recipientsms\": {{recipientsms1}},\n            \"singleSignOnEnabled\": false,\n            \"roles\": [\n                \"Kunde\"\n            ],\n            \"sendEmails\": true,\n            \"password\": \"ayreblpassword\",\n            \"passwordTransmissionType\": \"email\",\n            \"passwordTransmissionValue\":\"megadethbsi5@yopmail.com\",\n            \"sendSMS\": \"false\",\n            \"smsonly\": false,\n            \"mailLanguage\": \"en\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/extern/beginmulti?skipLandingPage=true",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"extern",
+						"beginmulti"
+					],
+					"query": [
+						{
+							"key": "skipLandingPage",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/extern/abort",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sessionid\":\"{{sessionid}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/extern/abort",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"extern",
+						"abort"
+					],
+					"query": [
+						{
+							"key": "oldsessionid",
+							"value": "{{sessionid}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/document",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/document?docid={{docid}}&includebiodata=true&includeExtension=false&originalfile=true",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"document"
+					],
+					"query": [
+						{
+							"key": "docid",
+							"value": "{{docid}}"
+						},
+						{
+							"key": "includebiodata",
+							"value": "true"
+						},
+						{
+							"key": "includeExtension",
+							"value": "false"
+						},
+						{
+							"key": "originalfile",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/documents/download",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"sessionid\":\"{{sessionid}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/documents/download?auditreport=true&incBioData=true",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"documents",
+						"download"
+					],
+					"query": [
+						{
+							"key": "auditreport",
+							"value": "true"
+						},
+						{
+							"key": "incBioData",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/documents/downloadmulti",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionids\": [\"{{sessionid}}\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/documents/downloadmulti?auditreport=true&incBioData=true",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"documents",
+						"downloadmulti"
+					],
+					"query": [
+						{
+							"key": "auditreport",
+							"value": "true"
+						},
+						{
+							"key": "incBioData",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionid\":\"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/status?withImages=false",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"status"
+					],
+					"query": [
+						{
+							"key": "withImages",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "audit/download",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionid\":\"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/audit/download",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"audit",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/configure/sessionVorgangsverwaltung",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/configure/sessionVorgangsverwaltung",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"configure",
+						"sessionVorgangsverwaltung"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/configure​/deletedocument",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionid\":\"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/configure/deletedocument?docid={{docid}}",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"configure",
+						"deletedocument"
+					],
+					"query": [
+						{
+							"key": "docid",
+							"value": "{{docid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/version",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "javascript"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/configure/get/version",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"configure",
+						"get",
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "systemcheckauto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/admin/systemcheckauto",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"admin",
+						"systemcheckauto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/blobdata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/insign/get/blobdata",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"insign",
+						"get",
+						"blobdata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/checkstatus",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/checkstatus?idVorgangsverwaltung=5f90b5fef4ea9bbc7bd8829b",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"checkstatus"
+					],
+					"query": [
+						{
+							"key": "idVorgangsverwaltung",
+							"value": "5f90b5fef4ea9bbc7bd8829b"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/serialProcess/begin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"displayname\": \"{{displayname}}\",\r\n  \"recipients\": [\r\n    {{recipient1}}\r\n  ],\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/serialProcess/begin",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"serialProcess",
+						"begin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/serialProcess/getResults",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/serialProcess/getResults?threadid=j9dyslh5KC5abTMJSu5wB5OkL6LbbOpxGi43Tkoh7ByrWacwdELeYNrOU47xNAZA",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"serialProcess",
+						"getResults"
+					],
+					"query": [
+						{
+							"key": "threadid",
+							"value": "j9dyslh5KC5abTMJSu5wB5OkL6LbbOpxGi43Tkoh7ByrWacwdELeYNrOU47xNAZA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get/sessionowner",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/sessionowner",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"sessionowner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/qes/get/tans",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/qes/get/tans",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"qes",
+						"get",
+						"tans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persistence/deleteall",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/persistence/deleteall",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"persistence",
+						"deleteall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persistence/loadsession",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/persistence/loadsession",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"persistence",
+						"loadsession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persistence/purge",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/persistence/purge",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"persistence",
+						"purge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persistence/recoverdeleted",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/persistence/recoverdeleted",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"persistence",
+						"recoverdeleted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/persistence/unloadsession",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/persistence/unloadsession",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"persistence",
+						"unloadsession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get/vorgangsnummer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sessionid\": \"{{sessionid}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://sandbox.test.getinsign.show/get/vorgangsnummer",
+					"protocol": "https",
+					"host": [
+						"sandbox",
+						"test",
+						"getinsign",
+						"show"
+					],
+					"path": [
+						"get",
+						"vorgangsnummer"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "pwd.insign.sandbox.4561",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "controller",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// pm.test(\"status and result\", function () {\r",
+					"//     var jsonData = pm.response.json();\r",
+					"//     if(jsonData !== null) {\r",
+					"//         console.log(\"Status: \" + pm.response.status);\r",
+					"//         console.log(\"Result: \" + JSON.stringify(jsonData));\r",
+					"//     } else {\r",
+					"//         console.log(\"Response is null\");\r",
+					"//     }\r",
+					"// });\r",
+					""
+				]
+			}
+		}
+	]
+}
