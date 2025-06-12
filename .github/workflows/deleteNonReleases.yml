@@ -1,0 +1,6 @@
+- uses: actions/delete-package-versions@v5
+  with: 
+    package-name: 'de.is2.insign.insign-rest-api-nodep'
+    package-type: 'maven'
+    num-old-versions-to-delete: 1
+    ignore-versions: '^([0-9]+\\d*)\\.[0-9]$'
