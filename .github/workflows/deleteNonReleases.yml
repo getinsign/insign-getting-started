@@ -1,6 +1,20 @@
-- uses: actions/delete-package-versions@v5
-  with: 
-    package-name: 'de.is2.insign.insign-rest-api-nodep'
-    package-type: 'maven'
-    num-old-versions-to-delete: 1
-    ignore-versions: '^([0-9]+\\d*)\\.[0-9]$'
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/delete-package-versions@v5
+    - name: Delete insign-rest-api-nodep
+      with:
+        package-name: 'de.is2.insign.insign-rest-api-nodep'
+        package-type: 'maven'
+        num-old-versions-to-delete: 1
+        ignore-versions: '3\.[0-9]+\.[0-9]+$'
