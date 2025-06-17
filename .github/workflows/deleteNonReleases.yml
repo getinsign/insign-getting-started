@@ -6,7 +6,7 @@ permissions:
 on:
   workflow_dispatch:
 jobs:
-  delete_rest_api_nodep:
+  delete_packages:
     runs-on: ubuntu-latest
     steps:
     - name: Delete insign-rest-api-nodep
@@ -14,5 +14,19 @@ jobs:
       with:
         package-name: 'de.is2.insign.insign-rest-api-nodep'
         package-type: 'maven'
-        num-old-versions-to-delete: 1
+        num-old-versions-to-delete: 100
+        ignore-versions: '3\.[0-9]+\.[0-9]+$'
+    - name: Delete insign-java-api
+      uses: actions/delete-package-versions@v5
+      with:
+        package-name: 'de.is2.insign.insign-java-api'
+        package-type: 'maven'
+        num-old-versions-to-delete: 100
+        ignore-versions: '3\.[0-9]+\.[0-9]+$'
+    - name: Delete insign-parent
+      uses: actions/delete-package-versions@v5
+      with:
+        package-name: 'de.is2.insign.insign-parent'
+        package-type: 'maven'
+        num-old-versions-to-delete: 100
         ignore-versions: '3\.[0-9]+\.[0-9]+$'
