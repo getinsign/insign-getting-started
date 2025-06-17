@@ -14,19 +14,19 @@ jobs:
       with:
         package-name: 'de.is2.insign.insign-rest-api-nodep'
         package-type: 'maven'
-        num-old-versions-to-delete: 100
+        num-old-versions-to-delete: 1000
         ignore-versions: '3\.[0-9]+\.[0-9]+$'
     - name: Delete insign-java-api
       uses: actions/delete-package-versions@v5
       with:
         package-name: 'de.is2.insign.insign-java-api'
         package-type: 'maven'
-        num-old-versions-to-delete: 100
+        num-old-versions-to-delete: 1000
         ignore-versions: '3\.[0-9]+\.[0-9]+$'
     - name: Delete insign-parent
       uses: actions/delete-package-versions@v5
       with:
         package-name: 'de.is2.insign.insign-parent'
         package-type: 'maven'
-        num-old-versions-to-delete: 100
+        num-old-versions-to-delete: 1000
         ignore-versions: '3\.[0-9]+\.[0-9]+$'
