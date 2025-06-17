@@ -1,7 +1,8 @@
 # This workflow will delete packages of feature and bugfix branches
 
 name: Delete old packages
-
+permissions:
+  packages: write
 on:
   workflow_dispatch:
 jobs:
