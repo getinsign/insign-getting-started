@@ -5,13 +5,11 @@ name: Delete old packages
 on:
   workflow_dispatch:
 jobs:
-  build:
-
+  delete_rest_api_nodep:
     runs-on: ubuntu-latest
     steps:
-    
-    - uses: actions/delete-package-versions@v5
     - name: Delete insign-rest-api-nodep
+      uses: actions/delete-package-versions@v5
       with:
         package-name: 'de.is2.insign.insign-rest-api-nodep'
         package-type: 'maven'
