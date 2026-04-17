@@ -13,14 +13,6 @@ on:
       - '.github/workflows/node.yml'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'src/sign-widget-demo-application/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'scripts/**'
-      - 'test/**'
-      - 'docs/data/cf-webhook-worker.js'
-      - '.github/workflows/node.yml'
   workflow_dispatch:
 
 permissions:
