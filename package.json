@@ -7,7 +7,7 @@
     "jquery": "^3.7.1",
     "monaco-editor": "^0.55.1",
     "pdfjs-dist": "^5.6.205",
-    "playwright": "^1.50.0",
+    "playwright": "^1.59.1",
     "serve": "^14.2.0",
     "typescript": "^6.0.2"
   },
