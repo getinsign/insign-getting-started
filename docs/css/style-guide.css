@@ -649,10 +649,14 @@
 
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
-    .scroll-reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
+    /* !important beats the per-variant .reveal-* transform rules above,
+       which otherwise win on specificity and leave elements stuck in their
+       pre-reveal offset positions (visible but displaced). */
+    .scroll-reveal,
+    .scroll-reveal[class*="reveal-"] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 }
 
