@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 16 454 112" width="1362" height="336">
+  <defs>
+    <linearGradient id="nlg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF5350"/>
+      <stop offset="100%" stop-color="#B71C1C"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="18" width="108" height="108" rx="22" fill="url(#nlg)"/>
+  <path d="M70 30 L80 56 L108 56 L86 72 L94 98 L70 82 L46 98 L54 72 L32 56 L60 56 Z" fill="rgba(255,255,255,0.18)"/>
+  <path d="M70 44 L76 58 L92 58 L80 68 L84 82 L70 72 L56 82 L60 68 L48 58 L64 58 Z" fill="#fff"/>
+  <text x="142" y="66" font-family="'Segoe UI',system-ui,sans-serif" font-weight="700" font-size="48" fill="#C62828" letter-spacing="-1">NOVA</text>
+  <text x="142" y="92" font-family="'Segoe UI',system-ui,sans-serif" font-weight="300" font-size="22" fill="#EF5350" letter-spacing="4">FINANCE</text>
+  <line x1="142" y1="102" x2="370" y2="102" stroke="#FFCDD2" stroke-width="2"/>
+  <text x="142" y="120" font-family="'Segoe UI',system-ui,sans-serif" font-weight="400" font-size="12" fill="#EF9A9A">Investment Banking · Asset Management · Insurance</text>
+</svg>

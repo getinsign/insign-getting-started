@@ -1,0 +1,999 @@
+{
+  "acme": {
+    "name": "ACME Corporation",
+    "subtitle": "Digital Transformation & Enterprise Solutions",
+    "colors": {
+      "primary": "#0D47A1",
+      "accent": "#42A5F5",
+      "dark": "#1B2838"
+    },
+    "contractTitle": "ENTERPRISE SOFTWARE LICENSE AGREEMENT",
+    "contractSubtitle": "SaaS Platform Subscription - Annual License",
+    "contractNo": "ACME-LIC-2026-00847",
+    "parties": [
+      {
+        "role": "licensor",
+        "label": "Licensor",
+        "name": "Dr. François Müsterfeld",
+        "company": "ACME Corporation",
+        "email": "françois.müsterfeld@example-acme.test",
+        "sigRole": "Licensor (Enterprise Division)",
+        "anrede": "Herr Dr.",
+        "ort": "München"
+      },
+      {
+        "role": "licensee",
+        "label": "Licensee",
+        "name": "Jiřina Běispiëlová",
+        "company": "Sonnental Energiewerke GmbH",
+        "email": "jiřina.beispielová@example-sonnental.test",
+        "sigRole": "Licensee - Authorized Representative",
+        "anrede": "Frau",
+        "ort": "Stuttgart"
+      },
+      {
+        "role": "compliance",
+        "label": "Compliance Officer",
+        "name": "René Prüfstein",
+        "company": "ACME Corporation",
+        "email": "rené.prüfstein@example-acme.test",
+        "sigRole": "Compliance & Data Protection Officer",
+        "anrede": "Herr",
+        "ort": "München"
+      }
+    ],
+    "sections": [
+      {
+        "title": "LICENSE GRANT",
+        "paragraphs": [
+          "The Licensor hereby grants the Licensee a non-exclusive, non-transferable license to use the ACME Enterprise Platform (\"the Software\") for the duration of this agreement. The license covers up to 250 named users and includes access to all standard modules, API integrations, and quarterly platform updates.",
+          "The Licensee may deploy the Software in a cloud-hosted or on-premises environment as specified in Schedule A. Sub-licensing, reverse engineering, or redistribution of the Software is strictly prohibited.",
+          "The Licensor shall provide the Licensee with comprehensive onboarding documentation, including technical integration guides, API reference materials, and administrator training sessions within 30 days of contract execution. A dedicated customer success manager shall be assigned for the first 12 months to facilitate adoption and resolve any integration challenges."
+        ]
+      },
+      {
+        "title": "FEES AND PAYMENT",
+        "paragraphs": [
+          "The annual license fee of EUR 128,400.00 shall be payable in advance within 30 days of the contract anniversary date. Support and maintenance services (24/7 enterprise tier) are included. Additional user packs of 50 seats may be purchased at EUR 18,200.00 per pack per year.",
+          "Late payments shall incur interest at a rate of 5 percentage points above the base rate of the European Central Bank. In the event of payment default exceeding 60 days, the Licensor reserves the right to suspend access to the platform after providing 14 days' written notice to the Licensee."
+        ]
+      },
+      {
+        "title": "DATA PROTECTION",
+        "paragraphs": [
+          "Both parties shall comply with the EU General Data Protection Regulation (GDPR) and the German Federal Data Protection Act (BDSG). The Licensor acts as a data processor under a separate Data Processing Agreement (DPA) attached as Schedule B. All customer data remains the property of the Licensee.",
+          "The Licensor maintains ISO 27001 certification for its data centers and performs annual penetration testing through independent third-party auditors. Results of security assessments shall be made available to the Licensee upon written request, subject to appropriate confidentiality undertakings.",
+          "Data residency shall be maintained within the European Union at all times. The Licensor shall not transfer any personal data to jurisdictions outside the EEA without the Licensee's explicit written authorization and appropriate safeguards in accordance with GDPR Chapter V. Backup data shall be encrypted at rest using AES-256 and retained for a maximum of 90 days."
+        ]
+      },
+      {
+        "title": "GOVERNING LAW",
+        "paragraphs": [
+          "This agreement shall be governed by the laws of the Federal Republic of Germany. The exclusive venue for all disputes arising from this contract shall be Munich, Germany.",
+          "Any amendments or modifications to this agreement shall be made in writing and signed by authorized representatives of both parties. Neither party may assign its rights or obligations under this agreement without the prior written consent of the other party, except in connection with a merger, acquisition, or sale of substantially all assets.",
+          "Should any provision of this agreement be held invalid or unenforceable by a court of competent jurisdiction, the remaining provisions shall continue in full force and effect. The parties agree to negotiate in good faith a replacement provision that most closely reflects the original intent."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Montserrat-Bold",
+      "body": "Roboto-Regular",
+      "label": "Roboto-Regular"
+    },
+    "signatureLevel": "QES",
+    "sigProvider": "Bundesdruckerei"
+  },
+  "greenleaf": {
+    "name": "GreenLeaf Sustainability",
+    "subtitle": "Clean Energy · Smart Agriculture · Carbon Neutral",
+    "colors": {
+      "primary": "#1B5E20",
+      "accent": "#66BB6A",
+      "dark": "#1B2F1B"
+    },
+    "contractTitle": "CARBON OFFSET PURCHASE AGREEMENT",
+    "contractSubtitle": "Verified Emission Reduction Credits - Annual Supply",
+    "contractNo": "GL-CO2-2026-01523",
+    "parties": [
+      {
+        "role": "supplier",
+        "label": "Offset Supplier",
+        "name": "Léna Blümenfeld",
+        "company": "GreenLeaf Sustainability AG",
+        "email": "léna.blümenfeld@example-greenleaf.test",
+        "sigRole": "Offset Supplier (DACH Region)",
+        "anrede": "Frau",
+        "ort": "Freiburg"
+      },
+      {
+        "role": "buyer",
+        "label": "Carbon Buyer",
+        "name": "Øystein Hopfengut",
+        "company": "Goldbach Braukunst KG",
+        "email": "øystein.hopfengut@example-goldbach.test",
+        "sigRole": "Carbon Buyer - Procurement Dept.",
+        "anrede": "Herr",
+        "ort": "Regensburg"
+      },
+      {
+        "role": "auditor",
+        "label": "Environmental Auditor",
+        "name": "Dr. Taňa Wałdgrün",
+        "company": "Waldgrün Umweltberatung",
+        "email": "taňa.wałdgrün@example-waldgruen.test",
+        "sigRole": "Environmental Auditor / Ext. Reviewer",
+        "anrede": "Frau Dr.",
+        "ort": "Zürich"
+      }
+    ],
+    "sections": [
+      {
+        "title": "CARBON CREDITS",
+        "paragraphs": [
+          "The Supplier agrees to deliver 5,000 tonnes of verified CO2-equivalent emission reduction credits (\"Carbon Credits\") to the Buyer during the calendar year 2026. Credits shall be sourced from certified reforestation and wind energy projects in the DACH region.",
+          "The total consideration for the credits is EUR 87,500.00 (EUR 17.50 per tonne CO2e), payable quarterly in arrears upon delivery of the corresponding tranche of credits.",
+          "Should the Supplier fail to deliver the contracted volume within a calendar quarter, the shortfall shall be carried forward to the subsequent quarter. If cumulative shortfall exceeds 15% of the annual volume by September 30, the Buyer may source replacement credits from alternative suppliers at the Supplier's expense."
+        ]
+      },
+      {
+        "title": "VERIFICATION AND STANDARDS",
+        "paragraphs": [
+          "All credits delivered under this agreement shall be certified under the Gold Standard or Verified Carbon Standard (VCS). The Supplier shall provide serial numbers and registry links for each credit batch within 5 business days of issuance.",
+          "The Environmental Auditor shall conduct semi-annual reviews of the underlying offset projects, verifying additionality, permanence, and compliance with applicable methodology protocols. Audit reports shall be shared with both parties within 30 days of each review visit."
+        ]
+      },
+      {
+        "title": "DELIVERY AND RETIREMENT",
+        "paragraphs": [
+          "Credits shall be transferred to the Buyer's account on the relevant registry within 10 business days of payment confirmation. The Buyer may request retirement of credits on their behalf, with retirement certificates provided within 30 days.",
+          "The Supplier shall maintain a buffer pool of no less than 5% of the annual contracted volume to compensate for potential invalidation of credits due to reversal events such as forest fires or project non-compliance.",
+          "Upon retirement, the Supplier shall issue a formal carbon neutrality certificate detailing the quantity of credits retired, the project of origin, the applicable standard, and the corresponding serial numbers. These certificates may be used by the Buyer for sustainability reporting, ESG disclosures, and corporate carbon accounting purposes."
+        ]
+      },
+      {
+        "title": "LIABILITY",
+        "paragraphs": [
+          "The Supplier warrants that all credits are genuine, have not been previously sold or retired, and originate from projects complying with all applicable environmental regulations. In the event of invalidity, the Supplier shall replace affected credits at no additional cost.",
+          "The Supplier shall maintain comprehensive project documentation including baseline assessments, monitoring reports, and third-party verification statements for each offset project. This documentation shall be made available to the Buyer and the Environmental Auditor upon request and retained for a minimum of 10 years following the retirement of any associated credits.",
+          "Force majeure events affecting the underlying offset projects, including but not limited to natural disasters, regulatory changes, or political instability, shall be promptly communicated to the Buyer. In such cases the parties shall negotiate in good faith to identify replacement credits from alternative certified projects within 60 days."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Nunito-Regular",
+      "body": "Lato-Regular",
+      "label": "Lato-Bold"
+    },
+    "signatureLevel": "AES"
+  },
+  "nova": {
+    "name": "NOVA Finance",
+    "subtitle": "Investment Banking · Asset Management · Insurance",
+    "colors": {
+      "primary": "#B71C1C",
+      "accent": "#EF5350",
+      "dark": "#212121"
+    },
+    "contractTitle": "DISCRETIONARY PORTFOLIO MANAGEMENT AGREEMENT",
+    "contractSubtitle": "Private Wealth Management - Balanced Growth Strategy",
+    "contractNo": "NF-DPM-2026-04291",
+    "parties": [
+      {
+        "role": "manager",
+        "label": "Portfolio Manager",
+        "name": "Dr. Kathérine Silberštejn",
+        "company": "NOVA Finance AG",
+        "email": "kathérine.silberštejn@example-nova.test",
+        "sigRole": "Portfolio Manager (Private Wealth)",
+        "anrede": "Frau Dr.",
+        "ort": "Frankfurt am Main"
+      },
+      {
+        "role": "client",
+        "label": "Client",
+        "name": "Ségolène Lindenthal",
+        "company": "",
+        "email": "ségolène.lindenthal@example-privat.test",
+        "sigRole": "Client - Discretionary Mandate",
+        "anrede": "Frau",
+        "ort": "Wiesbaden"
+      },
+      {
+        "role": "advisor",
+        "label": "Investment Advisor",
+        "name": "Ewa Gołdbach",
+        "company": "NOVA Finance AG",
+        "email": "ewa.gołdbach@example-nova.test",
+        "sigRole": "Senior Investment Advisor",
+        "anrede": "Frau",
+        "ort": "Frankfurt am Main"
+      }
+    ],
+    "sections": [
+      {
+        "title": "INVESTMENT MANDATE",
+        "paragraphs": [
+          "The Client grants NOVA Finance AG discretionary authority to manage the investment portfolio described herein, with an initial allocation of EUR 2,500,000.00. The investment strategy shall follow the \"Balanced Growth\" profile: 55% equities, 30% fixed income, 10% alternative assets, 5% cash equivalents.",
+          "The Manager shall adhere to the investment guidelines specified in Appendix A, including ESG screening criteria and geographic diversification constraints.",
+          "Quarterly portfolio reports shall be delivered to the Client within 15 business days of quarter-end, including performance attribution analysis, risk metrics (VaR, Sharpe ratio, maximum drawdown), and a commentary on market outlook and strategic positioning adjustments."
+        ]
+      },
+      {
+        "title": "FEES AND COMPENSATION",
+        "paragraphs": [
+          "Management fees: 0.95% p.a. of assets under management, calculated quarterly. Performance fee: 12% of returns exceeding the benchmark (60% MSCI World / 40% Bloomberg Aggregate), subject to a high-water mark. Custody fees are borne by the Client as per the depository agreement.",
+          "All fees shall be debited directly from the Client's custody account. The Manager shall provide a detailed fee statement with each quarterly report, showing the calculation basis, applicable rates, and total amount charged. Transaction costs incurred during rebalancing are borne by the portfolio."
+        ]
+      },
+      {
+        "title": "RISK DISCLOSURE",
+        "paragraphs": [
+          "The Client acknowledges that investments carry inherent risks, including potential loss of capital. Past performance does not guarantee future results. The Manager does not guarantee any minimum return. The Client confirms classification as a professional investor under MiFID II.",
+          "The Client has been informed of the specific risks associated with alternative investments, including limited liquidity, valuation uncertainty, and the use of leverage. Currency exposure is managed through hedging where feasible but is not fully eliminated.",
+          "The Manager shall implement stop-loss monitoring at portfolio level, triggering an immediate review and client notification if the portfolio value declines by more than 15% from its high-water mark within any rolling 12-month period. In such circumstances, the Manager shall convene a strategy review meeting within 5 business days to discuss potential rebalancing measures."
+        ]
+      },
+      {
+        "title": "TERMINATION",
+        "paragraphs": [
+          "Either party may terminate this agreement with 90 days' written notice. Upon termination, the Manager shall liquidate positions as instructed by the Client or transfer securities in-kind. Outstanding fees shall become due immediately upon termination.",
+          "In the event of early termination, a final portfolio valuation shall be prepared by the Manager using closing market prices on the effective termination date. The Client shall receive a comprehensive performance report covering the entire mandate period, including net-of-fees returns, benchmark comparison, and realized capital gains and losses for tax reporting purposes.",
+          "This agreement may also be terminated by mutual written consent at any time. The Client acknowledges that orderly liquidation of alternative asset positions may require up to 90 days beyond the termination date, during which management fees shall continue to apply on a pro-rata basis for assets still under management."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "PlayfairDisplay-Regular",
+      "body": "SourceSerif4-Regular",
+      "label": "Lato-Regular"
+    },
+    "signatureLevel": "QES",
+    "sigProvider": "IDnow"
+  },
+  "blueprint": {
+    "name": "BluePrint Design Studio",
+    "subtitle": "Architecture · Engineering · Digital Planning",
+    "colors": {
+      "primary": "#37474F",
+      "accent": "#26A69A",
+      "dark": "#263238"
+    },
+    "contractTitle": "ARCHITECTURAL SERVICES AGREEMENT",
+    "contractSubtitle": "Mixed-Use Development - Concept Through Construction",
+    "contractNo": "BP-ARCH-2026-00156",
+    "parties": [
+      {
+        "role": "architect",
+        "label": "Lead Architect",
+        "name": "Prof. Michał Dąchsberg",
+        "company": "BluePrint Design Studio GmbH",
+        "email": "michał.dąchsberg@example-blueprint.test",
+        "sigRole": "Lead Architect & BIM Coordinator",
+        "anrede": "Herr Prof.",
+        "ort": "Musterstadt"
+      },
+      {
+        "role": "developer",
+        "label": "Property Developer",
+        "name": "Çağla Grundstein",
+        "company": "Grundstein Projektbau AG",
+        "email": "çağla.grundstein@example-grundstein.test",
+        "sigRole": "Property Developer (Investor)",
+        "anrede": "Frau",
+        "ort": "Musterstadt"
+      },
+      {
+        "role": "engineer",
+        "label": "Structural Engineer",
+        "name": "Ing. Tomáš Trägwerk",
+        "company": "BluePrint Design Studio GmbH",
+        "email": "tomáš.trägwerk@example-blueprint.test",
+        "sigRole": "Structural Engineer - Dipl.-Ing.",
+        "anrede": "Herr Ing.",
+        "ort": "Musterstadt"
+      }
+    ],
+    "sections": [
+      {
+        "title": "SCOPE OF SERVICES",
+        "paragraphs": [
+          "BluePrint shall provide full architectural services for the planned mixed-use development at Ahornplatz, Musterstadt (Plot 14-B, approx. 8,200 sqm GFA). Services include: concept design, schematic design, detailed design with BIM Level 2 deliverables, building permit documentation, tender support, and construction oversight.",
+          "The design shall accommodate 42 residential units, 1,800 sqm commercial space (ground floor), and an underground car park with 85 spaces, in compliance with applicable building codes and KfW-55 energy standards.",
+          "BluePrint shall coordinate with all specialist consultants (structural, MEP, landscape, fire protection) and serve as lead designer responsible for integrating all discipline models into the central BIM environment. Design review meetings shall be held bi-weekly with all stakeholders present."
+        ]
+      },
+      {
+        "title": "PROJECT TIMELINE",
+        "paragraphs": [
+          "Phase 1 (Concept): 8 weeks from contract signing. Phase 2 (Schematic + Permits): 16 weeks. Phase 3 (Detailed Design + BIM): 12 weeks. Phase 4 (Construction Administration): duration of build, estimated 18 months. Milestones and deliverables are detailed in Schedule C.",
+          "Delays caused by permitting authorities, unforeseen site conditions, or changes requested by the Developer beyond the original brief shall extend the timeline proportionally. BluePrint shall notify the Developer within 5 business days of any anticipated schedule impact."
+        ]
+      },
+      {
+        "title": "COMPENSATION",
+        "paragraphs": [
+          "Total professional fees: EUR 1,240,000.00, structured according to HOAI fee scale phases 1-9. Payments are milestone-based as per the schedule in Appendix B. Travel expenses and specialist consultant fees (structural, MEP) shall be reimbursed at cost plus 5% coordination fee.",
+          "Invoices shall be submitted monthly with detailed time and cost breakdowns. Payment terms: 21 days net. In the event of scope changes exceeding 10% of the original brief, fees shall be renegotiated in good faith based on the applicable HOAI rates for the revised scope."
+        ]
+      },
+      {
+        "title": "INTELLECTUAL PROPERTY",
+        "paragraphs": [
+          "All design documents, BIM models, drawings, and specifications created under this agreement shall become the property of the Developer upon full payment. BluePrint retains the right to use anonymized project imagery for portfolio and competition purposes.",
+          "The Developer shall not modify or alter the design without prior consultation with BluePrint, as structural integrity and regulatory compliance may be affected. BluePrint reserves the moral right of authorship under the German Copyright Act and may request that its name be associated with the completed building in public communications.",
+          "In the event of project cancellation or indefinite postponement, all completed design materials shall be delivered to the Developer within 30 days of notice. Fees for completed phases remain due in full, and partially completed phases shall be compensated on a percentage-of-completion basis as determined by an independent quantity surveyor."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Archivo-Regular",
+      "body": "WorkSans-Regular",
+      "label": "WorkSans-Regular"
+    },
+    "sigVariant": "no-names",
+    "signatureLevel": "AES"
+  },
+  "solis": {
+    "name": "SOLIS Technology",
+    "subtitle": "Solar · Wind · Smart Grid · Energy Storage",
+    "colors": {
+      "primary": "#E65100",
+      "accent": "#1565C0",
+      "dark": "#1A1A2E"
+    },
+    "contractTitle": "SOLAR ENERGY SYSTEM SUPPLY AND INSTALLATION",
+    "contractSubtitle": "Commercial Rooftop PV - 380 kWp Turn-Key System",
+    "contractNo": "SOL-PV-2026-02847",
+    "parties": [
+      {
+        "role": "installer",
+        "label": "System Integrator",
+        "name": "Ing. Patrício Sønnweber",
+        "company": "SOLIS Technology GmbH",
+        "email": "patrício.sønnweber@example-solis.test",
+        "sigRole": "System Integrator (PV & Storage)",
+        "anrede": "Herr Ing.",
+        "ort": "Innsbruck"
+      },
+      {
+        "role": "owner",
+        "label": "Building Owner",
+        "name": "Zoë Dächler-Muñoz",
+        "company": "Dachler Logistik GmbH",
+        "email": "zoë.dächler-muñoz@example-dachler.test",
+        "sigRole": "Building Owner - Site Access Auth.",
+        "anrede": "Frau",
+        "ort": "Linz"
+      },
+      {
+        "role": "inspector",
+        "label": "Grid Inspector",
+        "name": "Klaus-José Netzwérk",
+        "company": "Netzwerk Elektroprüfung",
+        "email": "klaus-josé.netzwerk@example-netzwerk.test",
+        "sigRole": "Grid Inspector / Compliance Check",
+        "anrede": "Herr",
+        "ort": "Wien"
+      }
+    ],
+    "sections": [
+      {
+        "title": "SYSTEM SPECIFICATION",
+        "paragraphs": [
+          "SOLIS shall supply and install a 380 kWp rooftop photovoltaic system comprising 760 high-efficiency monocrystalline modules (500 Wp each), 4 string inverters (100 kW class), mounting system, DC/AC cabling, monitoring gateway, and grid connection equipment.",
+          "The system includes a 120 kWh lithium-iron-phosphate battery storage unit for peak-shaving and self-consumption optimization. All components are certified to IEC 61215/61730 standards.",
+          "SOLIS shall provide a cloud-based monitoring portal with real-time performance dashboards, fault alerts, and monthly energy yield reports. The monitoring system includes string-level analysis to enable rapid identification of underperforming modules or inverter faults."
+        ]
+      },
+      {
+        "title": "INSTALLATION AND COMMISSIONING",
+        "paragraphs": [
+          "Installation shall commence within 6 weeks of building permit approval and structural assessment sign-off. Estimated installation duration: 4 weeks. Commissioning includes performance ratio test per IEC 61724, grid synchronization, and monitoring system activation.",
+          "The Building Owner shall provide unobstructed roof access, a dedicated grid connection point rated at minimum 400A, and secure storage space for equipment during the installation period. SOLIS shall maintain appropriate insurance coverage (public liability, all-risk) throughout construction."
+        ]
+      },
+      {
+        "title": "WARRANTY AND MAINTENANCE",
+        "paragraphs": [
+          "Product warranty: 25 years on modules (min. 85% rated output at year 25), 10 years on inverters, 10 years on battery storage. Workmanship warranty: 5 years. SOLIS offers an optional O&M package at EUR 4,200/year including bi-annual inspections, cleaning, and monitoring.",
+          "Warranty claims shall be processed within 10 business days of notification. Defective components shall be replaced on-site within 20 business days. During warranty repair periods, SOLIS shall compensate the Building Owner for lost energy production at the prevailing feed-in tariff rate."
+        ]
+      },
+      {
+        "title": "ENERGY YIELD GUARANTEE",
+        "paragraphs": [
+          "SOLIS guarantees a minimum specific yield of 980 kWh/kWp in the first operating year under standard meteorological conditions (TMY data for the installation site). If actual yield falls below 95% of the guarantee, SOLIS shall compensate the shortfall at EUR 0.12/kWh.",
+          "The energy yield guarantee is subject to annual degradation adjustments of 0.5% per year as specified in the module manufacturer's warranty documentation. Meteorological deviations exceeding 10% from TMY reference data shall be accounted for using satellite-based irradiance measurements from an independent weather data provider.",
+          "SOLIS shall conduct an end-of-first-year performance assessment including thermographic inspection, IV curve tracing of a representative sample of strings, and a full system performance ratio analysis. The results shall be documented in a formal commissioning report shared with the Building Owner and the Grid Inspector."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Oswald-Regular",
+      "body": "DMSans-Regular",
+      "label": "DMSans-Regular"
+    },
+    "sigVariant": "no-names",
+    "signatureLevel": "SES"
+  },
+  "sentinel": {
+    "name": "Sentinel Insurance",
+    "subtitle": "Protection You Can Trust Since 1952",
+    "colors": {
+      "primary": "#1A237E",
+      "accent": "#FFD600",
+      "dark": "#0D1457"
+    },
+    "contractTitle": "COMMERCIAL PROPERTY INSURANCE POLICY",
+    "contractSubtitle": "All-Risk Coverage - Industrial Premises",
+    "contractNo": "SI-CPP-2026-18734",
+    "parties": [
+      {
+        "role": "insurer",
+        "label": "Insurer",
+        "name": "Dipl.-Kfm. Hélmut Schildbérg",
+        "company": "Sentinel Insurance AG",
+        "email": "hélmut.schildberg@example-sentinel.test",
+        "sigRole": "Insurer - Commercial Lines Dept.",
+        "anrede": "Herr Dipl.-Kfm.",
+        "ort": "Köln"
+      },
+      {
+        "role": "policyholder",
+        "label": "Policyholder",
+        "name": "György Eïsenwerk",
+        "company": "Eisenwerk Präzisionstechnik GmbH",
+        "email": "györgy.eisenwerk@example-eisenwerk.test",
+        "sigRole": "Policyholder & Managing Director",
+        "anrede": "Herr",
+        "ort": "Musterstadt"
+      },
+      {
+        "role": "broker",
+        "label": "Insurance Broker",
+        "name": "Pétra Schützschild",
+        "company": "Schutzschild Makler GmbH",
+        "email": "pétra.schützschild@example-schutzschild.test",
+        "sigRole": "Insurance Broker (Appointed Rep.)",
+        "anrede": "Frau",
+        "ort": "Düsseldorf"
+      }
+    ],
+    "sections": [
+      {
+        "title": "INSURED PROPERTY",
+        "paragraphs": [
+          "This policy covers the industrial premises located at Werkstrasse 44-48, 00000 Musterstadt, comprising: main production hall (4,200 sqm), warehouse (2,100 sqm), office building (800 sqm), and outdoor storage yard (1,500 sqm). Total insured value: EUR 12,800,000.00 (replacement cost basis).",
+          "Coverage extends to building structure, permanently installed machinery, inventory, and business interruption for up to 12 months following a covered loss event.",
+          "The insured values shall be reviewed annually and adjusted for inflation using the construction cost index published by the Federal Statistical Office. The Policyholder shall notify the Insurer within 30 days of any material change in occupancy, construction, or use of the insured premises."
+        ]
+      },
+      {
+        "title": "COVERAGE AND EXCLUSIONS",
+        "paragraphs": [
+          "All-risk coverage including: fire, lightning, explosion, storm, hail, water damage, burglary, vandalism, impact damage (vehicles/aircraft), and glass breakage. Exclusions: war, nuclear events, gradual deterioration, intentional damage, wear and tear. Natural hazard coverage (flood, earthquake) available as endorsement.",
+          "The Policyholder shall maintain reasonable security measures including functioning fire detection and suppression systems, burglar alarm connected to a central monitoring station, and compliance with all statutory safety regulations. Failure to maintain these may affect coverage."
+        ]
+      },
+      {
+        "title": "PREMIUM AND DEDUCTIBLE",
+        "paragraphs": [
+          "Annual gross premium: EUR 34,200.00, payable in quarterly instalments. General deductible: EUR 5,000 per claim. Fire deductible: EUR 10,000. Business interruption waiting period: 48 hours. Premium adjustment clause applies based on annual turnover declaration.",
+          "A claims-free discount of 10% shall apply after each consecutive loss-free policy year, up to a maximum of 30%. Any claim payment exceeding EUR 50,000 resets the discount to zero. The Insurer shall provide 60 days' notice of any premium adjustment at renewal."
+        ]
+      },
+      {
+        "title": "CLAIMS PROCEDURE",
+        "paragraphs": [
+          "The Policyholder shall notify the Insurer of any loss event within 72 hours of discovery. A written claim with supporting documentation must be submitted within 30 days. The Insurer shall acknowledge receipt within 5 business days and appoint a loss adjuster within 10 business days for claims exceeding EUR 25,000.",
+          "The Policyholder is entitled to emergency mitigation measures to prevent further loss, with reasonable costs reimbursed by the Insurer up to EUR 50,000 without prior approval. The Insurer shall provide a binding claims decision within 60 days of receipt of all required documentation, failing which interest on the undisputed portion of the claim shall accrue at the statutory rate.",
+          "Where subrogation rights exist, the Insurer may pursue recovery against third parties responsible for the loss. The Policyholder shall cooperate fully in any subrogation proceedings and shall not enter into settlements with third parties that may prejudice the Insurer's recovery rights without prior written consent."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Merriweather-Regular",
+      "body": "Lato-Regular",
+      "label": "Lato-Bold"
+    },
+    "signatureLevel": "QES",
+    "sigProvider": "ATrust",
+    "useExternRole": true
+  },
+  "aegis": {
+    "name": "Aegis Life",
+    "subtitle": "Life · Health · Disability · Long-Term Care",
+    "colors": {
+      "primary": "#00695C",
+      "accent": "#80CBC4",
+      "dark": "#004D40"
+    },
+    "contractTitle": "GROUP LIFE AND DISABILITY INSURANCE",
+    "contractSubtitle": "Employee Benefits Program - Comprehensive Coverage",
+    "contractNo": "AL-GLD-2026-05528",
+    "parties": [
+      {
+        "role": "insurer",
+        "label": "Insurer",
+        "name": "Chrístîne Lebensgut",
+        "company": "Aegis Life Versicherung AG",
+        "email": "chrístîne.lebensgut@example-aegis.test",
+        "sigRole": "Insurer - Group Life & Benefits",
+        "anrede": "Frau",
+        "ort": "Hamburg"
+      },
+      {
+        "role": "employer",
+        "label": "Employer",
+        "name": "Dr. Florián Heïlkraft",
+        "company": "Heilkraft Medizintechnik GmbH",
+        "email": "florián.heïlkraft@example-heilkraft.test",
+        "sigRole": "Employer (HR & Benefits Admin)",
+        "anrede": "Herr Dr.",
+        "ort": "Heidelberg"
+      },
+      {
+        "role": "trustee",
+        "label": "Benefits Trustee",
+        "name": "Monïka Treügut",
+        "company": "Treugut Pensionsverwaltung",
+        "email": "monïka.treügut@example-treugut.test",
+        "sigRole": "Benefits Trustee / Fiduciary",
+        "anrede": "Frau",
+        "ort": "Hamburg"
+      }
+    ],
+    "sections": [
+      {
+        "title": "GROUP COVERAGE",
+        "paragraphs": [
+          "Aegis Life agrees to provide group life and disability insurance coverage for all eligible employees of Heilkraft Medizintechnik GmbH. The policy covers a minimum of 120 and a maximum of 200 employees, including full-time and permanent part-time staff (minimum 20 hours/week).",
+          "Dependents of insured employees (spouse/partner and children up to age 25) are eligible for supplementary life coverage at 50% of the employee benefit level.",
+          "Employees on approved leave of absence (parental leave, sabbatical) may continue coverage for up to 24 months by paying the full premium (employer and employee portions). Coverage ceases automatically upon termination of employment, with a 31-day conversion privilege to individual coverage."
+        ]
+      },
+      {
+        "title": "BENEFIT SCHEDULE",
+        "paragraphs": [
+          "Group Term Life: 3x annual gross salary, maximum EUR 450,000 per insured. Accidental Death & Dismemberment (AD&D): additional 2x salary. Long-term Disability: 60% of gross salary after 90-day elimination period, benefit payable to age 65. Critical Illness rider: EUR 50,000 lump sum.",
+          "Benefits are coordinated with statutory social insurance. The disability benefit is reduced by the amount of any public disability pension received. Pre-existing condition limitation: 12 months for conditions treated within the 24 months prior to coverage effective date."
+        ]
+      },
+      {
+        "title": "PREMIUM CALCULATION",
+        "paragraphs": [
+          "Monthly premium per employee: calculated based on census data (age, gender, salary). Estimated average: EUR 89.50/employee/month. The Employer contributes 70%, employees contribute 30% via payroll deduction. Premiums are guaranteed for 24 months from the policy effective date.",
+          "Premium rates are experience-rated based on the group's claims history. An annual settlement comparing actual vs. expected claims shall be prepared within 90 days of each policy anniversary. Favorable experience may result in premium reductions or dividend payments to the Employer."
+        ]
+      },
+      {
+        "title": "ENROLLMENT AND ELIGIBILITY",
+        "paragraphs": [
+          "New employees become eligible after completion of the probationary period (typically 6 months). Late enrollees may be subject to evidence of insurability. Annual open enrollment period: November 1-30. The Employer shall provide updated census data quarterly.",
+          "Aegis Life shall provide an online benefits portal where employees can review their coverage details, designate beneficiaries, submit claims, and access educational materials about their insurance options. The portal shall also include a benefits calculator to help employees estimate their coverage amounts based on salary and family status.",
+          "The Employer shall distribute benefits information materials provided by Aegis Life to all eligible employees within 14 days of the policy effective date and during each annual enrollment period. Aegis Life shall make its benefits counselors available for on-site or virtual information sessions at least twice per year."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "LibreBaskerville-Regular",
+      "body": "Raleway-Regular",
+      "label": "Raleway-Regular"
+    },
+    "sigVariant": "no-roles",
+    "signatureLevel": "AES"
+  },
+  "harbor": {
+    "name": "Harbor Re",
+    "subtitle": "Reinsurance · Risk Analytics · Capital Solutions",
+    "colors": {
+      "primary": "#880E4F",
+      "accent": "#F48FB1",
+      "dark": "#6A0039"
+    },
+    "contractTitle": "EXCESS OF LOSS REINSURANCE TREATY",
+    "contractSubtitle": "Property Catastrophe - Per Occurrence Basis",
+    "contractNo": "HR-XOL-2026-00093",
+    "parties": [
+      {
+        "role": "reinsurer",
+        "label": "Reinsurer",
+        "name": "Jàmes P. Håfenfeld",
+        "company": "Harbor Re Ltd., Zurich",
+        "email": "jàmes.håfenfeld@example-harbor.test",
+        "sigRole": "Reinsurer - Treaty Underwriting",
+        "anrede": "Herr",
+        "ort": "Zürich"
+      },
+      {
+        "role": "cedent",
+        "label": "Ceding Company",
+        "name": "Dr. Moniqüe Bergtal",
+        "company": "Bergtal Versicherung AG",
+        "email": "moniqüe.bergtal@example-bergtal.test",
+        "sigRole": "Ceding Company (Chief Actuary)",
+        "anrede": "Frau Dr.",
+        "ort": "München"
+      },
+      {
+        "role": "actuary",
+        "label": "Signing Actuary",
+        "name": "Prof. Henrík Rísikoberg",
+        "company": "Harbor Re Ltd., Zurich",
+        "email": "henrík.rísikoberg@example-harbor.test",
+        "sigRole": "Signing Actuary & Risk Officer",
+        "anrede": "Herr Prof.",
+        "ort": "Zürich"
+      }
+    ],
+    "sections": [
+      {
+        "title": "COVERAGE AND LIMITS",
+        "paragraphs": [
+          "Harbor Re agrees to indemnify the Cedent for property catastrophe losses in excess of EUR 25,000,000 (retention) up to EUR 75,000,000 per occurrence. The treaty covers natural catastrophe perils including windstorm, flood, earthquake, and hail affecting risks located within the European Economic Area.",
+          "The coverage attaches to net retained losses after deduction of all inuring reinsurance and applies on a per-occurrence, losses-occurring-during basis for the treaty period January 1 to December 31, 2026.",
+          "Hours clauses apply as follows: windstorm - 72 consecutive hours, flood - 168 consecutive hours, earthquake - 72 hours. Multiple events separated by more than the specified hours period shall be treated as separate occurrences. The Cedent retains sole authority over claims handling and loss adjustment."
+        ]
+      },
+      {
+        "title": "PREMIUM AND REINSTATEMENTS",
+        "paragraphs": [
+          "Minimum and deposit premium: EUR 2,850,000, payable in quarterly instalments. Final premium: adjusted based on the Cedent's subject net earned premium, rate: 2.28% as-if. One free reinstatement at 100% additional premium, second reinstatement at 150% pro-rata temporis.",
+          "The Cedent shall provide quarterly bordereau reports showing written and earned premium by line of business and geographical zone. Rate adjustments at renewal shall be based on updated exposure data and loss experience, subject to mutual agreement."
+        ]
+      },
+      {
+        "title": "LOSS SETTLEMENT",
+        "paragraphs": [
+          "The Cedent shall report each loss to Harbor Re within 14 days of the loss exceeding 50% of the retention. Cash loss advances shall be made within 30 days of proof of loss presentation. Final settlement within 90 days of agreed loss amount. Interest on late payments: 3-month EURIBOR + 200 bps.",
+          "For catastrophe events affecting multiple insureds, the Cedent shall provide loss development reports at 30-day intervals until the final net loss is established. Harbor Re shall have the right to appoint an independent loss adjuster for claims exceeding EUR 10,000,000."
+        ]
+      },
+      {
+        "title": "ARBITRATION",
+        "paragraphs": [
+          "All disputes arising from this treaty shall be resolved by arbitration in Zurich, Switzerland, under the rules of the Swiss Chambers' Arbitration Institution. The tribunal shall consist of three arbitrators, each party appointing one, with the chair selected by the two party-appointed arbitrators.",
+          "The arbitration proceedings shall be conducted in English, with any relevant treaty documentation translated at the requesting party's expense. The tribunal may appoint independent actuarial experts to assist in the determination of loss amounts or reserve adequacy. Each party shall bear its own costs, with the tribunal's fees shared equally unless the award directs otherwise.",
+          "Pending final resolution of any dispute, both parties shall continue to perform their respective obligations under this treaty in good faith, including the timely payment of undisputed premium amounts and the settlement of undisputed loss claims."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "CrimsonText-Regular",
+      "body": "WorkSans-Regular",
+      "label": "WorkSans-Regular"
+    },
+    "sigVariant": "no-roles",
+    "signatureLevel": "QES",
+    "sigProvider": "Swisscom_eIDAS"
+  },
+  "apex": {
+    "name": "Apex Assurance",
+    "subtitle": "Commercial · Property · Casualty · Specialty",
+    "colors": {
+      "primary": "#4A148C",
+      "accent": "#CE93D8",
+      "dark": "#311B92"
+    },
+    "contractTitle": "PROFESSIONAL LIABILITY INSURANCE",
+    "contractSubtitle": "Errors & Omissions - Technology Sector Coverage",
+    "contractNo": "AA-PLI-2026-07612",
+    "parties": [
+      {
+        "role": "underwriter",
+        "label": "Underwriter",
+        "name": "Bernhàrd Gipfelmann",
+        "company": "Apex Assurance SE",
+        "email": "bernhàrd.gipfelmann@example-apex.test",
+        "sigRole": "Underwriter (E&O - Tech Sector)",
+        "anrede": "Herr",
+        "ort": "Wien"
+      },
+      {
+        "role": "insured",
+        "label": "Insured",
+        "name": "Ing. Cárla Wölkenreich",
+        "company": "Wolkenreich Solutions AG",
+        "email": "cárla.wölkenreich@example-wolkenreich.test",
+        "sigRole": "Insured - Company Representative",
+        "anrede": "Frau Ing.",
+        "ort": "Graz"
+      },
+      {
+        "role": "witness",
+        "label": "Legal Witness",
+        "name": "Dr. Antón Rechtsféld",
+        "company": "Rechtsfeld Kanzlei",
+        "email": "antón.rechtsfeld@example-rechtsfeld.test",
+        "sigRole": "Legal Witness / Notary Public",
+        "anrede": "Herr Dr.",
+        "ort": "Wien"
+      }
+    ],
+    "sections": [
+      {
+        "title": "INSURING AGREEMENT",
+        "paragraphs": [
+          "Apex Assurance agrees to indemnify the Insured against claims arising from professional services rendered in the field of software development, cloud infrastructure, and IT consulting. Coverage includes allegations of negligence, errors, omissions, or breach of professional duty that result in financial loss to third parties.",
+          "The policy extends to cover cyber-related professional liability claims, including data breaches arising from professional negligence, and regulatory defense costs.",
+          "Coverage includes the costs of crisis management consultants, forensic IT investigators, and public relations advisors retained in connection with a covered claim. Mitigation costs incurred with Apex's prior written consent are covered up to EUR 500,000 per policy period."
+        ]
+      },
+      {
+        "title": "COVERAGE TERRITORY AND LIMITS",
+        "paragraphs": [
+          "Territory: worldwide, excluding USA/Canada. Applicable courts: EU/EEA jurisdictions. Aggregate limit of liability: EUR 10,000,000. Per-claim limit: EUR 5,000,000. Defense costs: included within the limit. Retroactive date: January 1, 2022.",
+          "The Insured may purchase extended reporting period coverage of up to 36 months following policy expiration, at an additional premium of 150% of the expiring annual premium. This provision is available only if Apex elects not to renew the policy."
+        ]
+      },
+      {
+        "title": "CONDITIONS AND EXCLUSIONS",
+        "paragraphs": [
+          "Claims-made basis with 60-day extended reporting provision. Exclusions: bodily injury, property damage, criminal acts, prior/pending litigation, contractual liability assumed beyond professional duties, patent infringement. Sub-limit for regulatory proceedings: EUR 1,000,000.",
+          "The Insured shall not admit liability, make any settlement offer, or incur defense costs without Apex's prior written consent. Apex shall have the right, but not the obligation, to appoint defense counsel and take control of the defense of any covered claim."
+        ]
+      },
+      {
+        "title": "REPORTING",
+        "paragraphs": [
+          "The Insured shall notify Apex of any claim or circumstance that may give rise to a claim within 30 days of becoming aware. Late notification may result in coverage limitation. Annual policy renewal: subject to updated revenue declaration and loss experience review.",
+          "The Insured shall maintain professional standards and quality assurance processes consistent with industry best practices, including code review procedures, penetration testing, and documented incident response plans. Apex may request evidence of such measures during the underwriting process or following a reported claim.",
+          "Apex shall provide the Insured with access to a risk management resource library, including template client contracts, data processing agreements, and incident response checklists. The Insured may also request up to 4 hours per year of consultation with Apex's in-house legal risk team at no additional charge."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Poppins-Bold",
+      "body": "Poppins-Regular",
+      "label": "Poppins-Regular"
+    },
+    "signatureLevel": "SES",
+    "useExternRole": true
+  },
+  "prism": {
+    "name": "Prism Digital",
+    "subtitle": "Creative Agency · Digital Media · Brand Strategy",
+    "colors": {
+      "primary": "#2979FF",
+      "accent": "#FF9100",
+      "dark": "#1A1A2E"
+    },
+    "contractTitle": "CREATIVE SERVICES RETAINER AGREEMENT",
+    "contractSubtitle": "Brand Relaunch Campaign - Full-Service Engagement",
+    "contractNo": "PD-CRE-2026-00319",
+    "parties": [
+      {
+        "role": "agency",
+        "label": "Creative Agency",
+        "name": "Nína Fàrbstein",
+        "company": "Prism Digital GmbH",
+        "email": "nína.fàrbstein@example-prism.test",
+        "sigRole": "Creative Agency - Managing Partner",
+        "anrede": "Frau",
+        "ort": "Berlin"
+      },
+      {
+        "role": "client",
+        "label": "Client",
+        "name": "Tobías Laüfwerk",
+        "company": "Laufwerk Sportswear GmbH",
+        "email": "tobías.laüfwerk@example-laufwerk.test",
+        "sigRole": "Client (Brand & Marketing Lead)",
+        "anrede": "Herr",
+        "ort": "München"
+      },
+      {
+        "role": "director",
+        "label": "Creative Director",
+        "name": "Màrco Bïldwerk",
+        "company": "Prism Digital GmbH",
+        "email": "màrco.bïldwerk@example-prism.test",
+        "sigRole": "Creative Director / Art Direction",
+        "anrede": "Herr",
+        "ort": "Berlin"
+      }
+    ],
+    "sections": [
+      {
+        "title": "SCOPE OF CREATIVE SERVICES",
+        "paragraphs": [
+          "Prism Digital shall provide comprehensive creative and digital marketing services for the relaunch of the Laufwerk brand, including: brand identity redesign, visual language system, website UX/UI design and development, social media content strategy, launch campaign (digital + OOH), and brand guidelines.",
+          "The engagement follows a phased approach: Discovery (2 weeks), Strategy (3 weeks), Creative Development (6 weeks), Production (4 weeks), and Launch Support (4 weeks).",
+          "Prism Digital shall assign a dedicated project team consisting of a creative director, senior designer, UX lead, frontend developer, and project manager. The Client shall designate a single point of contact with decision-making authority to approve deliverables at each phase gate."
+        ]
+      },
+      {
+        "title": "DELIVERABLES AND TIMELINE",
+        "paragraphs": [
+          "Phase 1 - Brand Strategy: brand audit, competitor analysis, positioning workshop, brand architecture document. Phase 2 - Visual Identity: logo system, color palette, typography, iconography, motion design principles. Phase 3 - Digital: responsive website (Next.js), app UI kit, email templates. Phase 4 - Campaign: 3 hero films (30s), 12 social assets, OOH key visuals.",
+          "Each phase concludes with a formal presentation and sign-off. The Client receives two rounds of revisions per deliverable at no additional cost. Further revisions shall be billed at the hourly rates specified in this agreement."
+        ]
+      },
+      {
+        "title": "COMPENSATION",
+        "paragraphs": [
+          "Monthly retainer: EUR 42,000 for the 19-week engagement period (total EUR 199,500). Production costs (printing, media buying, stock assets) are billed at cost plus 15% markup. Additional hours beyond scope: EUR 165/hour (strategy), EUR 140/hour (design), EUR 155/hour (development).",
+          "Invoices are issued on the 1st of each month with net-14 payment terms. A 50% deposit on estimated production costs is due before any third-party purchasing. Early termination by the Client requires payment of all fees through the current phase plus 25% of remaining retainer."
+        ]
+      },
+      {
+        "title": "INTELLECTUAL PROPERTY AND USAGE RIGHTS",
+        "paragraphs": [
+          "Upon full payment, all final deliverables and source files shall be transferred to the Client with unlimited, worldwide, perpetual usage rights. Prism Digital retains portfolio and case-study rights. Third-party assets (fonts, stock photography) are licensed separately.",
+          "The Client shall receive a comprehensive digital asset package upon project completion, including all source files (Figma, After Effects, Premiere Pro), brand guidelines in PDF and interactive web format, component library documentation, and a style guide with usage examples for internal teams and external vendors.",
+          "Prism Digital shall provide 30 days of post-launch support at no additional cost, including minor adjustments to delivered assets, technical support for website deployment, and consultation on content strategy for the initial social media rollout. Extended support beyond this period is available under a separate maintenance agreement."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "DMSans-Regular",
+      "body": "Nunito-Regular",
+      "label": "DMSans-Regular"
+    },
+    "signatureLevel": "AES"
+  },
+  "mosaic": {
+    "name": "Mosaic Labs",
+    "subtitle": "Research · Innovation · Technology Transfer",
+    "colors": {
+      "primary": "#1976D2",
+      "accent": "#F57C00",
+      "dark": "#212121"
+    },
+    "contractTitle": "COLLABORATIVE RESEARCH AGREEMENT",
+    "contractSubtitle": "AI-Driven Drug Discovery - Joint Development Program",
+    "contractNo": "ML-CRA-2026-00041",
+    "parties": [
+      {
+        "role": "lab",
+        "label": "Research Institution",
+        "name": "Prof. Dr. Yūki Forschbèrg",
+        "company": "Mosaic Labs GmbH",
+        "email": "yūki.forschbèrg@example-mosaic.test",
+        "sigRole": "Research Institution (PI - Lead)",
+        "anrede": "Frau Prof. Dr.",
+        "ort": "Tübingen"
+      },
+      {
+        "role": "partner",
+        "label": "Industry Partner",
+        "name": "Dr. Maximílian Wïrkstoff",
+        "company": "Wirkstoff Biopharma AG",
+        "email": "maximílian.wïrkstoff@example-wirkstoff.test",
+        "sigRole": "Industry Partner & Co-Sponsor",
+        "anrede": "Herr Dr.",
+        "ort": "Basel"
+      },
+      {
+        "role": "ethics",
+        "label": "Ethics Board Chair",
+        "name": "Prof. Hélène Sorgfàlt",
+        "company": "Mosaic Labs GmbH",
+        "email": "hélène.sorgfàlt@example-mosaic.test",
+        "sigRole": "Ethics Board Chair - IRB Oversight",
+        "anrede": "Frau Prof.",
+        "ort": "Tübingen"
+      }
+    ],
+    "sections": [
+      {
+        "title": "RESEARCH PROGRAM",
+        "paragraphs": [
+          "The parties agree to collaborate on a 36-month research program applying machine learning and generative AI models to accelerate lead compound identification for oncology targets. Mosaic Labs contributes its proprietary ATLAS platform (molecular graph neural network) and computational infrastructure.",
+          "The program covers three work packages: WP1 - Model training on historical screening data, WP2 - Virtual screening of 50M+ compounds against 5 validated targets, WP3 - Experimental validation of top 200 AI-predicted candidates.",
+          "A joint steering committee comprising two representatives from each party shall meet quarterly to review progress, approve milestone deliverables, and authorize any scope modifications. The steering committee shall also oversee the program budget and approve expenditures exceeding EUR 100,000."
+        ]
+      },
+      {
+        "title": "FUNDING AND RESOURCES",
+        "paragraphs": [
+          "Total program budget: EUR 4,200,000, funded 60% by Wirkstoff Biopharma (EUR 2,520,000) and 40% by Mosaic Labs (in-kind: compute, personnel, platform access). Wirkstoff payments are milestone-based: EUR 840,000 at kick-off, followed by quarterly payments tied to deliverables.",
+          "Mosaic Labs shall provide dedicated GPU cluster time equivalent to 500,000 compute-hours per year for the duration of the program. Both parties shall assign a minimum of 3 full-time equivalent researchers. Key personnel changes require mutual written consent."
+        ]
+      },
+      {
+        "title": "INTELLECTUAL PROPERTY",
+        "paragraphs": [
+          "Background IP remains with each party. Foreground IP generated jointly shall be co-owned. Wirkstoff Biopharma receives an exclusive license to foreground IP for pharmaceutical applications. Mosaic Labs retains rights for non-pharmaceutical applications. Patent filing costs are shared equally.",
+          "Each party grants the other a non-exclusive, royalty-free license to use its background IP solely for the purposes of this collaboration. Machine learning models trained on combined datasets shall be treated as foreground IP. Training data remains the property of the contributing party."
+        ]
+      },
+      {
+        "title": "PUBLICATION AND CONFIDENTIALITY",
+        "paragraphs": [
+          "Results may be published after a 90-day review period during which the other party may request redaction of confidential information or delay for patent filing. Confidential information exchanged under this agreement is protected for 5 years from disclosure.",
+          "Both parties acknowledge the importance of open science principles and agree to deposit anonymized research datasets in recognized public repositories within 12 months of associated publication, subject to the confidentiality review process described above. Preprint versions of joint publications shall be made available on recognized platforms within 30 days of journal submission.",
+          "Upon completion or termination of the collaboration, each party shall return or securely destroy all confidential materials received from the other party within 60 days, except for copies reasonably required for ongoing regulatory compliance, patent prosecution, or exercise of licensed rights under this agreement."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Roboto-Regular",
+      "body": "SourceSerif4-Regular",
+      "label": "Roboto-Regular"
+    },
+    "signatureLevel": "QES",
+    "sigProvider": "Yes"
+  },
+  "nexus": {
+    "name": "Nexus Group",
+    "subtitle": "Venture Capital · M&A Advisory · Growth Partners",
+    "colors": {
+      "primary": "#1B3A5C",
+      "accent": "#C9963A",
+      "dark": "#0F2440"
+    },
+    "contractTitle": "SERIES B INVESTMENT TERM SHEET",
+    "contractSubtitle": "Preferred Equity Financing - Growth Round",
+    "contractNo": "NX-TS-2026-00017",
+    "parties": [
+      {
+        "role": "investor",
+        "label": "Lead Investor",
+        "name": "Aleksànder Kapitálberg",
+        "company": "Nexus Group Capital Partners",
+        "email": "aleksànder.kapitálberg@example-nexus.test",
+        "sigRole": "Lead Investor (Series B - Board)",
+        "anrede": "Herr",
+        "ort": "Frankfurt am Main"
+      },
+      {
+        "role": "founder",
+        "label": "Company / Founder",
+        "name": "Dipl.-Inf. Svën Dàtenström",
+        "company": "Datenström AI GmbH",
+        "email": "svën.dàtenström@example-datenstroem.test",
+        "sigRole": "Company / Founder & CEO",
+        "anrede": "Herr Dipl.-Inf.",
+        "ort": "Berlin"
+      },
+      {
+        "role": "counsel",
+        "label": "Legal Counsel",
+        "name": "Dr. Lísa Paràgraf",
+        "company": "Paragraf Rechtsberatung",
+        "email": "lísa.paràgraf@example-paragraf.test",
+        "sigRole": "Legal Counsel - Transaction Advisor",
+        "anrede": "Frau Dr.",
+        "ort": "Berlin"
+      }
+    ],
+    "sections": [
+      {
+        "title": "INVESTMENT TERMS",
+        "paragraphs": [
+          "Nexus Group Capital Partners agrees to invest EUR 15,000,000 in Series B Preferred Shares of Datenström AI GmbH at a pre-money valuation of EUR 60,000,000. The round targets EUR 22,000,000 total, with co-investors to be identified. Price per share: EUR 48.20. The investment is subject to satisfactory completion of due diligence.",
+          "Closing conditions include: satisfactory legal, financial, and technical due diligence; delivery of audited financial statements for FY2024 and FY2025; execution of updated articles of association reflecting the Series B terms; and delivery of an updated capitalization table reflecting all outstanding instruments."
+        ]
+      },
+      {
+        "title": "GOVERNANCE AND BOARD",
+        "paragraphs": [
+          "The Board of Directors shall consist of 5 members: 2 appointed by Series B investors, 2 by founders/common shareholders, and 1 independent member mutually agreed upon. Protective provisions require investor majority consent for: new share issuances, debt exceeding EUR 2M, M&A transactions, and dividend declarations.",
+          "The Company shall establish an employee stock option pool of 10% of fully diluted share capital, reserved from the pre-money valuation. Key employee contracts including non-compete, IP assignment, and vesting schedules must be in place prior to closing."
+        ]
+      },
+      {
+        "title": "LIQUIDATION PREFERENCE",
+        "paragraphs": [
+          "Series B shareholders hold a 1x non-participating liquidation preference. In a liquidation event, Series B holders receive the greater of: (a) their original investment plus 6% annual cumulative dividend, or (b) their pro-rata share on an as-converted basis.",
+          "A qualified IPO shall be defined as a public listing on a regulated EU exchange at a valuation exceeding EUR 200,000,000, at which point all preferred shares automatically convert to common shares. Founders are subject to a 12-month post-IPO lock-up."
+        ]
+      },
+      {
+        "title": "ANTI-DILUTION AND PROTECTIVE PROVISIONS",
+        "paragraphs": [
+          "Broad-based weighted average anti-dilution protection applies to down rounds. Pay-to-play provision: investors who do not participate pro-rata in future qualified rounds (> EUR 5M) will have their Series B shares automatically converted to common shares. Tag-along and drag-along rights apply as per standard terms.",
+          "The Company shall provide investors with monthly management reports including key performance indicators, cash position, and burn rate within 15 business days of month-end. Quarterly financial statements prepared in accordance with German GAAP shall be delivered within 45 days of quarter-end, and audited annual financial statements within 120 days of fiscal year-end.",
+          "Information rights extend to reasonable access to the Company's premises, books, and records upon 5 business days' prior written notice. The Lead Investor shall have the right to attend board meetings as an observer if not holding a board seat, and to receive copies of all materials distributed to board members simultaneously with their distribution."
+        ]
+      }
+    ],
+    "fonts": {
+      "heading": "Raleway-Regular",
+      "body": "CrimsonText-Regular",
+      "label": "CrimsonText-Bold"
+    },
+    "signatureLevel": "AES"
+  }
+}

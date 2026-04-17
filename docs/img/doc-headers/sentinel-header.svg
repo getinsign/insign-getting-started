@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 130">
+  <defs>
+    <linearGradient id="sen-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D1457"/>
+      <stop offset="100%" stop-color="#1A237E"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="595" height="130" fill="url(#sen-bg)"/>
+  <!-- Subtle shield motif centered background -->
+  <g opacity="0.04" fill="#FFD600">
+    <path d="M297,10 L340,25 L340,70 Q340,100 297,120 Q254,100 254,70 L254,25 Z"/>
+  </g>
+  <!-- Second larger shield echo -->
+  <g opacity="0.02" stroke="#FFD600" stroke-width="1.5" fill="none">
+    <path d="M297,5 L350,22 L350,72 Q350,108 297,125 Q244,108 244,72 L244,22 Z"/>
+  </g>
+  <!-- Gold accent stripe -->
+  <rect x="0" y="0" width="595" height="4" fill="#FFD600"/>
+  <rect x="0" y="126" width="595" height="4" fill="#FFD600" opacity="0.4"/>
+  <!-- Thin gold line separators -->
+  <line x1="0" y1="8" x2="595" y2="8" stroke="#FFD600" stroke-width="0.5" opacity="0.2"/>
+  <!-- Left gold bar -->
+  <rect x="30" y="30" width="3" height="60" fill="#FFD600" opacity="0.6"/>
+  <!-- Company name -->
+  <text x="50" y="58" font-family="system-ui, sans-serif" font-size="30" font-weight="bold" fill="#FFFFFF" letter-spacing="2">Sentinel Insurance</text>
+  <!-- Subtitle -->
+  <text x="52" y="82" font-family="system-ui, sans-serif" font-size="10.5" fill="#FFD600" letter-spacing="1.5" font-style="italic">Protection You Can Trust Since 1952</text>
+  <!-- Classic decorative elements -->
+  <line x1="50" y1="92" x2="250" y2="92" stroke="#FFD600" stroke-width="0.5" opacity="0.3"/>
+  <!-- Gold diamond accents -->
+  <polygon points="50,100 54,104 50,108 46,104" fill="#FFD600" opacity="0.25"/>
+  <polygon points="65,100 69,104 65,108 61,104" fill="#FFD600" opacity="0.15"/>
+  <!-- Right side decorative gold lines -->
+  <line x1="530" y1="25" x2="570" y2="25" stroke="#FFD600" stroke-width="0.5" opacity="0.2"/>
+  <line x1="540" y1="32" x2="570" y2="32" stroke="#FFD600" stroke-width="0.5" opacity="0.15"/>
+  <line x1="550" y1="39" x2="570" y2="39" stroke="#FFD600" stroke-width="0.5" opacity="0.1"/>
+</svg>

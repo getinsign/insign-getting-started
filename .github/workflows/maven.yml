@@ -1,32 +1,93 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
+name: Java CI - Build and Publish
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/java/**'
+      - '.github/workflows/maven.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'src/java/**'
+      - '.github/workflows/maven.yml'
   workflow_dispatch:
-    
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [spring-client, insign-client]
+    name: build (${{ matrix.profile }})
+    defaults:
+      run:
+        working-directory: src/java
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
+    - uses: actions/checkout@v6
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v5
       with:
-        java-version: '11'
+        java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Set up Maven
-      uses: s4u/maven-settings-action@v2.8.0
+        cache-dependency-path: src/java/pom.xml
+
+    - name: Configure Maven settings.xml
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml <<'EOF'
+        <settings>
+          <servers>
+            <server>
+              <id>github</id>
+              <username>${env.GITHUB_ACTOR}</username>
+              <password>${env.GITHUB_TOKEN}</password>
+            </server>
+            <server>
+              <id>github-getinsign</id>
+              <username>${env.GITHUB_ACTOR}</username>
+              <password>${env.INSIGN_PACKAGES_TOKEN}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+
+    - name: Build and Test (${{ matrix.profile }})
+      run: |
+        if [ "${{ matrix.profile }}" = "insign-client" ]; then
+          mvn -B clean verify -P'!spring-client' -Pinsign-client
+        else
+          mvn -B clean verify -Pspring-client
+        fi
+      env:
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        INSIGN_PACKAGES_TOKEN: ${{ secrets.INSIGN_PACKAGES_TOKEN }}
+
+    - name: Publish Test Results
+      uses: dorny/test-reporter@v3
+      if: always()
       with:
-        servers: '[{"id": "mygithub", "username": "${{github.actor}}", "password": "${{secrets.GITHUB_TOKEN}}"}]'        
-    - name: Build with Maven
-      run: cat ~/.m2/settings.xml & mvn -B clean package --file pom.xml
+        name: Test Results (${{ matrix.profile }})
+        path: src/java/**/target/surefire-reports/*.xml
+        reporter: java-junit
+
+    - name: JaCoCo Coverage Report
+      uses: madrapps/jacoco-report@v1.7.2
+      if: always()
+      with:
+        paths: src/java/**/target/site/jacoco/jacoco.xml
+        token: ${{ secrets.GITHUB_TOKEN }}
+        title: Coverage (${{ matrix.profile }})
+        update-comment: true
+        min-coverage-overall: 0
+        min-coverage-changed-files: 0

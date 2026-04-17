@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="90" height="90">
+  <defs>
+    <linearGradient id="prg-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#16213E"/>
+    </linearGradient>
+    <linearGradient id="prg-beam1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="50%" stop-color="#FF9100"/>
+      <stop offset="100%" stop-color="#FFD600"/>
+    </linearGradient>
+    <linearGradient id="prg-beam2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00E676"/>
+      <stop offset="100%" stop-color="#2979FF"/>
+    </linearGradient>
+    <linearGradient id="prg-beam3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2979FF"/>
+      <stop offset="100%" stop-color="#D500F9"/>
+    </linearGradient>
+    <linearGradient id="prg-prism" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#B0BEC5" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <rect width="30" height="30" rx="6" fill="url(#prg-bg)"/>
+  <!-- Incoming white light beam -->
+  <polygon points="3,14 10,13.5 10,16.5 3,16" fill="#ffffff" fill-opacity="0.8"/>
+  <!-- Prism triangle -->
+  <polygon points="15,5 10,24 20,24" fill="url(#prg-prism)" stroke="#ffffff" stroke-width="0.3" stroke-opacity="0.5"/>
+  <!-- Dispersed rainbow beams -->
+  <polygon points="20,10 28,4 28,6.5" fill="#FF1744" fill-opacity="0.9"/>
+  <polygon points="20,12 28,7 28,9.5" fill="#FF9100" fill-opacity="0.9"/>
+  <polygon points="20,14 28,10 28,12.5" fill="#FFD600" fill-opacity="0.9"/>
+  <polygon points="20,16 28,13.5 28,16" fill="#00E676" fill-opacity="0.9"/>
+  <polygon points="20,18 28,17 28,19.5" fill="#2979FF" fill-opacity="0.9"/>
+  <polygon points="20,20 28,20.5 28,23" fill="#D500F9" fill-opacity="0.9"/>
+  <!-- Subtle glow on prism -->
+  <polygon points="15,5 10,24 20,24" fill="none" stroke="#ffffff" stroke-width="0.4" stroke-opacity="0.3"/>
+</svg>

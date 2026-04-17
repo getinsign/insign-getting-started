@@ -1,0 +1,95 @@
+<!--
+  explorer.html - inSign API Explorer (thin shell)
+
+  Full interactive playground for the inSign REST API. Content is loaded at
+  runtime from partials in docs/partials/explorer/ by explorer-loader.js.
+  No build step required - works directly via GitHub Pages.
+
+  Partials loaded:
+    _navbar.html     - Top navigation bar
+    _main.html       - Steps 1-4 (connection, session, operations, snippets)
+    _sidebar.html    - Right sidebar (webhooks, polling, API trace)
+    _templates.html  - <template> elements cloned by JS
+    _footer.html     - Footer links
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- FOUC prevention: apply dark/light theme before first paint -->
+    <script>!function(){var d=!0;try{var s=localStorage.getItem('insign-dark-mode');if(s!==null)d=s==='true'}catch(e){}document.documentElement.setAttribute('data-theme',d?'dark':'light')}()</script>
+    <!-- Hash-based step navigation: show correct step panel before CSS loads -->
+    <script>!function(){var m=location.hash.match(/^#step(\d)/);if(m){var s=parseInt(m[1]);if(s>=1&&s<=4){var css='';for(var i=1;i<=4;i++){if(i===s){css+='#step-'+i+'-panel{display:block!important}';css+='.step-indicator .step[data-step="'+i+'"]{background:#1a2a3a!important;border-color:var(--insign-border)!important;color:#fff!important}';css+='.step[data-step="'+i+'"] .step-number{background:rgba(255,255,255,0.15)!important}'}else{css+='#step-'+i+'-panel{display:none!important}'}}var el=document.createElement('style');el.id='early-step-css';el.textContent=css;document.head.appendChild(el);window.__insign_init_step=s}}}()</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inSign API Explorer - Interactive Getting Started</title>
+    <link rel="icon" href="favicon.png" sizes="32x32">
+    <link rel="icon" href="favicon-192.png" sizes="192x192">
+
+    <!-- Fonts (self-hosted via @fontsource) -->
+    <link href="vendor/fonts/roboto.css" rel="stylesheet">
+
+    <!-- Bootstrap 5 (self-hosted via npm) -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="css/style-base.css" rel="stylesheet">
+    <link href="css/style-components.css" rel="stylesheet">
+    <link href="css/style-features.css" rel="stylesheet">
+    <link href="css/theme-base.css" rel="stylesheet">
+    <link href="css/theme-components.css" rel="stylesheet">
+    <link href="css/theme-features.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Placeholder slots filled by explorer-loader.js -->
+<div id="slot-navbar"></div>
+
+<!-- Main content layout -->
+<div class="container-fluid py-3">
+    <div class="row g-3">
+        <div class="col" id="main-column">
+            <div id="slot-step1"></div>
+            <div id="slot-step2"></div>
+            <div id="slot-step3"></div>
+            <div id="slot-step4"></div>
+        </div>
+        <div class="col-lg-3 col-md-4 d-none" id="trace-column">
+            <div id="slot-sidebar"></div>
+        </div>
+    </div>
+
+    <!-- Expand tab for collapsed sidebar -->
+    <button class="sidebar-expand-tab sidebar-expand-right d-none" id="expand-right-sidebar"
+            onclick="window.app.expandSidebar()" title="Show sidebar">
+        <i class="bi bi-layout-sidebar-reverse"></i>
+        <span class="expand-tab-badge" id="expand-trace-count"></span>
+    </button>
+</div>
+
+<!-- Overlays and tooltips -->
+<div id="feature-float-tooltip"></div>
+<div id="json-hover-tooltip"></div>
+<div id="drop-overlay" class="drop-overlay">
+    <div class="drop-overlay-content">
+        <i class="bi bi-file-earmark-arrow-down drop-overlay-icon"></i>
+        <div class="drop-overlay-title">Drop PDF here</div>
+        <div class="drop-overlay-sub">File will be used as your custom test document</div>
+    </div>
+</div>
+
+<div id="slot-templates"></div>
+<div id="slot-footer"></div>
+
+<!-- Vendor scripts (must load before app modules) -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/monaco-editor/min/vs/loader.js"></script>
+<script src="js/openapi-schema-loader.js"></script>
+<script src="js/api-client.js"></script>
+
+<!-- Runtime loader: fetches partials, inserts HTML, then loads app scripts -->
+<script src="js/explorer-loader.js"></script>
+
+</body>
+</html>

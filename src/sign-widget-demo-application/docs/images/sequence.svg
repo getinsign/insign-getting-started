@@ -1,0 +1,63 @@
+<svg viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',system-ui,sans-serif;font-size:10px;">
+  <rect width="760" height="520" fill="#fff"/>
+  <defs>
+    <marker id="seqArr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="#1565c0"/></marker>
+    <marker id="seqArrR" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="#1565c0"/></marker>
+    <marker id="seqArrP" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5" fill="#7986cb"/></marker>
+  </defs>
+  <!-- Column headers -->
+  <rect x="60" y="8" width="100" height="28" rx="6" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.2"/>
+  <text x="110" y="27" text-anchor="middle" font-weight="700" font-size="11" fill="#1a237e">Browser</text>
+  <rect x="310" y="8" width="100" height="28" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.2"/>
+  <text x="360" y="27" text-anchor="middle" font-weight="700" font-size="11" fill="#1565c0">Backend</text>
+  <rect x="560" y="8" width="100" height="28" rx="6" fill="#fce4ec" stroke="#c62828" stroke-width="1.2"/>
+  <text x="610" y="27" text-anchor="middle" font-weight="700" font-size="11" fill="#c62828">inSign</text>
+  <!-- Lifelines -->
+  <line x1="110" y1="36" x2="110" y2="510" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="360" y1="36" x2="360" y2="510" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="610" y1="36" x2="610" y2="510" stroke="#bbb" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- Step 2 -->
+  <rect x="0" y="52" width="46" height="18" rx="4" fill="#1a237e"/><text x="23" y="65" text-anchor="middle" font-size="9" fill="#fff" font-weight="600">Step 2</text>
+  <line x1="110" y1="70" x2="360" y2="70" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArr)"/>
+  <text x="235" y="65" text-anchor="middle" font-size="9.5" fill="#333" font-weight="600">POST /api/session {userData}</text>
+  <line x1="360" y1="95" x2="610" y2="95" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArr)"/>
+  <text x="485" y="90" text-anchor="middle" font-size="9.5" fill="#333" font-weight="600">POST /configure/session</text>
+  <text x="485" y="103" text-anchor="middle" font-size="8.5" fill="#888">{createJWT:true, documents:[{file:"b64...", preFilledFields}]}</text>
+  <rect x="442" y="107" width="86" height="14" rx="3" fill="#ffebee"/><text x="485" y="117" text-anchor="middle" font-size="8" fill="#c62828" font-weight="600">Controller Auth</text>
+  <line x1="610" y1="130" x2="360" y2="130" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArrR)"/>
+  <text x="485" y="126" text-anchor="middle" font-size="9" fill="#333">{sessionid, jwt}</text>
+  <line x1="360" y1="152" x2="110" y2="152" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArrR)"/>
+  <text x="235" y="148" text-anchor="middle" font-size="9" fill="#333">{sessionKey, insignSessionId, jwt}</text>
+  <!-- Step 3 -->
+  <rect x="0" y="175" width="46" height="18" rx="4" fill="#1a237e"/><text x="23" y="188" text-anchor="middle" font-size="9" fill="#fff" font-weight="600">Step 3</text>
+  <line x1="110" y1="195" x2="610" y2="195" stroke="#7986cb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#seqArrP)"/>
+  <text x="360" y="190" text-anchor="middle" font-size="9" fill="#7986cb">GET /js/insign-standalonesignature-pad.js</text>
+  <text x="360" y="208" text-anchor="middle" font-size="8" fill="#999">direct — public, no auth</text>
+  <line x1="110" y1="228" x2="610" y2="228" stroke="#7986cb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#seqArrP)"/>
+  <text x="360" y="224" text-anchor="middle" font-size="9" fill="#7986cb">GET /configjs.js?sessionid=...</text>
+  <text x="360" y="241" text-anchor="middle" font-size="8" fill="#999">direct — INSIGN_JWT auth</text>
+  <line x1="110" y1="258" x2="610" y2="258" stroke="#7986cb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#seqArrP)"/>
+  <text x="360" y="253" text-anchor="middle" font-size="9" fill="#7986cb">POST /get/documents/full</text>
+  <text x="360" y="270" text-anchor="middle" font-size="8" fill="#999">called by initEmbeddedData() — INSIGN_JWT auth</text>
+  <!-- User draws -->
+  <rect x="50" y="288" width="120" height="22" rx="5" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="110" y="303" text-anchor="middle" font-size="9" fill="#f57f17" font-weight="600">User draws signature</text>
+  <line x1="110" y1="328" x2="610" y2="328" stroke="#7986cb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#seqArrP)"/>
+  <text x="360" y="323" text-anchor="middle" font-size="9" fill="#7986cb">POST /put/signaturedata</text>
+  <text x="360" y="340" text-anchor="middle" font-size="8" fill="#999">called by sendSignature() — INSIGN_JWT auth</text>
+  <!-- Step 4 -->
+  <rect x="0" y="358" width="46" height="18" rx="4" fill="#1a237e"/><text x="23" y="371" text-anchor="middle" font-size="9" fill="#fff" font-weight="600">Step 4</text>
+  <line x1="110" y1="380" x2="360" y2="380" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArr)"/>
+  <text x="235" y="376" text-anchor="middle" font-size="9" fill="#333">GET /api/session/:key/document</text>
+  <line x1="360" y1="400" x2="610" y2="400" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArr)"/>
+  <text x="485" y="396" text-anchor="middle" font-size="9" fill="#333">POST /get/document</text>
+  <rect x="442" y="404" width="86" height="14" rx="3" fill="#ffebee"/><text x="485" y="414" text-anchor="middle" font-size="8" fill="#c62828" font-weight="600">Controller Auth</text>
+  <line x1="610" y1="430" x2="360" y2="430" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArrR)"/>
+  <text x="485" y="426" text-anchor="middle" font-size="9" fill="#333">binary PDF</text>
+  <line x1="360" y1="450" x2="110" y2="450" stroke="#1565c0" stroke-width="1.5" marker-end="url(#seqArrR)"/>
+  <text x="235" y="446" text-anchor="middle" font-size="9" fill="#333">binary PDF</text>
+  <!-- Legend -->
+  <rect x="140" y="475" width="480" height="30" rx="6" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+  <line x1="160" y1="492" x2="200" y2="492" stroke="#1565c0" stroke-width="1.5"/><text x="208" y="496" font-size="9" fill="#555">Backend (controller auth)</text>
+  <line x1="370" y1="492" x2="410" y2="492" stroke="#7986cb" stroke-width="1.5" stroke-dasharray="6,3"/><text x="418" y="496" font-size="9" fill="#555">Direct (JWT via INSIGN_JWT header)</text>
+</svg>

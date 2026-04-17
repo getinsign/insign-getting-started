@@ -1,0 +1,60 @@
+<svg viewBox="0 0 780 290" xmlns="http://www.w3.org/2000/svg" style="font-family:'Segoe UI',system-ui,sans-serif;">
+  <rect width="780" height="290" fill="#fff"/>
+  <defs>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#1565c0"/></marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2e7d32"/></marker>
+  </defs>
+
+  <!-- Browser box -->
+  <rect x="10" y="20" width="220" height="250" rx="12" fill="#e8eaf6" stroke="#1a237e" stroke-width="1.5"/>
+  <text x="120" y="48" text-anchor="middle" font-weight="700" font-size="13" fill="#1a237e">Browser (JS)</text>
+  <text x="28" y="72" font-size="10.5" fill="#333">Collects user data</text>
+  <text x="28" y="90" font-size="10.5" fill="#333">Loads inSign JS directly</text>
+  <text x="28" y="108" font-size="10.5" fill="#333">Renders signature pad</text>
+  <text x="28" y="126" font-size="10.5" fill="#333">Sends signature to inSign</text>
+  <rect x="28" y="142" width="184" height="28" rx="6" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+  <text x="120" y="160" text-anchor="middle" font-size="9.5" fill="#2e7d32" font-weight="600">Talks directly to inSign via JWT</text>
+  <rect x="28" y="178" width="184" height="28" rx="6" fill="#fff" stroke="#90caf9" stroke-width="1"/>
+  <text x="120" y="196" text-anchor="middle" font-size="9" fill="#666">No proxy, no cookies needed</text>
+  <rect x="28" y="214" width="184" height="28" rx="6" fill="#fff" stroke="#90caf9" stroke-width="1"/>
+  <text x="120" y="232" text-anchor="middle" font-size="9" fill="#666">Header: <tspan font-weight="600" fill="#1a237e">INSIGN_JWT: Bearer ...</tspan></text>
+
+  <!-- Backend box -->
+  <rect x="280" y="20" width="220" height="180" rx="12" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="390" y="48" text-anchor="middle" font-weight="700" font-size="13" fill="#1565c0">Your Backend</text>
+  <text x="298" y="72" font-size="10.5" fill="#333">POST /api/session</text>
+  <text x="298" y="90" font-size="10.5" fill="#333">GET /api/.../document</text>
+  <rect x="298" y="104" width="184" height="36" rx="6" fill="#fff" stroke="#90caf9" stroke-width="1"/>
+  <text x="390" y="119" text-anchor="middle" font-size="9.5" fill="#666">Auth to inSign: <tspan font-weight="700" fill="#c62828">Controller Auth</tspan></text>
+  <text x="390" y="133" text-anchor="middle" font-size="9" fill="#999">Server-side only, never exposed</text>
+  <rect x="298" y="148" width="184" height="28" rx="6" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+  <text x="390" y="166" text-anchor="middle" font-size="9" fill="#2e7d32">Returns JWT to browser</text>
+
+  <!-- inSign box -->
+  <rect x="550" y="20" width="220" height="250" rx="12" fill="#fce4ec" stroke="#c62828" stroke-width="1.5"/>
+  <text x="660" y="48" text-anchor="middle" font-weight="700" font-size="13" fill="#c62828">inSign Server</text>
+  <text x="568" y="72" font-size="10.5" fill="#333">/configure/session</text>
+  <text x="568" y="90" font-size="10.5" fill="#333">/get/document</text>
+  <rect x="568" y="100" width="184" height="28" rx="6" fill="#ffebee" stroke="#ef9a9a" stroke-width="1"/>
+  <text x="660" y="118" text-anchor="middle" font-size="9" fill="#c62828"><tspan font-weight="700">Controller Auth</tspan> (backend only)</text>
+  <line x1="568" y1="140" x2="752" y2="140" stroke="#eee" stroke-width="1"/>
+  <text x="568" y="158" font-size="10.5" fill="#333">/js/*.js (public)</text>
+  <text x="568" y="176" font-size="10.5" fill="#333">/configjs.js</text>
+  <text x="568" y="194" font-size="10.5" fill="#333">/get/documents/full</text>
+  <text x="568" y="212" font-size="10.5" fill="#333">/put/signaturedata</text>
+  <rect x="568" y="222" width="184" height="28" rx="6" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+  <text x="660" y="240" text-anchor="middle" font-size="9" fill="#2e7d32"><tspan font-weight="700">INSIGN_JWT</tspan> (browser direct)</text>
+
+  <!-- Arrow: Browser → Backend (API calls) -->
+  <line x1="230" y1="72" x2="280" y2="72" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="255" y="65" text-anchor="middle" font-size="8" fill="#666">API</text>
+
+  <!-- Arrow: Backend → inSign (server-side, Controller Auth) -->
+  <line x1="500" y1="72" x2="550" y2="72" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="525" y="65" text-anchor="middle" font-size="8" fill="#c62828">Controller Auth</text>
+
+  <!-- Arrow: Browser → inSign DIRECT (JWT, the key arrow) -->
+  <path d="M170,250 L170,278 L600,278 L600,252" stroke="#2e7d32" stroke-width="2.5" fill="none" marker-end="url(#arrowGreen)"/>
+  <rect x="280" y="268" width="220" height="20" rx="4" fill="#e8f5e9"/>
+  <text x="390" y="282" text-anchor="middle" font-size="10" fill="#2e7d32" font-weight="700">Direct: JS load + XHR via JWT</text>
+</svg>

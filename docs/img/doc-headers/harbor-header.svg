@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 130">
+  <defs>
+    <linearGradient id="hb-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6A0039"/>
+      <stop offset="60%" stop-color="#880E4F"/>
+      <stop offset="100%" stop-color="#6A0039"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="595" height="130" fill="url(#hb-bg)"/>
+  <!-- Maritime wave pattern along bottom -->
+  <path d="M0,105 Q30,95 60,105 Q90,115 120,105 Q150,95 180,105 Q210,115 240,105 Q270,95 300,105 Q330,115 360,105 Q390,95 420,105 Q450,115 480,105 Q510,95 540,105 Q570,115 595,105 L595,130 L0,130 Z" fill="#F48FB1" opacity="0.08"/>
+  <path d="M0,112 Q30,104 60,112 Q90,120 120,112 Q150,104 180,112 Q210,120 240,112 Q270,104 300,112 Q330,120 360,112 Q390,104 420,112 Q450,120 480,112 Q510,104 540,112 Q570,120 595,112 L595,130 L0,130 Z" fill="#F48FB1" opacity="0.06"/>
+  <path d="M0,118 Q25,113 50,118 Q75,123 100,118 Q125,113 150,118 Q175,123 200,118 Q225,113 250,118 Q275,123 300,118 Q325,113 350,118 Q375,123 400,118 Q425,113 450,118 Q475,123 500,118 Q525,113 550,118 Q575,123 595,118 L595,130 L0,130 Z" fill="#F48FB1" opacity="0.1"/>
+  <!-- Elegant top accent -->
+  <rect x="0" y="0" width="595" height="2" fill="#F48FB1" opacity="0.6"/>
+  <rect x="0" y="4" width="300" height="1" fill="#F48FB1" opacity="0.2"/>
+  <!-- Vertical accent -->
+  <rect x="35" y="20" width="2" height="80" fill="#F48FB1" opacity="0.4"/>
+  <rect x="40" y="25" width="1" height="70" fill="#F48FB1" opacity="0.2"/>
+  <!-- Company name - centered layout -->
+  <text x="297" y="50" font-family="system-ui, sans-serif" font-size="32" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">Harbor Re</text>
+  <!-- Decorative line under name -->
+  <line x1="230" y1="58" x2="365" y2="58" stroke="#F48FB1" stroke-width="0.8" opacity="0.4"/>
+  <!-- Subtitle centered -->
+  <text x="297" y="78" font-family="system-ui, sans-serif" font-size="10.5" fill="#F48FB1" text-anchor="middle" letter-spacing="2.5">Reinsurance · Risk Analytics · Capital Solutions</text>
+  <!-- Elegant corner elements -->
+  <path d="M560,15 L575,15 L575,30" stroke="#F48FB1" stroke-width="0.8" fill="none" opacity="0.2"/>
+  <path d="M560,115 L575,115 L575,100" stroke="#F48FB1" stroke-width="0.8" fill="none" opacity="0.2"/>
+  <path d="M20,15 L20,30" stroke="#F48FB1" stroke-width="0.8" fill="none" opacity="0.15"/>
+</svg>

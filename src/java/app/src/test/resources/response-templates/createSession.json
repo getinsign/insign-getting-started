@@ -1,0 +1,10 @@
+{
+  "sessionid" : "a3863f77fdf8e38489b5455a",
+  "token" : "b567d2be92eaef9a-b03756dd-c345-4260-a29b-e034a9e016d2-1774195352771",
+  "accessURL" : "https://sandbox.test.getinsign.show/apistart/index?token=b567d2be92eaef9a-b03756dd-c345-4260-a29b-e034a9e016d2-1774195352771",
+  "accessURLProcessManagement" : "https://sandbox.test.getinsign.show/apistart/load?token=b567d2be92eaef9a-b03756dd-c345-4260-a29b-e034a9e016d2-1774195352771",
+  "error" : 0,
+  "message" : "OK",
+  "errormessage" : null,
+  "trace" : null
+}

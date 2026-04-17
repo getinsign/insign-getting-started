@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 12 439 105" width="1317" height="315">
+  <defs>
+    <linearGradient id="hlBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#880E4F"/>
+      <stop offset="100%" stop-color="#4A0028"/>
+    </linearGradient>
+    <linearGradient id="hlAnc" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#F48FB1"/>
+      <stop offset="100%" stop-color="#EC407A"/>
+    </linearGradient>
+    <linearGradient id="hlLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F48FB1" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#F48FB1" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="hlGlow" cx="0.5" cy="0.4" r="0.5">
+      <stop offset="0%" stop-color="#F48FB1" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#F48FB1" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="hlSh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#2A0016" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+  <!-- Icon block -->
+  <rect x="0" y="15" width="100" height="100" rx="18" fill="url(#hlBg)"/>
+  <circle cx="50" cy="60" r="40" fill="url(#hlGlow)"/>
+  <g filter="url(#hlSh)">
+    <circle cx="50" cy="32" r="7" fill="none" stroke="url(#hlAnc)" stroke-width="2.2"/>
+    <circle cx="50" cy="32" r="1.5" fill="#F48FB1" opacity="0.6"/>
+    <line x1="50" y1="39" x2="50" y2="88" stroke="url(#hlAnc)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="35" y1="52" x2="65" y2="52" stroke="url(#hlAnc)" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M28 78 C28 87 37 92 50 88" fill="none" stroke="url(#hlAnc)" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M72 78 C72 87 63 92 50 88" fill="none" stroke="url(#hlAnc)" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M25 76 L28 78 L28 82" fill="none" stroke="#F48FB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M75 76 L72 78 L72 82" fill="none" stroke="#F48FB1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <rect x="0" y="100" width="100" height="15" fill="url(#hlAnc)" opacity="0.2" clip-path="inset(0 0 0 0 round 0 0 18 18)"/>
+  <!-- Company name - darker -->
+  <text x="120" y="52" font-family="'Segoe UI',system-ui,sans-serif" font-size="48" font-weight="700" fill="#4A0028">Harbor Re</text>
+  <text x="120" y="52" font-family="'Segoe UI',system-ui,sans-serif" font-size="48" font-weight="700" fill="#6A0039">Harbor Re</text>
+  <!-- Subtitle -->
+  <text x="120" y="78" font-family="'Segoe UI',system-ui,sans-serif" font-size="21" font-weight="300" fill="#6A0039" letter-spacing="5" opacity="0.7">REINSURANCE</text>
+  <!-- Separator line -->
+  <line x1="120" y1="90" x2="370" y2="90" stroke="url(#hlLine)" stroke-width="1.5"/>
+  <!-- Tagline -->
+  <text x="120" y="108" font-family="'Segoe UI',system-ui,sans-serif" font-size="12" font-weight="400" fill="#6A0039" opacity="0.6">Reinsurance · Risk Analytics · Capital Solutions</text>
+</svg>

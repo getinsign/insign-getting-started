@@ -1,0 +1,423 @@
+            <div id="step-2-panel" class="d-none">
+                <div class="card-insign">
+                    <div class="card-header">
+                        <span class="badge-method badge-method-post">POST</span>
+                        <span class="endpoint-path">/configure/session</span>
+                        <h5 class="ms-auto mb-0" style="font-size:0.9rem">Create a signing session</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Feature Configurator (visual toggles that modify the JSON) -->
+                        <div class="feature-configurator-box mb-3">
+                            <div class="feature-configurator-header configurator-header-row" data-bs-toggle="collapse" data-bs-target="#feature-configurator">
+                                <div class="configurator-header-text">
+                                    <div class="feature-configurator-title">
+                                        <i class="bi bi-sliders"></i> Session Feature Configurator
+                                        <span id="feature-changed-count" class="feature-changed-badge" style="display:none"></span>
+                                    </div>
+                                    <div class="feature-configurator-subtitle">
+                                        Configure UI behavior, signing devices, form editing, external signing and more.
+                                        Toggle properties visually - only non-default values are included in the JSON request body.
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column align-items-end justify-content-between align-self-stretch flex-shrink-0">
+                                    <i class="bi bi-chevron-down feature-configurator-chevron"></i>
+                                    <button class="btn btn-insign btn-insign-sm btn-insign-outline configurator-defaults-btn" onclick="event.stopPropagation();window.app.resetAllFeatures()" title="Reset all toggles to default">
+                                        <i class="bi bi-arrow-counterclockwise"></i> Defaults
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="collapse" id="feature-configurator">
+                                <div class="feature-panel p-3">
+                                    <div class="text-muted-sm mb-2">
+                                        <i class="bi bi-info-circle"></i>
+                                        <strong>Default</strong> = uses the server-configured value (property omitted from JSON).
+                                        Only <strong>On</strong>/<strong>Off</strong> values are sent in the request.
+                                        Hover over a toggle to see its description; click <i class="bi bi-info-circle"></i> to pin it.
+                                    </div>
+                                    <div class="mb-2 d-flex align-items-start gap-2">
+                                        <div class="input-group input-group-sm" style="flex:1">
+                                            <span class="input-group-text" style="font-size:0.78rem"><i class="bi bi-search"></i></span>
+                                            <input type="text" class="form-control" id="feature-search" name="feature-search" placeholder="Search features by name, key, property, or description..."
+                                                   style="font-size:0.78rem" oninput="window.app.filterFeatures(this.value)">
+                                            <button class="btn btn-outline-secondary" type="button" id="feature-search-clear"
+                                                    style="font-size:0.72rem;display:none" onclick="document.getElementById('feature-search').value='';window.app.filterFeatures('');">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </div>
+                                        <div class="btn-group btn-group-sm flex-shrink-0">
+                                            <button class="btn btn-outline-secondary" type="button" style="font-size:0.72rem" onclick="window.app.expandAllGroups()" title="Expand all groups">
+                                                <i class="bi bi-chevron-bar-expand"></i> Expand
+                                            </button>
+                                            <button class="btn btn-outline-secondary" type="button" style="font-size:0.72rem" onclick="window.app.collapseAllGroups()" title="Collapse all groups">
+                                                <i class="bi bi-chevron-bar-contract"></i> Collapse
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="feature-search-count" class="text-muted" style="font-size:0.68rem;margin-top:2px;display:none"></div>
+                                    <div id="feature-toggles">
+                                        <!-- populated by app.js -->
+                                    </div>
+                                    <div id="uncovered-properties">
+                                        <!-- populated after OpenAPI spec loads -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Branding & CSS Customizer -->
+                        <div class="feature-configurator-box mb-3">
+                            <div class="feature-configurator-header branding-header" data-bs-toggle="collapse" data-bs-target="#branding-configurator">
+                                <div class="branding-header-text">
+                                    <div class="feature-configurator-title">
+                                        <i class="bi bi-palette"></i> Branding &amp; CSS Customizer
+                                    </div>
+                                    <div class="feature-configurator-subtitle">
+                                        Customize colors, logos, and email branding. Choose a color scheme or pick your own colors -
+                                        the CSS is generated from the inSign farbpalette template and injected via <code>externalPropertiesURL</code>.
+                                    </div>
+                                </div>
+                                <div id="branding-header-summary" class="branding-header-summary"></div>
+                                <div class="d-flex flex-column align-items-end justify-content-between align-self-stretch flex-shrink-0">
+                                    <i class="bi bi-chevron-down feature-configurator-chevron"></i>
+                                    <button class="btn btn-insign btn-insign-sm btn-insign-outline configurator-defaults-btn" onclick="event.stopPropagation();window.app.resetBrandingAll()" title="Reset colors and logos to defaults">
+                                        <i class="bi bi-arrow-counterclockwise"></i> Defaults
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="collapse" id="branding-configurator">
+                                <div class="feature-panel p-3">
+
+                                    <!-- Sync from document toggle -->
+                                    <div class="mb-3 d-flex align-items-center gap-2">
+                                        <label class="toggle-pill" for="brand-sync-doc">
+                                            <input type="checkbox" id="brand-sync-doc">
+                                            <span class="toggle-pill-switch"></span>
+                                            <span class="toggle-pill-label" style="font-size:0.78rem"><i class="bi bi-link-45deg"></i> Sync from selected document</span>
+                                        </label>
+                                        <span class="text-muted" style="font-size:0.68rem">auto-apply company style when switching documents</span>
+                                    </div>
+
+                                    <!-- Color Scheme Presets -->
+                                    <div class="mb-3">
+                                        <label class="form-label" style="font-size:0.82rem;font-weight:600">
+                                            <i class="bi bi-brush"></i> Color Scheme
+                                        </label>
+                                        <div class="d-flex flex-wrap gap-2 mb-2" id="color-scheme-presets">
+                                            <!-- populated by JS -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Custom Color Pickers -->
+                                    <div class="mb-3">
+                                        <label class="form-label" style="font-size:0.82rem;font-weight:600">
+                                            <i class="bi bi-eyedropper"></i> Custom Colors
+                                        </label>
+                                        <div class="row g-2">
+                                            <div class="col-6 col-md-3">
+                                                <label class="form-label" style="font-size:0.72rem">Primary</label>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <input type="color" class="form-control form-control-color" id="brand-color-primary" name="brand-color-primary" value="#0165BC"
+                                                           onchange="window.app.updateBrandColor()">
+                                                    <input type="text" class="form-control form-control-sm" id="brand-color-primary-hex" name="brand-color-primary-hex" value="#0165BC"
+                                                           style="font-size:0.72rem;font-family:monospace;width:75px"
+                                                           onchange="document.getElementById('brand-color-primary').value=this.value;window.app.updateBrandColor()">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-3">
+                                                <label class="form-label" style="font-size:0.72rem">Accent</label>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <input type="color" class="form-control form-control-color" id="brand-color-accent" name="brand-color-accent" value="#E48803"
+                                                           onchange="window.app.updateBrandColor()">
+                                                    <input type="text" class="form-control form-control-sm" id="brand-color-accent-hex" name="brand-color-accent-hex" value="#E48803"
+                                                           style="font-size:0.72rem;font-family:monospace;width:75px"
+                                                           onchange="document.getElementById('brand-color-accent').value=this.value;window.app.updateBrandColor()">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-3">
+                                                <label class="form-label" style="font-size:0.72rem">Dark / Nav</label>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <input type="color" class="form-control form-control-color" id="brand-color-dark" name="brand-color-dark" value="#2C2C2C"
+                                                           onchange="window.app.updateBrandColor()">
+                                                    <input type="text" class="form-control form-control-sm" id="brand-color-dark-hex" name="brand-color-dark-hex" value="#2C2C2C"
+                                                           style="font-size:0.72rem;font-family:monospace;width:75px"
+                                                           onchange="document.getElementById('brand-color-dark').value=this.value;window.app.updateBrandColor()">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-3">
+                                                <label class="form-label" style="font-size:0.72rem">Error / Danger</label>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <input type="color" class="form-control form-control-color" id="brand-color-error" name="brand-color-error" value="#BD2318"
+                                                           onchange="window.app.updateBrandColor()">
+                                                    <input type="text" class="form-control form-control-sm" id="brand-color-error-hex" name="brand-color-error-hex" value="#BD2318"
+                                                           style="font-size:0.72rem;font-family:monospace;width:75px"
+                                                           onchange="document.getElementById('brand-color-error').value=this.value;window.app.updateBrandColor()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sample Logo Sets -->
+                                    <div class="mb-3">
+                                        <label class="form-label" style="font-size:0.82rem;font-weight:600">
+                                            <i class="bi bi-collection"></i> Logo Sets
+                                            <span class="text-muted" style="font-size:0.7rem;font-weight:normal">
+                                                - click a set to apply all 3 logos at once
+                                            </span>
+                                        </label>
+                                        <div class="text-muted-sm mb-2" style="font-size:0.7rem">
+                                            Each set provides: <strong>App icon</strong> (square, 30x30 - editor desktop via <code>message</code>),
+                                            <strong>Mail header</strong> (banner, 120x60 - <code>message.mt.header.image</code>),
+                                            <strong>Login logo</strong> (wide, 314x100 - <code>logoExtern</code>).
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-3" id="logo-sets">
+                                            <!-- populated by JS -->
+                                        </div>
+                                    </div>
+
+                                    <hr style="margin:12px 0;border-color:var(--insign-border)">
+
+                                    <!-- Individual Logo Overrides -->
+                                    <div class="mb-3">
+                                        <label class="form-label" style="font-size:0.82rem;font-weight:600">
+                                            <i class="bi bi-pencil-square"></i> Individual Logo Overrides
+                                            <span class="text-muted" style="font-size:0.7rem;font-weight:normal">
+                                                - or upload/paste your own per slot
+                                            </span>
+                                        </label>
+
+                                        <!-- App Icon (editor desktop) -->
+                                        <div class="row g-2 align-items-center mb-2">
+                                            <div class="col-auto" style="min-width:90px">
+                                                <span style="font-size:0.72rem;font-weight:600"><i class="bi bi-app"></i> App icon</span>
+                                                <div style="font-size:0.62rem;color:var(--insign-text-muted)">30x30 square</div>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control form-control-sm" id="brand-app-icon" name="brand-app-icon"
+                                                       placeholder="URL or upload" style="font-size:0.72rem"
+                                                       onchange="window.app.updateBrandLogo('icon', this.value)">
+                                            </div>
+                                            <div class="col-auto">
+                                                <label class="btn btn-insign btn-insign-sm btn-insign-outline" for="brand-app-icon-upload" style="margin:0;font-size:0.7rem">
+                                                    <i class="bi bi-upload"></i>
+                                                </label>
+                                                <input type="file" id="brand-app-icon-upload" name="brand-app-icon-upload" accept="image/png,image/svg+xml"
+                                                       style="display:none" onchange="window.app.uploadBrandLogo(this, 'icon')">
+                                            </div>
+                                            <div class="col-auto" id="brand-app-icon-preview" style="min-width:34px"></div>
+                                        </div>
+
+                                        <!-- Mail Header -->
+                                        <div class="row g-2 align-items-center mb-2">
+                                            <div class="col-auto" style="min-width:90px">
+                                                <span style="font-size:0.72rem;font-weight:600"><i class="bi bi-envelope"></i> Mail header</span>
+                                                <div style="font-size:0.62rem;color:var(--insign-text-muted)">120x60 banner</div>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control form-control-sm" id="brand-mail-header-image" name="brand-mail-header-image"
+                                                       placeholder="URL or upload" style="font-size:0.72rem"
+                                                       onchange="window.app.updateBrandLogo('mail', this.value)">
+                                            </div>
+                                            <div class="col-auto">
+                                                <label class="btn btn-insign btn-insign-sm btn-insign-outline" for="brand-mail-header-upload" style="margin:0;font-size:0.7rem">
+                                                    <i class="bi bi-upload"></i>
+                                                </label>
+                                                <input type="file" id="brand-mail-header-upload" name="brand-mail-header-upload" accept="image/png,image/svg+xml,image/jpeg"
+                                                       style="display:none" onchange="window.app.uploadBrandLogo(this, 'mail')">
+                                            </div>
+                                            <div class="col-auto" id="brand-mail-header-preview" style="min-width:60px"></div>
+                                        </div>
+
+                                        <!-- Login Logo -->
+                                        <div class="row g-2 align-items-center mb-2">
+                                            <div class="col-auto" style="min-width:90px">
+                                                <span style="font-size:0.72rem;font-weight:600"><i class="bi bi-box-arrow-in-right"></i> Login logo</span>
+                                                <div style="font-size:0.62rem;color:var(--insign-text-muted)">314x100 wide</div>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control form-control-sm" id="brand-logo-extern" name="brand-logo-extern"
+                                                       placeholder="URL or upload" style="font-size:0.72rem"
+                                                       onchange="window.app.updateBrandLogo('login', this.value)">
+                                            </div>
+                                            <div class="col-auto">
+                                                <label class="btn btn-insign btn-insign-sm btn-insign-outline" for="brand-logo-extern-upload" style="margin:0;font-size:0.7rem">
+                                                    <i class="bi bi-upload"></i>
+                                                </label>
+                                                <input type="file" id="brand-logo-extern-upload" name="brand-logo-extern-upload" accept="image/png,image/svg+xml,image/jpeg"
+                                                       style="display:none" onchange="window.app.uploadBrandLogo(this, 'login')">
+                                            </div>
+                                            <div class="col-auto" id="brand-logo-extern-preview" style="min-width:80px"></div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <hr style="margin:6px 0;border-color:var(--insign-border)">
+
+                                    <!-- CSS Preview -->
+                                    <div class="mb-2">
+                                        <label class="form-label" style="font-size:0.82rem;font-weight:600">
+                                            <i class="bi bi-code-slash"></i> Generated CSS
+                                            <span class="text-muted" style="font-size:0.7rem;font-weight:normal">
+                                                - raw CSS string set as <code>externalPropertiesURL</code>
+                                            </span>
+                                        </label>
+                                        <textarea class="form-control" id="brand-css-preview" rows="4" readonly
+                                                  style="font-family:'Roboto Mono',monospace;font-size:0.7rem;background:var(--insign-code-bg);resize:vertical;display:none"></textarea>
+                                        <div id="brand-css-rich" class="css-rich-editor" contenteditable="false"></div>
+                                        <div class="d-flex gap-2 mt-1">
+                                            <button class="btn btn-insign btn-insign-sm btn-insign-outline" onclick="window.app.resetBranding()" title="Reset to defaults">
+                                                <i class="bi bi-arrow-counterclockwise"></i> Reset
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        <!-- Session Owner -->
+                        <div class="section-title">Session Owner</div>
+                        <div class="text-muted-sm mb-2" style="font-size:0.75rem">
+                            The owner (e.g. broker) can open the session via the <code>accessURL</code> returned after creation.
+                            This link is single-use - call <strong>Load</strong> to reactivate it.
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-sm-6">
+                                <label class="form-label d-flex align-items-center gap-1" for="cfg-foruser" style="font-size:0.78rem">foruser <span class="text-muted-sm">(owner ID)</span>
+                                    <button type="button" class="btn btn-link btn-sm p-0 ms-auto" id="btn-regenerate-user" title="Generate new random user" style="font-size:0.72rem;line-height:1"><i class="bi bi-arrow-repeat"></i></button>
+                                </label>
+                                <input type="text" class="form-control form-control-sm" id="cfg-foruser" name="cfg-foruser"
+                                       placeholder="firstname-lastname-id"
+                                       style="font-family:'Roboto Mono',monospace;font-size:0.75rem">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="cfg-userfullname" style="font-size:0.78rem">userFullName</label>
+                                <input type="text" class="form-control form-control-sm" id="cfg-userfullname" name="cfg-userfullname"
+                                       placeholder="Demo User" style="font-size:0.8rem">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="cfg-userEmail" style="font-size:0.78rem">userEmail <span class="text-muted-sm">(optional)</span></label>
+                                <input type="text" class="form-control form-control-sm" id="cfg-userEmail" name="cfg-userEmail"
+                                       placeholder="owner@example.com" style="font-size:0.8rem">
+                            </div>
+                        </div>
+
+                        <!-- Test Document Selector (collapsible section) -->
+                        <div class="feature-configurator-box mb-3">
+                            <div class="feature-configurator-header doc-header" data-bs-toggle="collapse" data-bs-target="#doc-selector-panel">
+                                <div class="doc-header-top">
+                                    <div class="feature-configurator-title">
+                                        <i class="bi bi-file-earmark-pdf"></i> Document
+                                    </div>
+                                    <i class="bi bi-chevron-down feature-configurator-chevron"></i>
+                                </div>
+                                <div class="doc-header-detail">
+                                    <div class="doc-header-thumb-wrap" onclick="event.stopPropagation();window.app.previewDocument()" title="Click to preview">
+                                        <canvas class="doc-header-thumb skeleton-pulse" id="doc-header-thumb" width="48" height="64"></canvas>
+                                        <div class="doc-header-thumb-overlay"><i class="bi bi-eye"></i></div>
+                                    </div>
+                                    <div class="doc-header-info">
+                                        <div class="doc-header-doc-title">
+                                            <span id="doc-header-logo"></span>
+                                            <span id="doc-selector-title">Test Document</span>
+                                        </div>
+                                        <div class="feature-configurator-subtitle" id="doc-selector-subtitle">
+                                            Select a branded test contract or drag-and-drop your own PDF.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="doc-selector-panel">
+                                <div class="doc-selector-list" id="doc-selector">
+                                    <!-- populated by app.js from DOCUMENTS catalog -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 mt-2 mb-3">
+                            <label class="text-muted-sm mb-0 flex-shrink-0" style="font-size:0.72rem;font-weight:600">File Delivery</label>
+                            <div class="fd-dropdown position-relative flex-grow-1" id="fd-dropdown">
+                                <button class="fd-dd-btn" type="button" id="fd-dd-toggle">
+                                    <i class="bi bi-file-earmark-binary fd-dd-icon"></i>
+                                    <span id="fd-dd-label">Base64 embed</span>
+                                    <i class="bi bi-chevron-down fd-dd-chevron"></i>
+                                </button>
+                                <div class="fd-dd-menu" id="fd-dd-menu">
+                                    <div class="fd-dd-item fd-dd-item-selected" data-fd="base64" onclick="window.app.setFileDelivery('base64')">
+                                        <i class="bi bi-file-earmark-binary"></i> Base64 embed
+                                        <span class="text-muted-sm">- in JSON body</span>
+                                    </div>
+                                    <div class="fd-dd-item" data-fd="upload" onclick="window.app.setFileDelivery('upload')">
+                                        <i class="bi bi-cloud-arrow-up"></i> Upload after create
+                                        <span class="text-muted-sm">- separate call</span>
+                                    </div>
+                                    <div class="fd-dd-item" data-fd="url" onclick="window.app.setFileDelivery('url')">
+                                        <i class="bi bi-link-45deg"></i> URL reference
+                                        <span class="text-muted-sm">- server fetches</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Headers -->
+                        <div class="section-title">Request Headers</div>
+                        <div class="headers-display mb-3" id="step1-headers"></div>
+
+                        <p class="text-muted-sm mb-3">
+                            Creates a new session with document metadata. Use <code>&lt;filedata&gt;</code> as placeholder
+                            - the file is loaded automatically before sending based on your delivery method (base64 embed, upload, or URL).
+                        </p>
+
+                        <!-- Request Body Editor -->
+                        <div class="section-title">Request Body (JSON)</div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="cfg-displayname" style="font-size:0.78rem">displayname <span class="text-muted-sm">(session title)</span></label>
+                                <input type="text" class="form-control form-control-sm" id="cfg-displayname" name="cfg-displayname"
+                                       placeholder="Auto from document" style="font-size:0.8rem">
+                            </div>
+                        </div>
+                        <p class="text-muted-sm mb-2" style="font-size:0.78rem"><i class="bi bi-lightbulb"></i> Hover over values for documentation. Press <kbd>Ctrl</kbd>+<kbd>Space</kbd> for autocomplete.</p>
+                        <div class="editor-container" id="editor-create-session"></div>
+
+                        <!-- Actions -->
+                        <div class="d-flex gap-2 mt-3 flex-wrap">
+                            <button class="btn btn-insign btn-insign-primary" id="btn-create-session" onclick="window.app.createSession()">
+                                <i class="bi bi-send"></i> Send Request
+                            </button>
+                            <button class="btn btn-insign btn-insign-cta" id="btn-create-session-open" onclick="window.app.createSessionAndOpen()">
+                                <i class="bi bi-box-arrow-up-right"></i> Send &amp; Open
+                            </button>
+                            <button class="btn btn-insign btn-insign-primary d-none" id="btn-goto-step2" onclick="window.app.goToStep(3)">
+                                <i class="bi bi-arrow-right"></i> Operate &amp; Trace
+                            </button>
+                            <button class="btn btn-insign btn-insign-outline" onclick="window.app.resetRequestBody('create-session')">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset
+                            </button>
+                        </div>
+
+                        <!-- Response -->
+                        <div id="step1-response" class="d-none">
+                            <div class="section-title mt-4">Response</div>
+                            <div class="response-panel">
+                                <div class="response-status" id="step1-response-status"></div>
+                                <div class="editor-container" id="editor-create-session-response"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating action buttons -->
+                <div class="floating-actions" id="floating-actions-step2">
+                    <button class="btn btn-insign btn-insign-primary btn-floating" id="btn-floating-send"
+                            onclick="window.app.createSession()" title="Send Request">
+                        <i class="bi bi-send"></i> Send Request
+                    </button>
+                    <button class="btn btn-insign btn-insign-cta btn-floating" id="btn-floating-send-open"
+                            onclick="window.app.createSessionAndOpen()" title="Send &amp; Open in inSign">
+                        <i class="bi bi-box-arrow-up-right"></i> Send &amp; Open
+                    </button>
+                    <button class="btn btn-insign btn-insign-primary btn-floating d-none" id="btn-floating-goto-step2"
+                            onclick="window.app.goToStep(3)">
+                        <i class="bi bi-arrow-right"></i> Operate &amp; Trace
+                    </button>
+                </div>
+            </div>

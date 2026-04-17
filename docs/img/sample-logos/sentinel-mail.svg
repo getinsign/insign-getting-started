@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 2 350 76" width="1050" height="228">
+  <defs>
+    <linearGradient id="smBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A237E"/>
+      <stop offset="100%" stop-color="#0D1457"/>
+    </linearGradient>
+    <linearGradient id="smShield" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#FFD600"/>
+      <stop offset="100%" stop-color="#FFC107"/>
+    </linearGradient>
+    <linearGradient id="smLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFD600" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFD600" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon square -->
+  <rect x="14" y="4" width="72" height="72" rx="12" fill="url(#smBg)"/>
+  <!-- Shield in icon -->
+  <path d="M50 16 L66 22 L66 38 C66 46 60 52 50 56 C40 52 34 46 34 38 L34 22 Z" fill="url(#smShield)" opacity="0.2"/>
+  <path d="M50 19 L64 24 L64 38 C64 44.5 59 50 50 53.5 C41 50 36 44.5 36 38 L36 24 Z" fill="none" stroke="url(#smShield)" stroke-width="1.8"/>
+  <path d="M50 22 L62 26 L62 38 C62 43.5 58 48.5 50 51.5 C42 48.5 38 43.5 38 38 L38 26 Z" fill="url(#smShield)" opacity="0.2"/>
+  <path d="M43 37 L47.5 41.5 L57 31.5" fill="none" stroke="#FFD600" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Accent bar on icon -->
+  <rect x="14" y="66" width="72" height="10" rx="0" fill="url(#smShield)" opacity="0.3" clip-path="inset(0 0 0 0 round 0 0 12 12)"/>
+  <!-- Company name -->
+  <text x="102" y="34" font-family="'Segoe UI',system-ui,sans-serif" font-size="26" font-weight="700" fill="#FFFFFF">Sentinel Insurance</text>
+  <!-- Subtitle -->
+  <text x="102" y="52" font-family="'Segoe UI',system-ui,sans-serif" font-size="14" font-weight="300" fill="#FFD600" opacity="0.9">Sentinel Ins.</text>
+  <!-- Decorative line -->
+  <line x1="102" y1="60" x2="350" y2="60" stroke="url(#smLine)" stroke-width="1"/>
+  <!-- Tagline -->
+  <text x="102" y="73" font-family="'Segoe UI',system-ui,sans-serif" font-size="10" font-weight="300" fill="#FFFFFF" opacity="0.6">Protection You Can Trust Since 1952</text>
+</svg>

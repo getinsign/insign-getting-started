@@ -1,0 +1,264 @@
+            <div id="step-3-panel" class="d-none">
+
+                <!-- Operation tabs (generated at runtime by app-init.js from operations.json) -->
+                <ul class="nav nav-operations" id="operation-tabs" role="tablist">
+                </ul>
+
+                <!-- Tab content: standard panes generated at runtime, special cases inline below -->
+                <div class="tab-content mt-3" id="operation-tab-content">
+
+                    <!-- SPECIAL: External Signing (custom signing options UI) -->
+                    <div class="tab-pane fade" id="op-extern" role="tabpanel">
+                        <div class="card-insign">
+                            <div class="card-header">
+                                <span class="badge-method badge-method-post">POST</span>
+                                <span class="endpoint-path">/extern/beginmulti</span>
+                                <h5 class="ms-auto mb-0" style="font-size:0.9rem">Start external signing</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted-sm mb-3">
+                                    Starts external mode for multiple recipients. Each user gets a unique signing link.
+                                    Assign roles to match signature fields in the document.
+                                </p>
+
+                                <!-- Smart flow: discover fields first -->
+                                <div class="alert alert-insign mb-3" id="extern-fields-info" style="background:rgba(248,169,9,0.08);color:var(--insign-dark);display:none">
+                                    <i class="bi bi-diagram-3" style="color:var(--insign-orange)"></i>
+                                    <div>
+                                        <strong>Document Fields &amp; Roles</strong>
+                                        <div id="extern-fields-summary" class="text-muted-sm mt-1"></div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2 mb-3">
+                                    <button class="btn btn-insign btn-insign-sm btn-insign-outline" onclick="window.app.discoverFieldsAndRoles()" title="Calls /get/status to retrieve signature fields, roles, and their signing status">
+                                        <i class="bi bi-search"></i> Discover Fields &amp; Roles
+                                    </button>
+                                    <span class="text-muted-sm align-self-center">Calls <code>/get/status</code> to retrieve signature fields, roles &amp; signing status</span>
+                                </div>
+
+                                <div class="section-title">Request Headers</div>
+                                <div class="headers-display mb-3 op-headers" data-op="extern"></div>
+
+                                <!-- Extern user options -->
+                                <div class="mb-3">
+                                    <div class="section-title">Signing Options</div>
+                                    <div class="text-muted-sm mb-2" style="font-size:0.72rem">
+                                        These apply to all extern users. If users have different values in JSON, the control shows mixed (gray). Changing overrides all users.
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <div class="btn-group btn-group-sm" role="group" id="extern-opt-sendEmails">
+                                            <button type="button" class="btn btn-outline-primary active" data-val="true"
+                                                    onclick="window.app.setExternOption('sendEmails', true)">
+                                                <i class="bi bi-envelope"></i> Send emails
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary" data-val="false"
+                                                    onclick="window.app.setExternOption('sendEmails', false)">
+                                                <i class="bi bi-link-45deg"></i> Return links
+                                            </button>
+                                        </div>
+                                        <div class="btn-group btn-group-sm" role="group" id="extern-opt-singleSignOnEnabled">
+                                            <button type="button" class="btn btn-outline-primary active" data-val="true"
+                                                    onclick="window.app.setExternOption('singleSignOnEnabled', true)">
+                                                <i class="bi bi-unlock"></i> No password
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary" data-val="false"
+                                                    onclick="window.app.setExternOption('singleSignOnEnabled', false)">
+                                                <i class="bi bi-lock"></i> Password required
+                                            </button>
+                                        </div>
+                                        <div class="btn-group btn-group-sm" role="group" id="extern-opt-sendSMS">
+                                            <button type="button" class="btn btn-outline-primary" data-val="true"
+                                                    onclick="window.app.setExternOption('sendSMS', true)">
+                                                <i class="bi bi-phone"></i> Send SMS
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary active" data-val="false"
+                                                    onclick="window.app.setExternOption('sendSMS', false)">
+                                                <i class="bi bi-key"></i> Return password
+                                            </button>
+                                        </div>
+                                        <div class="btn-group btn-group-sm" role="group" id="extern-opt-inOrder">
+                                            <button type="button" class="btn btn-outline-primary active" data-val="false"
+                                                    onclick="window.app.setExternOption('inOrder', false)">
+                                                <i class="bi bi-arrows-expand"></i> Parallel
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary" data-val="true"
+                                                    onclick="window.app.setExternOption('inOrder', true)">
+                                                <i class="bi bi-list-ol"></i> Sequential
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="section-title">Request Body</div>
+                                <div class="editor-container" id="editor-op-extern"></div>
+                                <div class="d-flex gap-2 mt-3">
+                                    <button class="btn btn-insign btn-insign-primary" onclick="window.app.executeExtern()">
+                                        <i class="bi bi-send"></i> Send
+                                    </button>
+                                </div>
+                                <div class="op-response d-none" data-op="extern">
+                                    <div class="section-title mt-3">Response</div>
+                                    <div class="response-panel">
+                                        <div class="response-status" data-op="extern"></div>
+                                        <div class="editor-container" id="editor-op-extern-response"></div>
+                                    </div>
+                                    <!-- Signing links rendered here -->
+                                    <div id="extern-signing-links" class="mt-3" style="display:none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SPECIAL: Single Document Download (biodata toggle + dual buttons) -->
+                    <div class="tab-pane fade" id="op-document-single" role="tabpanel">
+                        <div class="card-insign">
+                            <div class="card-header">
+                                <span class="badge-method badge-method-post">POST</span>
+                                <span class="endpoint-path">/get/document</span>
+                                <h5 class="ms-auto mb-0" style="font-size:0.9rem">Download single document</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted-sm mb-3">
+                                    Downloads a single PDF document by its <code>docid</code>.
+                                    Unlike <em>Download All</em> (which returns a ZIP for multi-doc sessions),
+                                    this always returns the individual PDF file.
+                                </p>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="includeBiodata" checked
+                                           onchange="window.app.toggleIncludeBiodata(this.checked)">
+                                    <label class="form-check-label" for="includeBiodata">
+                                        Include biodata <small class="text-muted">(signature images, timestamps, biometric data)</small>
+                                    </label>
+                                </div>
+                                <div class="section-title">Request Headers</div>
+                                <div class="headers-display mb-3 op-headers" data-op="document-single"></div>
+                                <div class="section-title">Request Body</div>
+                                <div class="editor-container" id="editor-op-document-single"></div>
+                                <div class="d-flex gap-2 mt-3">
+                                    <button class="btn btn-insign btn-insign-primary" onclick="window.app.downloadDocumentSingle()">
+                                        <i class="bi bi-download"></i> Download
+                                    </button>
+                                    <button class="btn btn-insign btn-insign-outline" onclick="window.app.previewDocumentSingle()">
+                                        <i class="bi bi-eye"></i> Preview
+                                    </button>
+                                </div>
+                                <div class="op-response d-none" data-op="document-single">
+                                    <div class="section-title mt-3">Response</div>
+                                    <div class="response-panel">
+                                        <div class="response-status" data-op="document-single"></div>
+                                        <div class="editor-container" id="editor-op-document-single-response"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SPECIAL: Upload Document (file input, no JSON editor) -->
+                    <div class="tab-pane fade" id="op-upload" role="tabpanel">
+                        <div class="card-insign">
+                            <div class="card-header">
+                                <span class="badge-method badge-method-post">POST</span>
+                                <span class="endpoint-path">/configure/uploaddocument</span>
+                                <h5 class="ms-auto mb-0" style="font-size:0.9rem">Upload additional document</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted-sm mb-3">Upload a PDF document to an existing session via multipart/form-data.</p>
+                                <div class="section-title">Request Headers</div>
+                                <div class="headers-display mb-3 op-headers" data-op="upload"></div>
+                                <div class="mb-3">
+                                    <label class="form-label">PDF File</label>
+                                    <input type="file" class="form-control" id="upload-file" name="upload-file" accept=".pdf">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Document ID</label>
+                                    <input type="text" class="form-control" id="upload-docid" name="upload-docid" value="uploaded-doc-1">
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-insign btn-insign-primary" onclick="window.app.uploadDocument()">
+                                        <i class="bi bi-upload"></i> Upload
+                                    </button>
+                                </div>
+                                <div class="op-response d-none" data-op="upload">
+                                    <div class="section-title mt-3">Response</div>
+                                    <div class="response-panel">
+                                        <div class="response-status" data-op="upload"></div>
+                                        <div class="editor-container" id="editor-op-upload-response"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SPECIAL: Free API Request (custom method, endpoint, headers) -->
+                    <div class="tab-pane fade" id="op-free" role="tabpanel">
+                        <div class="card-insign">
+                            <div class="card-header">
+                                <i class="bi bi-terminal" style="color:var(--insign-blue)"></i>
+                                <h5 class="mb-0" style="font-size:0.9rem">Free API Request</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted-sm mb-3">Send any request to the inSign API. Configure method, endpoint, headers, and body freely.</p>
+
+                                <!-- Method + URL row -->
+                                <div class="d-flex gap-2 mb-3 align-items-center flex-wrap">
+                                    <select id="free-method" class="form-select form-select-sm" style="width:auto;min-width:90px;font-weight:600">
+                                        <option value="GET">GET</option>
+                                        <option value="POST" selected>POST</option>
+                                        <option value="PUT">PUT</option>
+                                        <option value="PATCH">PATCH</option>
+                                        <option value="DELETE">DELETE</option>
+                                    </select>
+                                    <input type="text" id="free-endpoint" name="free-endpoint" class="form-control form-control-sm" value="/get/status"
+                                           placeholder="/endpoint/path" style="flex:1;min-width:200px;font-family:'Roboto Mono',monospace;font-size:0.82rem">
+                                </div>
+
+                                <!-- Headers row -->
+                                <div class="d-flex gap-2 mb-3 align-items-end flex-wrap">
+                                    <div style="flex:1;min-width:180px">
+                                        <label class="form-label mb-1" style="font-size:0.75rem;color:var(--insign-text-muted)">Content-Type</label>
+                                        <input type="text" id="free-content-type" name="free-content-type" class="form-control form-control-sm" value="application/json"
+                                               list="free-ct-list" style="font-family:'Roboto Mono',monospace;font-size:0.8rem">
+                                        <datalist id="free-ct-list">
+                                            <option value="application/json">
+                                            <option value="application/x-www-form-urlencoded">
+                                            <option value="multipart/form-data">
+                                            <option value="text/plain">
+                                            <option value="application/xml">
+                                        </datalist>
+                                    </div>
+                                    <div style="flex:1;min-width:180px">
+                                        <label class="form-label mb-1" style="font-size:0.75rem;color:var(--insign-text-muted)">Accept</label>
+                                        <input type="text" id="free-accept" name="free-accept" class="form-control form-control-sm" value="application/json"
+                                               list="free-accept-list" style="font-family:'Roboto Mono',monospace;font-size:0.8rem">
+                                        <datalist id="free-accept-list">
+                                            <option value="application/json">
+                                            <option value="*/*">
+                                            <option value="application/pdf">
+                                            <option value="application/xml">
+                                            <option value="text/plain">
+                                            <option value="application/octet-stream">
+                                        </datalist>
+                                    </div>
+                                </div>
+
+                                <div class="section-title">Request Body</div>
+                                <div class="editor-container" id="editor-op-free"></div>
+                                <div class="d-flex gap-2 mt-3">
+                                    <button class="btn btn-insign btn-insign-primary" onclick="window.app.executeFreeRequest()">
+                                        <i class="bi bi-send"></i> Send
+                                    </button>
+                                </div>
+                                <div class="op-response d-none" data-op="free">
+                                    <div class="section-title mt-3">Response</div>
+                                    <div class="response-panel">
+                                        <div class="response-status" data-op="free"></div>
+                                        <div class="editor-container" id="editor-op-free-response"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /tab-content -->
+
+            </div>

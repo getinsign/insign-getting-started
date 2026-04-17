@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>insign-getting-started</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>insign-client-api-impl</artifactId>
+    <name>inSign Getting Started - inSign Java API Implementation</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>insign-getting-started-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.is2.insign</groupId>
+            <artifactId>insign-java-api</artifactId>
+            <version>[3.74,)</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>github-getinsign</id>
+            <name>GitHub getinsign Packages</name>
+            <url>https://maven.pkg.github.com/getinsign/insign-java-api</url>
+        </repository>
+    </repositories>
+</project>

@@ -1,0 +1,23 @@
+{
+  "devDependencies": {
+    "@fontsource/roboto": "^5.2.10",
+    "@fontsource/roboto-mono": "^5.2.8",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "jquery": "^3.7.1",
+    "monaco-editor": "^0.55.1",
+    "pdfjs-dist": "^5.6.205",
+    "playwright": "^1.50.0",
+    "serve": "^14.2.0",
+    "typescript": "^6.0.2"
+  },
+  "scripts": {
+    "build:vendor": "node scripts/build-vendor.js",
+    "test:getting-started": "node test/getting-started.test.js",
+    "test:getting-started:headed": "node test/getting-started.test.js --headed",
+    "test:api-explorer": "node test/api-explorer.test.js",
+    "test:api-explorer:headed": "node test/api-explorer.test.js --headed",
+    "test:ui": "node test/getting-started.test.js && node test/api-explorer.test.js",
+    "test:ui:headed": "node test/getting-started.test.js --headed && node test/api-explorer.test.js --headed"
+  }
+}

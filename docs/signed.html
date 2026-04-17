@@ -1,0 +1,620 @@
+<!--
+  signed.html - Session Callback Landing Page
+
+  Displayed when the inSign server redirects back after a signing session
+  completes (configured via the session's callbackURL). Extracts the
+  sessionid from the URL query string and shows a confirmation message.
+
+  Used by the API Explorer to demonstrate the callback flow - the explorer
+  sets callbackURL to this page so developers can see the redirect in action.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Callback - inSign</title>
+    <link rel="icon" href="favicon.png" sizes="32x32">
+    <link href="vendor/fonts/roboto.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', system-ui, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2ecf5 100%);
+            color: #1a1a2e;
+            padding: 2rem 1rem;
+        }
+
+        .page-wrap {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* --- Callback hint --- */
+        .callback-hint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: fadeSlideIn 0.5s ease-out;
+        }
+        .callback-hint h1 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .callback-hint p {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        .callback-hint code {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.78rem;
+            background: rgba(0,0,0,0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* --- Session Status Card --- */
+        .session-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            overflow: hidden;
+            animation: fadeSlideIn 0.6s ease-out 0.1s both;
+        }
+        .session-card-header {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .session-card-header .status-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .status-icon.status-completed { background: linear-gradient(135deg, #28a745, #20c997); color: #fff; }
+        .status-icon.status-active { background: linear-gradient(135deg, #0165bc, #17a2b8); color: #fff; }
+        .status-icon.status-pending { background: linear-gradient(135deg, #f8a909, #ffc107); color: #fff; }
+        .status-icon.status-loading { background: #e9ecef; color: #adb5bd; }
+
+        .session-card-header .header-text h2 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .session-card-header .header-text .session-id {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.72rem;
+            color: #888;
+        }
+
+        .session-card-body { padding: 1.25rem 1.5rem; }
+
+        /* --- Info grid --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .info-item .info-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #999;
+        }
+        .info-item .info-value {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #333;
+        }
+        .info-item .info-value.mono {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        /* --- Status badge --- */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-badge.badge-completed { background: rgba(40,167,69,0.1); color: #1a7a34; }
+        .status-badge.badge-active { background: rgba(1,101,188,0.1); color: #0165bc; }
+        .status-badge.badge-pending { background: rgba(248,169,9,0.1); color: #b47a00; }
+
+        .status-badge .pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* --- Documents table --- */
+        .docs-section { margin-bottom: 1.25rem; }
+        .docs-section-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+        .doc-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+        .doc-row .doc-icon { font-size: 1.1rem; color: #dc3545; flex-shrink: 0; }
+        .doc-row .doc-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .doc-row .doc-meta {
+            font-size: 0.72rem;
+            color: #888;
+            white-space: nowrap;
+        }
+
+        /* --- Signature fields --- */
+        .sig-field-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+        .sig-field-row .sig-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .sig-icon.signed { color: #28a745; }
+        .sig-icon.unsigned { color: #adb5bd; }
+
+        .sig-field-row .sig-info { flex: 1; min-width: 0; }
+        .sig-field-row .sig-role {
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+        .sig-field-row .sig-name {
+            font-size: 0.72rem;
+            color: #888;
+        }
+        .sig-field-row .sig-status {
+            font-size: 0.72rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .sig-status.is-signed { color: #1a7a34; }
+        .sig-status.is-unsigned { color: #999; }
+
+        /* --- Progress bar --- */
+        .sig-progress {
+            margin-top: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .sig-progress-bar {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .sig-progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.6s ease-out;
+        }
+        .sig-progress-text {
+            font-size: 0.72rem;
+            color: #888;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        /* --- Footer actions --- */
+        .session-card-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-cb {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-cb:active { transform: scale(0.97); }
+        .btn-cb-primary { background: #0165bc; color: #fff; }
+        .btn-cb-primary:hover { background: #014f94; }
+        .btn-cb-outline { background: transparent; color: #555; border: 1px solid #ddd; }
+        .btn-cb-outline:hover { background: #f5f5f5; }
+
+        /* --- Raw JSON toggle --- */
+        .raw-json-toggle {
+            font-size: 0.75rem;
+            color: #888;
+            cursor: pointer;
+            border: none;
+            background: none;
+            text-decoration: underline;
+            padding: 0;
+            margin-top: 0.5rem;
+        }
+        .raw-json-toggle:hover { color: #555; }
+        .raw-json-box {
+            display: none;
+            margin-top: 0.75rem;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.72rem;
+            line-height: 1.5;
+            max-height: 300px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .raw-json-box.visible { display: block; }
+
+        /* --- Loading skeleton --- */
+        .skeleton {
+            background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+        .skeleton-text { height: 14px; margin-bottom: 6px; }
+        .skeleton-text.w60 { width: 60%; }
+        .skeleton-text.w80 { width: 80%; }
+        .skeleton-text.w40 { width: 40%; }
+
+        /* --- Animations --- */
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 480px) {
+            .info-grid { grid-template-columns: 1fr; }
+            body { padding: 1rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+
+        <!-- Callback explanation -->
+        <div class="callback-hint">
+            <h1><i class="bi bi-arrow-return-left me-1"></i> Session Callback</h1>
+            <p>You're seeing this page because it was passed as the <code>callbackURL</code> in the
+                <code>/configure/session</code> request when the session was created.
+                inSign redirects here when the user closes or completes the signing session.
+                The session ID is resolved via a lookup key in the URL and <code>localStorage</code>.</p>
+        </div>
+
+        <!-- Session Status Card -->
+        <div class="session-card" id="session-card">
+
+            <!-- Header -->
+            <div class="session-card-header">
+                <div class="status-icon status-loading" id="sc-status-icon">
+                    <i class="bi bi-hourglass-split"></i>
+                </div>
+                <div class="header-text">
+                    <h2 id="sc-title">Loading session...</h2>
+                    <div class="session-id" id="sc-session-id">-</div>
+                </div>
+            </div>
+
+            <!-- Body: loading skeleton -->
+            <div class="session-card-body" id="sc-body">
+                <div class="info-grid">
+                    <div class="info-item"><div class="skeleton skeleton-text w40"></div><div class="skeleton skeleton-text w80"></div></div>
+                    <div class="info-item"><div class="skeleton skeleton-text w40"></div><div class="skeleton skeleton-text w60"></div></div>
+                    <div class="info-item"><div class="skeleton skeleton-text w40"></div><div class="skeleton skeleton-text w80"></div></div>
+                    <div class="info-item"><div class="skeleton skeleton-text w40"></div><div class="skeleton skeleton-text w60"></div></div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="session-card-footer">
+                <button class="btn-cb btn-cb-primary" onclick="closeTab()">
+                    <i class="bi bi-arrow-left"></i> Back to Getting Started
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation links -->
+        <div style="text-align:center;padding:1.5rem 0;font-size:0.85rem;display:flex;justify-content:center;gap:1.25rem">
+            <a href="./" style="text-decoration:none"><i class="bi bi-house me-1"></i>Home</a>
+            <a href="guide.html" style="text-decoration:none"><i class="bi bi-rocket-takeoff me-1"></i>Getting Started</a>
+            <a href="explorer.html" style="text-decoration:none"><i class="bi bi-play-circle me-1"></i>API Explorer</a>
+            <a class="data-github-link" href="#" target="_blank" style="text-decoration:none"><i class="bi bi-github me-1"></i>GitHub</a>
+        </div>
+    </div>
+
+    <script src="js/api-client.js"></script>
+    <script>
+    'use strict';
+
+    var SANDBOX_URL = 'https://sandbox.test.getinsign.show';
+    var SANDBOX_USER = 'controller';
+    var SANDBOX_PASS = 'pwd.insign.sandbox.4561';
+
+    var apiClient = new InsignApiClient(SANDBOX_URL, SANDBOX_USER, SANDBOX_PASS);
+    apiClient.useCorsProxy = false;
+
+    // Resolve session ID: URL param > cbkey lookup > latest session
+    function getSessionIdFromUrl() {
+        var params = new URLSearchParams(window.location.search);
+        // 1. Direct sessionid param
+        var sid = params.get('sessionid') || params.get('sessionId') || params.get('sid') || '';
+        if (sid) return sid;
+        // 2. Lookup via callback key in localStorage
+        var cbKey = params.get('cbkey') || '';
+        if (cbKey) {
+            try {
+                sid = localStorage.getItem('insign-cb-' + cbKey) || '';
+            } catch (_) {}
+            if (sid) return sid;
+        }
+        // 3. Fall back to latest session
+        try {
+            sid = localStorage.getItem('insign-cb-latest') || '';
+        } catch (_) {}
+        return sid;
+    }
+
+    function closeTab() {
+        if (window.opener) {
+            window.opener.focus();
+            window.close();
+        } else {
+            window.close();
+        }
+        setTimeout(function () {
+            // Can't close - redirect to readme
+            window.location.href = './';
+        }, 400);
+    }
+
+    function formatTimestamp(ts) {
+        if (!ts) return '-';
+        var d = new Date(ts);
+        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+    }
+
+    function renderStatusCard(data, sid) {
+        var completed = !!data.sucessfullyCompleted;
+        var docData = data.documentData || [];
+        var sigFields = data.signaturFieldsStatusList || [];
+        var totalSigs = 0;
+        for (var i = 0; i < docData.length; i++) {
+            totalSigs += (docData[i].numberOfSignatures || 0);
+        }
+        var signedFields = sigFields.filter(function (f) { return !!f.signed; });
+        var totalFields = sigFields.length;
+        var allSigned = totalFields > 0 && signedFields.length === totalFields;
+        var hasSigs = totalSigs > 0 || signedFields.length > 0;
+
+        // --- Header ---
+        var iconEl = document.getElementById('sc-status-icon');
+        var titleEl = document.getElementById('sc-title');
+        var idEl = document.getElementById('sc-session-id');
+
+        if (completed) {
+            iconEl.className = 'status-icon status-completed';
+            iconEl.innerHTML = '<i class="bi bi-check-lg"></i>';
+            titleEl.textContent = data.displayname || 'Session Complete';
+        } else if (hasSigs) {
+            iconEl.className = 'status-icon status-active';
+            iconEl.innerHTML = '<i class="bi bi-pen"></i>';
+            titleEl.textContent = data.displayname || 'Signing in Progress';
+        } else {
+            iconEl.className = 'status-icon status-pending';
+            iconEl.innerHTML = '<i class="bi bi-clock"></i>';
+            titleEl.textContent = data.displayname || 'Awaiting Signatures';
+        }
+        idEl.textContent = sid;
+
+        // --- Body ---
+        var body = document.getElementById('sc-body');
+        var html = '';
+
+        // Status badge + info grid
+        var badgeClass = completed ? 'badge-completed' : (hasSigs ? 'badge-active' : 'badge-pending');
+        var badgeLabel = completed ? 'Completed' : (hasSigs ? 'In Progress' : 'Pending');
+        var badgeDot = completed ? '' : '<span class="pulse-dot"></span>';
+
+        html += '<div class="info-grid">';
+        html += '<div class="info-item"><span class="info-label">Status</span>'
+            + '<span class="info-value"><span class="status-badge ' + badgeClass + '">' + badgeDot + badgeLabel + '</span></span></div>';
+        html += '<div class="info-item"><span class="info-label">Owner</span>'
+            + '<span class="info-value">' + escHtml(data.userid || '-') + '</span></div>';
+        html += '<div class="info-item"><span class="info-label">Total Signatures</span>'
+            + '<span class="info-value">' + totalSigs + '</span></div>';
+        html += '<div class="info-item"><span class="info-label">Last Modified</span>'
+            + '<span class="info-value">' + formatTimestamp(data.modifiedTimestamp) + '</span></div>';
+        if (data.tan) {
+            html += '<div class="info-item"><span class="info-label">TAN</span>'
+                + '<span class="info-value mono">' + escHtml(data.tan) + '</span></div>';
+        }
+        html += '<div class="info-item"><span class="info-label">Completed</span>'
+            + '<span class="info-value">' + (completed ? '<i class="bi bi-check-circle-fill" style="color:#28a745"></i> Yes' : '<i class="bi bi-dash-circle" style="color:#adb5bd"></i> No') + '</span></div>';
+        html += '</div>';
+
+        // Documents
+        if (docData.length > 0) {
+            html += '<div class="docs-section"><div class="docs-section-title">Documents</div>';
+            for (var d = 0; d < docData.length; d++) {
+                var doc = docData[d];
+                var sigs = doc.numberOfSignatures || 0;
+                html += '<div class="doc-row">'
+                    + '<i class="bi bi-file-earmark-pdf doc-icon"></i>'
+                    + '<span class="doc-name">' + escHtml(doc.displayname || doc.docid || 'Document') + '</span>'
+                    + '<span class="doc-meta">' + sigs + ' signature' + (sigs !== 1 ? 's' : '') + '</span>'
+                    + '</div>';
+            }
+            html += '</div>';
+        }
+
+        // Signature fields
+        if (totalFields > 0) {
+            html += '<div class="docs-section"><div class="docs-section-title">Signature Fields</div>';
+            for (var s = 0; s < sigFields.length; s++) {
+                var f = sigFields[s];
+                var isSigned = !!f.signed;
+                var role = f.role || f.quickInfoParsedRole || f.fieldID || 'Unknown';
+                var name = f.displayname || f.quickInfoParsedName || '';
+                html += '<div class="sig-field-row">'
+                    + '<i class="bi ' + (isSigned ? 'bi-check-circle-fill sig-icon signed' : 'bi-circle sig-icon unsigned') + '"></i>'
+                    + '<div class="sig-info">'
+                    + '<div class="sig-role">' + escHtml(role) + '</div>'
+                    + (name ? '<div class="sig-name">' + escHtml(name) + '</div>' : '')
+                    + '</div>'
+                    + '<span class="sig-status ' + (isSigned ? 'is-signed' : 'is-unsigned') + '">'
+                    + (isSigned ? 'Signed' : 'Pending') + '</span>'
+                    + '</div>';
+            }
+            html += '</div>';
+
+            // Progress bar
+            var pct = Math.round((signedFields.length / totalFields) * 100);
+            html += '<div class="sig-progress">'
+                + '<div class="sig-progress-bar"><div class="sig-progress-fill" style="width:' + pct + '%"></div></div>'
+                + '<div class="sig-progress-text">' + signedFields.length + ' of ' + totalFields + ' fields signed (' + pct + '%)</div>'
+                + '</div>';
+        }
+
+        // Raw JSON toggle
+        html += '<button class="raw-json-toggle" onclick="toggleRawJson()"><i class="bi bi-code-slash"></i> Show raw API response</button>';
+        html += '<div class="raw-json-box" id="raw-json">' + escHtml(JSON.stringify(data, null, 2)) + '</div>';
+
+        body.innerHTML = html;
+    }
+
+    function renderError(sid, errMsg) {
+        var iconEl = document.getElementById('sc-status-icon');
+        var titleEl = document.getElementById('sc-title');
+        var idEl = document.getElementById('sc-session-id');
+        var body = document.getElementById('sc-body');
+
+        iconEl.className = 'status-icon';
+        iconEl.style.background = '#f8d7da';
+        iconEl.style.color = '#842029';
+        iconEl.innerHTML = '<i class="bi bi-exclamation-triangle"></i>';
+        titleEl.textContent = 'Could not load session';
+        idEl.textContent = sid || 'No session ID found';
+        body.innerHTML = '<p style="font-size:0.88rem;color:#666">' + escHtml(errMsg) + '</p>';
+    }
+
+    function renderNoSession() {
+        var iconEl = document.getElementById('sc-status-icon');
+        var titleEl = document.getElementById('sc-title');
+        var body = document.getElementById('sc-body');
+
+        iconEl.className = 'status-icon status-pending';
+        iconEl.innerHTML = '<i class="bi bi-info-circle"></i>';
+        titleEl.textContent = 'No session ID provided';
+        document.getElementById('sc-session-id').textContent = '';
+        body.innerHTML = '<p style="font-size:0.88rem;color:#666">'
+            + 'This callback page expects a <code>sessionid</code> query parameter. '
+            + 'When used as a <code>callbackURL</code>, inSign automatically appends it.</p>';
+    }
+
+    function toggleRawJson() {
+        var el = document.getElementById('raw-json');
+        el.classList.toggle('visible');
+    }
+
+    function escHtml(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+    }
+
+    // --- Resolve GitHub links ---
+    (function () {
+        var m = location.hostname.match(/^(.+)\.github\.io$/);
+        if (!m) return;
+        var repo = location.pathname.split('/')[1] || '';
+        var base = 'https://github.com/' + m[1] + (repo ? '/' + repo : '');
+        var links = document.querySelectorAll('.data-github-link');
+        for (var i = 0; i < links.length; i++) {
+            var suffix = links[i].getAttribute('data-github-path') || '';
+            links[i].href = base + suffix;
+        }
+    })();
+
+    // --- Init ---
+    var sid = getSessionIdFromUrl();
+    if (!sid) {
+        renderNoSession();
+    } else {
+        apiClient.call('POST', '/get/status', { body: { sessionid: sid } })
+            .then(function (result) {
+                if (result.ok && result.body && result.body.error === 0) {
+                    renderStatusCard(result.body, sid);
+                } else {
+                    var msg = (result.body && result.body.message) || ('HTTP ' + result.status);
+                    renderError(sid, 'API returned: ' + msg);
+                }
+            })
+            .catch(function (err) {
+                renderError(sid, 'Network error: ' + err.message);
+            });
+    }
+    </script>
+</body>
+</html>

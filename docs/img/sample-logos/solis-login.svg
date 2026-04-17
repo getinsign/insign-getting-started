@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 16 402 112" width="1206" height="336">
+  <defs>
+    <radialGradient id="slg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFB74D"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </radialGradient>
+    <linearGradient id="slgl" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF9800"/>
+      <stop offset="40%" stop-color="#00BCD4"/>
+      <stop offset="100%" stop-color="#00BCD4" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="18" width="100" height="108" rx="20" fill="#1A1A2E"/>
+  <circle cx="66" cy="60" r="24" fill="url(#slg)"/>
+  <!-- Warm rays -->
+  <g stroke="#FFB74D" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <line x1="66" y1="24" x2="66" y2="30"/>
+    <line x1="66" y1="90" x2="66" y2="96"/>
+    <line x1="40.6" y1="34.6" x2="44.8" y2="38.8"/>
+    <line x1="87.2" y1="81.2" x2="91.4" y2="85.4"/>
+  </g>
+  <!-- Teal rays -->
+  <g stroke="#00BCD4" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <line x1="30" y1="60" x2="36" y2="60"/>
+    <line x1="96" y1="60" x2="102" y2="60"/>
+    <line x1="40.6" y1="85.4" x2="44.8" y2="81.2"/>
+    <line x1="87.2" y1="38.8" x2="91.4" y2="34.6"/>
+  </g>
+  <!-- Teal energy arc under sun -->
+  <path d="M36 100 Q66 90 96 100" fill="none" stroke="#00BCD4" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <rect x="40" y="108" width="52" height="4" rx="2" fill="#FF9800" opacity="0.4"/>
+  <text x="136" y="58" font-family="'Segoe UI',system-ui,sans-serif" font-weight="700" font-size="48" fill="#E65100" letter-spacing="-1">SOLIS</text>
+  <text x="136" y="86" font-family="'Segoe UI',system-ui,sans-serif" font-weight="300" font-size="22" fill="#00BCD4" letter-spacing="4">TECHNOLOGY</text>
+  <line x1="136" y1="96" x2="380" y2="96" stroke="url(#slgl)" stroke-width="2"/>
+  <text x="136" y="118" font-family="'Segoe UI',system-ui,sans-serif" font-weight="400" font-size="12" fill="#FFB74D">Solar · Wind · Smart Grid · Energy Storage</text>
+</svg>

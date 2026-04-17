@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 2 340 76" width="1020" height="228">
+  <defs>
+    <linearGradient id="xmBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4A148C"/>
+      <stop offset="100%" stop-color="#311B92"/>
+    </linearGradient>
+    <linearGradient id="xmPeak" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#AB47BC"/>
+    </linearGradient>
+    <linearGradient id="xmLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#CE93D8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="xmGl" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.81 0 0 0 0 0.58 0 0 0 0 0.85 0 0 0 0.5 0" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Icon square -->
+  <rect x="14" y="4" width="72" height="72" rx="12" fill="url(#xmBg)"/>
+  <g filter="url(#xmGl)">
+    <path d="M50 14 L74 58 L26 58 Z" fill="url(#xmPeak)" opacity="0.2"/>
+    <path d="M50 17 L72 56 L28 56 Z" fill="none" stroke="url(#xmPeak)" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M50 17 L56 28 L52 26 L50 28.5 L48 26 L44 28 Z" fill="#CE93D8" opacity="0.4"/>
+    <path d="M63 30 L78 58 L52 58 Z" fill="url(#xmPeak)" opacity="0.1"/>
+    <path d="M63 33 L76 56 L54 56" fill="none" stroke="#CE93D8" stroke-width="0.8" opacity="0.4" stroke-linejoin="round"/>
+    <line x1="22" y1="58" x2="78" y2="58" stroke="#CE93D8" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <rect x="14" y="66" width="72" height="10" fill="url(#xmPeak)" opacity="0.25" clip-path="inset(0 0 0 0 round 0 0 12 12)"/>
+  <!-- Company name with glow -->
+  <text x="102" y="34" font-family="'Segoe UI',system-ui,sans-serif" font-size="26" font-weight="700" fill="#CE93D8" opacity="0.3" filter="url(#xmGl)">Apex Assurance</text>
+  <text x="102" y="34" font-family="'Segoe UI',system-ui,sans-serif" font-size="26" font-weight="700" fill="#4A148C">Apex Assurance</text>
+  <!-- Subtitle -->
+  <text x="102" y="52" font-family="'Segoe UI',system-ui,sans-serif" font-size="14" font-weight="300" fill="#4A148C" opacity="0.7">Apex Assurance</text>
+  <line x1="102" y1="60" x2="350" y2="60" stroke="url(#xmLine)" stroke-width="1"/>
+  <text x="102" y="73" font-family="'Segoe UI',system-ui,sans-serif" font-size="10" font-weight="300" fill="#4A148C" opacity="0.5">Commercial · Property · Casualty · Specialty</text>
+</svg>

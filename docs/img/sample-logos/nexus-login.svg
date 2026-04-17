@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 13 410 104" width="1230" height="312">
+  <defs>
+    <linearGradient id="nxl-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1B3A5C"/>
+      <stop offset="100%" stop-color="#0F2440"/>
+    </linearGradient>
+    <radialGradient id="nxl-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C9963A" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#C9963A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="nxl-sep" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C9963A"/>
+      <stop offset="50%" stop-color="#C75B4A"/>
+      <stop offset="100%" stop-color="#C9963A" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="15" width="100" height="100" rx="16" fill="url(#nxl-bg)"/>
+  <!-- Network nodes - triangle layout -->
+  <circle cx="58" cy="35" r="16" fill="#C9963A" fill-opacity="0.8"/>
+  <circle cx="32" cy="82" r="16" fill="#C75B4A" fill-opacity="0.8"/>
+  <circle cx="78" cy="82" r="16" fill="#C9963A" fill-opacity="0.8"/>
+  <!-- Connecting lines -->
+  <line x1="58" y1="35" x2="32" y2="82" stroke="#C9963A" stroke-width="2.5" stroke-opacity="0.35"/>
+  <line x1="58" y1="35" x2="78" y2="82" stroke="#C9963A" stroke-width="2.5" stroke-opacity="0.35"/>
+  <line x1="32" y1="82" x2="78" y2="82" stroke="#C75B4A" stroke-width="2.5" stroke-opacity="0.35"/>
+  <!-- Cross lines -->
+  <line x1="58" y1="35" x2="55" y2="82" stroke="#C75B4A" stroke-width="1" stroke-opacity="0.15"/>
+  <!-- Central glow -->
+  <circle cx="56" cy="66" r="18" fill="url(#nxl-glow)"/>
+  <!-- Node highlights -->
+  <circle cx="58" cy="35" r="6" fill="#fff" fill-opacity="0.15"/>
+  <circle cx="32" cy="82" r="6" fill="#fff" fill-opacity="0.1"/>
+  <circle cx="78" cy="82" r="6" fill="#fff" fill-opacity="0.15"/>
+  <!-- Small satellite nodes -->
+  <circle cx="44" cy="56" r="3" fill="#C75B4A" fill-opacity="0.5"/>
+  <circle cx="70" cy="56" r="3" fill="#C9963A" fill-opacity="0.5"/>
+  <circle cx="55" cy="90" r="3" fill="#C9963A" fill-opacity="0.4"/>
+  <!-- Company name -->
+  <text x="130" y="52" font-family="'Segoe UI',system-ui,sans-serif" font-size="36" font-weight="700" letter-spacing="1.5">
+    <tspan fill="#C9963A">Nexus</tspan><tspan fill="#C75B4A" dx="6">Group</tspan>
+  </text>
+  <!-- Subtitle -->
+  <text x="130" y="72" font-family="'Segoe UI',system-ui,sans-serif" font-size="13" fill="#8DA4BE" letter-spacing="3" font-weight="300">CONNECTED FUTURES</text>
+  <!-- Separator -->
+  <rect x="130" y="82" width="220" height="2.5" rx="1.25" fill="url(#nxl-sep)"/>
+  <!-- Tagline -->
+  <text x="130" y="102" font-family="'Segoe UI',system-ui,sans-serif" font-size="12" fill="#8DA4BE" letter-spacing="0.5">Venture Capital · M&amp;A Advisory · Growth Partners</text>
+</svg>

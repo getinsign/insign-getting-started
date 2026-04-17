@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maklermandat — Digitale Unterschrift</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <!-- Inter font for modern dev aesthetic -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand:    #1a237e;
+      --brand-lt: #3949ab;
+      --accent:   #00c853;
+      --bg:       #f4f6fb;
+      --sidebar-w: 50%;
+      --sidebar-collapsed: 48px;
+      /* Doc theme colors */
+      --doc-bg: #0d1117;
+      --doc-surface: #161b22;
+      --doc-border: #30363d;
+      --doc-text: #e6edf3;
+      --doc-text-muted: #8b949e;
+      --doc-accent: #58a6ff;
+      --doc-accent2: #7ee787;
+      --doc-accent3: #d2a8ff;
+      --doc-warning-bg: rgba(210,168,61,0.1);
+      --doc-warning-border: #d29922;
+      --doc-info-bg: rgba(88,166,255,0.1);
+      --doc-info-border: #58a6ff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* ===================== LAYOUT ===================== */
+    .app-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ---- Sidebar (Developer Guide) ---- */
+    .dev-sidebar {
+      width: var(--sidebar-w);
+      min-width: 280px;
+      max-width: 80vw;
+      background: var(--doc-bg);
+      color: var(--doc-text);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 100;
+      border-right: none;
+      flex-shrink: 0;
+    }
+    .dev-sidebar.collapsed {
+      width: var(--sidebar-collapsed) !important;
+      min-width: var(--sidebar-collapsed);
+    }
+    .dev-sidebar.animating {
+      transition: width .35s cubic-bezier(.4,0,.2,1), min-width .35s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ---- Resize handle ---- */
+    .resize-handle {
+      width: 6px;
+      cursor: col-resize;
+      background: var(--doc-border);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 101;
+      transition: background .15s;
+    }
+    .resize-handle:hover,
+    .resize-handle.active {
+      background: var(--doc-accent);
+    }
+    .resize-handle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2px;
+      height: 32px;
+      background: rgba(255,255,255,.15);
+      border-radius: 1px;
+    }
+    .resize-handle:hover::after,
+    .resize-handle.active::after {
+      background: rgba(255,255,255,.4);
+    }
+    .dev-sidebar.collapsed ~ .resize-handle {
+      width: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .dev-sidebar.collapsed .sidebar-content,
+    .dev-sidebar.collapsed .sidebar-header-text,
+    .dev-sidebar.collapsed .sidebar-tabs {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .dev-sidebar.collapsed .sidebar-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--doc-border);
+      background: var(--doc-surface);
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .sidebar-header-text {
+      transition: opacity .2s;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .sidebar-header-text h6 {
+      margin: 0;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--doc-accent);
+    }
+    .sidebar-header-text span {
+      font-size: .68rem;
+      color: var(--doc-text-muted);
+    }
+
+    .sidebar-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--doc-border);
+      background: var(--doc-surface);
+      color: var(--doc-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .sidebar-toggle:hover {
+      background: var(--doc-border);
+      color: var(--doc-text);
+    }
+    .sidebar-toggle-icon {
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      font-size: .9rem;
+    }
+
+    /* Sidebar step tabs */
+    .sidebar-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--doc-border);
+      background: var(--doc-surface);
+      transition: opacity .2s;
+      flex-shrink: 0;
+      overflow-x: auto;
+    }
+    .sidebar-tab {
+      flex: 1;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--doc-text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all .2s;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
+    .sidebar-tab:hover { color: var(--doc-text); background: rgba(255,255,255,.03); }
+    .sidebar-tab.active {
+      color: var(--doc-accent);
+      border-bottom-color: var(--doc-accent);
+      background: rgba(88,166,255,.06);
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      transition: opacity .2s;
+      scroll-behavior: smooth;
+    }
+
+    .sidebar-doc-panel {
+      display: none;
+      padding: 24px 20px 40px;
+    }
+    .sidebar-doc-panel.active { display: block; }
+
+    /* ---- Collapsed reopen button ---- */
+    .dev-sidebar.collapsed .sidebar-toggle {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+    }
+
+    /* ===================== MAIN CONTENT ===================== */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: #f8f9fc;
+      overflow-y: auto;
+    }
+
+    /* ---- Top bar ---- */
+    .brand-bar {
+      background: var(--brand);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      height: 52px;
+      flex-shrink: 0;
+    }
+    .brand-bar .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 700;
+      font-size: .95rem;
+      letter-spacing: -.2px;
+    }
+    .brand-bar .brand-logo i { font-size: 1.15rem; opacity: .85; }
+    .brand-bar .brand-env {
+      margin-left: auto;
+      font-size: .7rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.45);
+      letter-spacing: .3px;
+      text-transform: uppercase;
+    }
+
+    /* ---- Funnel area ---- */
+    .funnel-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 0 3rem;
+    }
+
+    /* ---- Step indicator (minimal pill style) ---- */
+    .step-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 20px 24px 0;
+    }
+    .step-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 100px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #a0a4b8;
+      background: transparent;
+      transition: all .3s;
+      white-space: nowrap;
+    }
+    .step-pill .s-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .68rem;
+      font-weight: 700;
+      background: #e4e6ef;
+      color: #a0a4b8;
+      transition: all .3s;
+      flex-shrink: 0;
+    }
+    .step-pill.active {
+      background: rgba(26,35,126,.07);
+      color: var(--brand);
+    }
+    .step-pill.active .s-num {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(26,35,126,.25);
+    }
+    .step-pill.done { color: #34a853; }
+    .step-pill.done .s-num {
+      background: #34a853;
+      color: #fff;
+    }
+    .step-pill.done .s-num i { font-size: .65rem; }
+    .step-conn {
+      width: 28px;
+      height: 2px;
+      background: #e4e6ef;
+      border-radius: 1px;
+      transition: background .3s;
+      flex-shrink: 0;
+    }
+    .step-conn.done { background: #34a853; }
+
+    /* ---- Cards ---- */
+    .card-step {
+      max-width: 540px;
+      margin: 28px auto 0;
+      border: 0;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.04);
+    }
+    .card-step .card-body { padding: 2rem 2.2rem; }
+
+    /* ---- Buttons ---- */
+    .btn-brand {
+      background: var(--brand);
+      color: #fff;
+      border: 0;
+      padding: .65rem 1.8rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: .88rem;
+      letter-spacing: -.1px;
+      transition: all .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-brand:hover {
+      background: var(--brand-lt);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(26,35,126,.25);
+    }
+    .btn-brand:active { transform: translateY(0); box-shadow: none; }
+
+    .btn-accent {
+      background: #1a8f4a;
+      color: #fff;
+      border: 0;
+      padding: .65rem 1.8rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: .88rem;
+      transition: all .2s;
+    }
+    .btn-accent:hover {
+      background: #157a3e;
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(26,143,74,.25);
+    }
+    .btn-accent:active { transform: translateY(0); box-shadow: none; }
+
+    .btn-ghost {
+      background: transparent;
+      color: #64687a;
+      border: 1px solid #dfe1ea;
+      padding: .6rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: .86rem;
+      transition: all .15s;
+    }
+    .btn-ghost:hover { border-color: #b0b4c8; color: #3a3d50; background: #f4f5fa; }
+
+    /* ---- Form controls ---- */
+    .funnel-form .form-label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #4a4d63;
+      margin-bottom: .35rem;
+      letter-spacing: .1px;
+    }
+    .funnel-form .form-control {
+      border: 1.5px solid #e0e2ec;
+      border-radius: 10px;
+      padding: .6rem .9rem;
+      font-size: .88rem;
+      color: #1d1f2f;
+      background: #fafbfe;
+      transition: all .15s;
+    }
+    .funnel-form .form-control::placeholder { color: #b4b7c9; }
+    .funnel-form .form-control:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(26,35,126,.08);
+      background: #fff;
+    }
+    .funnel-form .form-control.is-invalid {
+      border-color: #e53935;
+      box-shadow: 0 0 0 3px rgba(229,57,53,.08);
+    }
+    .funnel-form .form-select {
+      border: 1.5px solid #e0e2ec;
+      border-radius: 10px;
+      padding: .6rem .9rem;
+      font-size: .88rem;
+      color: #1d1f2f;
+      background-color: #fafbfe;
+    }
+    .funnel-form .form-select:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(26,35,126,.08);
+    }
+
+    /* ---- Step 1: Welcome ---- */
+    .welcome-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #eef0ff, #dde1ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+    }
+    .welcome-icon i { font-size: 1.7rem; color: var(--brand); }
+    .welcome-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1d1f2f;
+      margin-bottom: .4rem;
+      letter-spacing: -.3px;
+    }
+    .welcome-sub {
+      font-size: .88rem;
+      color: #6b6f84;
+      line-height: 1.55;
+      max-width: 400px;
+      margin: 0 auto 1.5rem;
+    }
+    .feature-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 340px;
+      margin: 0 auto 1.8rem;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .84rem;
+      color: #3a3d50;
+      font-weight: 500;
+    }
+    .feature-item .f-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .75rem;
+    }
+    .feature-item .f-icon.green { background: #e8f5e9; color: #2e7d32; }
+    .feature-item .f-icon.blue  { background: #e3f2fd; color: #1565c0; }
+    .feature-item .f-icon.amber { background: #fff8e1; color: #f57f17; }
+
+    /* ---- Step 3: Signature ---- */
+    #sig-container { margin-top: .8rem; }
+    .sig-field-wrap {
+      border: 1.5px solid #e0e2ec;
+      border-radius: 12px;
+      padding: 14px;
+      background: #fafbfe;
+      margin-bottom: .8rem;
+      transition: border-color .15s;
+    }
+    .sig-field-wrap:focus-within,
+    .sig-field-wrap:hover {
+      border-color: var(--brand);
+    }
+    .sig-field-wrap .sig-label {
+      font-size: .7rem;
+      color: #8b8fa3;
+      margin-bottom: .5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .sig-field-wrap canvas.pad {
+      border: 1px dashed #d0d3e0;
+      border-radius: 10px;
+      background: #fff;
+      cursor: crosshair;
+      width: 100%;
+      height: 140px;
+      display: block;
+      transition: border-color .15s;
+    }
+    .sig-field-wrap:hover canvas.pad { border-color: #b0b4c8; }
+    .sig-field-wrap .sig-actions {
+      margin-top: .5rem;
+      display: flex;
+      gap: .5rem;
+    }
+    .sig-field-wrap .btn-clear {
+      font-size: .72rem;
+      padding: .3rem .7rem;
+      border-radius: 6px;
+      border: 1px solid #e0e2ec;
+      background: #fff;
+      color: #6b6f84;
+      font-weight: 500;
+      transition: all .15s;
+      cursor: pointer;
+    }
+    .sig-field-wrap .btn-clear:hover {
+      background: #f4f5fa;
+      border-color: #b0b4c8;
+      color: #3a3d50;
+    }
+    .sig-done-img {
+      border: 1px solid #e0e2ec;
+      border-radius: 10px;
+      max-width: 100%;
+      height: auto;
+      padding: .8rem;
+      background: #fafbfe;
+    }
+
+    /* ---- Send to Phone panel ---- */
+    .phone-panel {
+      border: 1.5px solid #e0e2ec;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #f8f9fd;
+      margin-bottom: .8rem;
+    }
+    .phone-panel .panel-title {
+      font-size: .78rem;
+      font-weight: 700;
+      color: #1d1f2f;
+      margin-bottom: .6rem;
+    }
+    .phone-panel .input-row {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+    }
+    .phone-panel .input-row input {
+      flex: 1;
+      font-size: .82rem;
+    }
+    .phone-panel .qr-area {
+      text-align: center;
+      margin-top: .8rem;
+      padding-top: .8rem;
+      border-top: 1px solid #e8eaf0;
+    }
+    .phone-panel .qr-area canvas {
+      border-radius: 10px;
+      border: 1px solid #e0e2ec;
+    }
+    .phone-panel .qr-label {
+      font-size: .68rem;
+      color: #8b8fa3;
+      margin-top: .4rem;
+    }
+    .phone-panel .or-divider {
+      text-align: center;
+      font-size: .7rem;
+      color: #8b8fa3;
+      margin: .6rem 0;
+      font-weight: 600;
+    }
+
+    /* ---- Remote signing status overlay ---- */
+    .remote-status-overlay {
+      border: 1.5px solid var(--brand);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(135deg, #f0f2ff 0%, #fafbfe 100%);
+      text-align: center;
+      margin-bottom: .8rem;
+    }
+    .remote-status-overlay .status-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e0e2ec;
+      border-top-color: var(--brand);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto .8rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .remote-status-overlay .status-text {
+      font-size: .9rem;
+      font-weight: 600;
+      color: #1d1f2f;
+    }
+    .remote-status-overlay .status-sub {
+      font-size: .78rem;
+      color: #8b8fa3;
+      margin-top: .3rem;
+    }
+    .remote-status-overlay .status-icon {
+      font-size: 2.5rem;
+      color: var(--accent);
+    }
+
+    /* ---- Real name / location input ---- */
+    .realinput-panel {
+      border: 1.5px solid #e0e2ec;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #fafbfe;
+      margin-bottom: .8rem;
+    }
+    .realinput-panel label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #1d1f2f;
+    }
+    .realinput-panel .input-row {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      margin-top: .4rem;
+    }
+    .realinput-panel .input-row input {
+      flex: 1;
+      font-size: .82rem;
+    }
+
+    /* ---- Mode toggle (Sign here / Send to Phone) ---- */
+    .sig-mode-toggle {
+      display: flex;
+      gap: .4rem;
+      margin-bottom: .8rem;
+    }
+    .sig-mode-toggle .btn {
+      flex: 1;
+      font-size: .78rem;
+      padding: .5rem .6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 1.5px solid #e0e2ec;
+      background: #fff;
+      color: #6b6f84;
+      transition: all .15s;
+    }
+    .sig-mode-toggle .btn.active {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
+    /* Status bar */
+    #insign-status-bar {
+      font-size: .72rem;
+      color: #8b8fa3;
+      margin-top: .6rem;
+      padding: .45rem .7rem;
+      background: #f4f5fa;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid #e8eaf0;
+    }
+
+    /* ---- Step 4: Done ---- */
+    .done-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #e8f5e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .done-badge i { font-size: 1.5rem; color: #2e7d32; }
+    .done-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1d1f2f;
+      margin-bottom: .3rem;
+    }
+    .pdf-frame {
+      width: 100%;
+      height: 440px;
+      border: 1px solid #e0e2ec;
+      border-radius: 10px;
+      background: #fafbfe;
+    }
+
+    /* ---- General manual & deploy panels ---- */
+    .general-manual { max-width:860px; margin:2rem auto; }
+    .general-manual .card { border: 1px solid #e0e2ec; }
+    .general-manual .card-body { font-size:.88rem; line-height:1.7; }
+    .general-manual pre { background:#1e1e2e; color:#cdd6f4; padding:1rem; border-radius:8px; font-size:.78rem; overflow-x:auto; white-space:pre; }
+    .general-manual h5 { color:var(--brand); border-bottom:2px solid var(--brand); padding-bottom:.3rem; margin-top:1.5rem; }
+    .general-manual h6 { color:#333; font-weight:700; margin-top:1rem; }
+    .general-manual .pitfall { background:#fff3cd; border-left:4px solid #ffc107; padding:.6rem .8rem; border-radius:4px; margin:.5rem 0; font-size:.82rem; }
+    .general-manual .important { background:#e3f2fd; border-left:4px solid #1a237e; padding:.6rem .8rem; border-radius:4px; margin:.5rem 0; font-size:.82rem; }
+    .general-manual table { font-size:.82rem; }
+    .general-manual table th { background:#f0f0f5; }
+
+    /* ---- Deploy cards ---- */
+    .deploy-grid .card {
+      border: 1px solid #e0e2ec;
+      border-radius: 12px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .deploy-grid .card:hover {
+      border-color: #c5c8d8;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .deploy-grid h6 { font-size: .85rem; }
+    .deploy-grid pre {
+      background: #f4f5fa;
+      color: #3a3d50;
+      border: 1px solid #e8eaf0;
+      border-radius: 8px;
+      padding: .7rem;
+      font-size: .72rem;
+      margin: 0;
+    }
+    .deploy-grid code { font-family: 'JetBrains Mono', monospace; font-size: .72rem; }
+    .deploy-grid .badge { font-size: .6rem; font-weight: 600; }
+
+    /* ===================== MARKDOWN RENDERING (dark dev theme) ===================== */
+    .doc-rendered {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: .855rem;
+      line-height: 1.75;
+      color: var(--doc-text);
+    }
+
+    .doc-rendered h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0 0 .6rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--doc-border);
+      background: linear-gradient(135deg, var(--doc-accent), var(--doc-accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .doc-rendered h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 2rem 0 .6rem;
+      padding-bottom: .4rem;
+      border-bottom: 1px solid var(--doc-border);
+      color: var(--doc-text);
+    }
+    .doc-rendered h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      margin: 1.6rem 0 .5rem;
+      color: var(--doc-accent);
+    }
+    .doc-rendered h4 {
+      font-size: .92rem;
+      font-weight: 700;
+      margin: 1.4rem 0 .4rem;
+      color: var(--doc-accent3);
+    }
+    .doc-rendered h5, .doc-rendered h6 {
+      font-size: .85rem;
+      font-weight: 700;
+      margin: 1.2rem 0 .3rem;
+      color: var(--doc-accent2);
+    }
+
+    .doc-rendered p { margin: 0 0 .8rem; }
+
+    .doc-rendered a {
+      color: var(--doc-accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .15s;
+    }
+    .doc-rendered a:hover {
+      border-bottom-color: var(--doc-accent);
+    }
+
+    .doc-rendered strong { color: #f0f6fc; font-weight: 600; }
+
+    .doc-rendered ul, .doc-rendered ol {
+      padding-left: 1.4rem;
+      margin: 0 0 .8rem;
+    }
+    .doc-rendered li {
+      margin-bottom: .35rem;
+    }
+    .doc-rendered li::marker {
+      color: var(--doc-accent);
+    }
+
+    /* Inline code */
+    .doc-rendered code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: .78rem;
+      background: rgba(110,118,129,.2);
+      padding: .15rem .4rem;
+      border-radius: 5px;
+      color: var(--doc-accent2);
+      font-weight: 500;
+    }
+
+    /* Code blocks */
+    .doc-rendered pre {
+      background: var(--doc-surface);
+      border: 1px solid var(--doc-border);
+      border-radius: 10px;
+      padding: 0;
+      margin: .8rem 0 1rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .doc-rendered pre code {
+      display: block;
+      padding: 16px 18px;
+      background: none;
+      color: var(--doc-text);
+      font-size: .78rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      border-radius: 0;
+    }
+    /* Code block copy button */
+    .doc-rendered pre .code-copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--doc-border);
+      background: var(--doc-bg);
+      color: var(--doc-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity .15s, background .15s;
+      font-size: .75rem;
+      z-index: 2;
+    }
+    .doc-rendered pre:hover .code-copy-btn { opacity: 1; }
+    .doc-rendered pre .code-copy-btn:hover {
+      background: var(--doc-border);
+      color: var(--doc-text);
+    }
+
+    /* Tables */
+    .doc-rendered table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: .8rem 0 1rem;
+      font-size: .8rem;
+    }
+    .doc-rendered thead th {
+      background: var(--doc-surface);
+      color: var(--doc-text);
+      font-weight: 600;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--doc-border);
+      text-align: left;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .doc-rendered tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--doc-border);
+      vertical-align: top;
+    }
+    .doc-rendered tbody tr:hover {
+      background: rgba(88,166,255,.04);
+    }
+
+    /* Blockquotes */
+    .doc-rendered blockquote {
+      border-left: 3px solid var(--doc-accent);
+      margin: .8rem 0;
+      padding: .5rem .8rem .5rem 1rem;
+      background: var(--doc-info-bg);
+      border-radius: 0 8px 8px 0;
+      color: var(--doc-text-muted);
+    }
+    .doc-rendered blockquote p { margin-bottom: .3rem; }
+
+    /* Horizontal rule */
+    .doc-rendered hr {
+      border: none;
+      border-top: 1px solid var(--doc-border);
+      margin: 1.5rem 0;
+    }
+
+    /* Images */
+    .doc-rendered img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--doc-border);
+      margin: .5rem 0;
+    }
+
+    /* Pitfall / Important callouts from the md content */
+    .doc-rendered .pitfall,
+    .doc-rendered .alert-warning {
+      background: var(--doc-warning-bg);
+      border-left: 3px solid var(--doc-warning-border);
+      padding: .6rem .8rem;
+      border-radius: 0 8px 8px 0;
+      margin: .5rem 0;
+      font-size: .82rem;
+      color: #d29922;
+    }
+    .doc-rendered .important,
+    .doc-rendered .alert-info {
+      background: var(--doc-info-bg);
+      border-left: 3px solid var(--doc-info-border);
+      padding: .6rem .8rem;
+      border-radius: 0 8px 8px 0;
+      margin: .5rem 0;
+      font-size: .82rem;
+      color: var(--doc-accent);
+    }
+
+    /* Custom scrollbar for sidebar */
+    .sidebar-content::-webkit-scrollbar { width: 6px; }
+    .sidebar-content::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-content::-webkit-scrollbar-thumb {
+      background: var(--doc-border);
+      border-radius: 3px;
+    }
+    .sidebar-content::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+    /* Loading skeleton */
+    .doc-loading {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 8px 0;
+    }
+    .doc-loading .skel {
+      height: 14px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--doc-surface) 25%, rgba(88,166,255,.08) 50%, var(--doc-surface) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    .doc-loading .skel.title { height: 22px; width: 70%; margin-bottom: 8px; }
+    .doc-loading .skel.short { width: 45%; }
+    .doc-loading .skel.medium { width: 80%; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 900px) {
+      .dev-sidebar {
+        position: fixed;
+        left: 0; top: 0; bottom: 0;
+        z-index: 1000;
+        box-shadow: 4px 0 24px rgba(0,0,0,.4);
+      }
+      .dev-sidebar.collapsed {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Toast -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index:9999;">
+  <div id="app-toast" class="toast align-items-center text-bg-danger border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toast-msg"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<div class="app-layout">
+
+  <!-- ==================== DEVELOPER GUIDE SIDEBAR ==================== -->
+  <aside class="dev-sidebar" id="devSidebar">
+    <div class="sidebar-header">
+      <i class="bi bi-book" style="font-size:1.1rem; color:var(--doc-accent);"></i>
+      <div class="sidebar-header-text">
+        <h6>Developer Guide</h6>
+        <span>inSign Integration Docs</span>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+        <i class="bi bi-chevron-left sidebar-toggle-icon"></i>
+      </button>
+    </div>
+
+    <div class="sidebar-tabs" id="sidebarTabs">
+      <div class="sidebar-tab active" data-doc="1">Step 1</div>
+      <div class="sidebar-tab" data-doc="2">Step 2</div>
+      <div class="sidebar-tab" data-doc="3">Step 3</div>
+      <div class="sidebar-tab" data-doc="4">Step 4</div>
+      <div class="sidebar-tab" data-doc="manual">Manual</div>
+    </div>
+
+    <div class="sidebar-content">
+      <div class="sidebar-doc-panel active" id="doc-panel-1" data-src="/docs/step-1-architecture.md">
+        <div class="doc-loading"><div class="skel title"></div><div class="skel"></div><div class="skel medium"></div><div class="skel short"></div><div class="skel"></div><div class="skel medium"></div></div>
+      </div>
+      <div class="sidebar-doc-panel" id="doc-panel-2" data-src="/docs/step-2-session-creation.md">
+        <div class="doc-loading"><div class="skel title"></div><div class="skel"></div><div class="skel medium"></div><div class="skel short"></div><div class="skel"></div><div class="skel medium"></div></div>
+      </div>
+      <div class="sidebar-doc-panel" id="doc-panel-3" data-src="/docs/step-3-signature-pad.md">
+        <div class="doc-loading"><div class="skel title"></div><div class="skel"></div><div class="skel medium"></div><div class="skel short"></div><div class="skel"></div><div class="skel medium"></div></div>
+      </div>
+      <div class="sidebar-doc-panel" id="doc-panel-4" data-src="/docs/step-4-download.md">
+        <div class="doc-loading"><div class="skel title"></div><div class="skel"></div><div class="skel medium"></div><div class="skel short"></div><div class="skel"></div><div class="skel medium"></div></div>
+      </div>
+      <div class="sidebar-doc-panel" id="doc-panel-manual" data-src="/docs/integration-manual.md">
+        <div class="doc-loading"><div class="skel title"></div><div class="skel"></div><div class="skel medium"></div><div class="skel short"></div><div class="skel"></div><div class="skel medium"></div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Draggable resize handle -->
+  <div class="resize-handle" id="resizeHandle"></div>
+
+  <!-- ==================== MAIN FUNNEL CONTENT ==================== -->
+  <div class="main-content">
+
+    <!-- Top bar -->
+    <nav class="brand-bar">
+      <div class="brand-logo"><i class="bi bi-vector-pen"></i>Sig-Funnel</div>
+      <div class="brand-env">Maklermandat Demo</div>
+    </nav>
+
+    <div class="funnel-scroll">
+
+    <!-- Progress -->
+    <div class="step-bar" id="progress">
+      <div class="step-pill active" data-step="1">
+        <span class="s-num">1</span><span class="s-text">&Uuml;bersicht</span>
+      </div>
+      <div class="step-conn" data-after="1"></div>
+      <div class="step-pill" data-step="2">
+        <span class="s-num">2</span><span class="s-text">Ihre Daten</span>
+      </div>
+      <div class="step-conn" data-after="2"></div>
+      <div class="step-pill" data-step="3">
+        <span class="s-num">3</span><span class="s-text">Unterschrift</span>
+      </div>
+      <div class="step-conn" data-after="3"></div>
+      <div class="step-pill" data-step="4">
+        <span class="s-num">4</span><span class="s-text">Fertig</span>
+      </div>
+    </div>
+
+    <!-- ===== STEP 1 — Welcome ===== -->
+    <div class="container" id="step-1-panel">
+      <div class="card card-step">
+        <div class="card-body text-center">
+          <div class="welcome-icon"><i class="bi bi-person-badge"></i></div>
+          <div class="welcome-title">Maklermandat</div>
+          <p class="welcome-sub">
+            Erteilen Sie Ihrem Versicherungs- und Finanzmakler die Vollmacht,
+            Sie umfassend zu betreuen &mdash; digital, sicher und in wenigen Minuten.
+          </p>
+          <div class="feature-row">
+            <div class="feature-item"><span class="f-icon green"><i class="bi bi-check-lg"></i></span>Rechtsg&uuml;ltige digitale Unterschrift</div>
+            <div class="feature-item"><span class="f-icon blue"><i class="bi bi-lock"></i></span>DSGVO-konforme Datenverarbeitung</div>
+            <div class="feature-item"><span class="f-icon amber"><i class="bi bi-file-earmark-pdf"></i></span>Sofortiger Download als signiertes PDF</div>
+          </div>
+          <div>
+            <button class="btn btn-brand" id="btn-start" onclick="goTo(2)">
+              Jetzt starten <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 2 — User Data ===== -->
+    <div class="container d-none" id="step-2-panel">
+      <div class="card card-step" style="max-width:600px;">
+        <div class="card-body">
+          <h4 style="font-size:1.1rem;font-weight:700;color:#1d1f2f;margin-bottom:.2rem;">Ihre Angaben</h4>
+          <p style="font-size:.8rem;color:#8b8fa3;margin-bottom:1.2rem;">Bitte f&uuml;llen Sie alle Pflichtfelder aus, um das Maklermandat zu erstellen.</p>
+          <form id="user-form" class="funnel-form" novalidate>
+            <div class="row g-2">
+              <div class="col-3">
+                <label class="form-label">Anrede</label>
+                <select class="form-control form-select" id="title" required>
+                  <option value="">W&auml;hlen</option>
+                  <option value="Herr">Herr</option>
+                  <option value="Frau">Frau</option>
+                  <option value="Divers">Divers</option>
+                </select>
+              </div>
+              <div class="col">
+                <label class="form-label">Vorname</label>
+                <input type="text" class="form-control" id="firstName" required placeholder="Max">
+              </div>
+              <div class="col">
+                <label class="form-label">Nachname</label>
+                <input type="text" class="form-control" id="lastName" required placeholder="Mustermann">
+              </div>
+            </div>
+            <div class="row g-2 mt-1">
+              <div class="col-md-4">
+                <label class="form-label">Geburtsdatum</label>
+                <input type="date" class="form-control" id="birthdate" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Geburtsort</label>
+                <input type="text" class="form-control" id="birthplace" placeholder="Frankfurt">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Staatsangeh.</label>
+                <input type="text" class="form-control" id="nationality" placeholder="deutsch">
+              </div>
+            </div>
+            <div class="row g-2 mt-1">
+              <div class="col">
+                <label class="form-label">Stra&szlig;e &amp; Nr.</label>
+                <input type="text" class="form-control" id="street" required placeholder="Kaiserstra&szlig;e 27">
+              </div>
+            </div>
+            <div class="row g-2 mt-1">
+              <div class="col-3">
+                <label class="form-label">PLZ</label>
+                <input type="text" class="form-control" id="zip" required placeholder="60311" maxlength="10">
+              </div>
+              <div class="col">
+                <label class="form-label">Ort</label>
+                <input type="text" class="form-control" id="city" required placeholder="Frankfurt am Main">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Land</label>
+                <input type="text" class="form-control" id="country" placeholder="Deutschland">
+              </div>
+            </div>
+            <div class="row g-2 mt-1">
+              <div class="col-md-5">
+                <label class="form-label">Telefon / Mobil</label>
+                <input type="tel" class="form-control" id="phone" placeholder="+49 170 9876543">
+              </div>
+              <div class="col">
+                <label class="form-label">E-Mail</label>
+                <input type="email" class="form-control" id="email" placeholder="max@example.de">
+              </div>
+            </div>
+            <div class="row g-2 mt-1">
+              <div class="col-md-5">
+                <label class="form-label">Ausweisart</label>
+                <select class="form-control form-select" id="idType">
+                  <option value="Personalausweis">Personalausweis</option>
+                  <option value="Reisepass">Reisepass</option>
+                </select>
+              </div>
+              <div class="col">
+                <label class="form-label">Ausweisnummer</label>
+                <input type="text" class="form-control" id="idNumber" placeholder="L01X00T47">
+              </div>
+            </div>
+
+            <div style="font-size:.68rem;font-weight:600;color:#8b8fa3;margin:1rem 0 .4rem;letter-spacing:.3px;">BESTEHENDE VERTR&Auml;GE <span style="font-weight:400;">(optional)</span></div>
+            <div class="row g-2">
+              <div class="col-12">
+                <input type="text" class="form-control" id="contract1" placeholder="z.B. Allianz / Haftpflicht / VS-123456789">
+              </div>
+              <div class="col-12">
+                <input type="text" class="form-control" id="contract2" placeholder="z.B. HUK-Coburg / KFZ / KH-987654321">
+              </div>
+              <div class="col-12">
+                <input type="text" class="form-control" id="contract3" placeholder="z.B. Debeka / PKV / 1234567">
+              </div>
+            </div>
+
+            <div style="font-size:.68rem;font-weight:600;color:#8b8fa3;margin:1rem 0 .4rem;letter-spacing:.3px;">SIGNATUR-OPTIONEN</div>
+            <div class="row g-2">
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="opt-realname">
+                  <label class="form-check-label" for="opt-realname" style="font-size:.8rem;">Name eingeben</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="opt-realname-skip">
+                  <label class="form-check-label" for="opt-realname-skip" style="font-size:.8rem;">&Uuml;berspringbar</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-ghost" onclick="goTo(1)">
+                <i class="bi bi-arrow-left me-1"></i> Zur&uuml;ck
+              </button>
+              <button type="submit" class="btn btn-brand" id="btn-submit">
+                Mandat erstellen <i class="bi bi-arrow-right ms-1"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 3 — Signature (Embedded or Remote) ===== -->
+    <div class="container d-none" id="step-3-panel">
+      <div class="card card-step" style="max-width:600px;">
+        <div class="card-body">
+          <h4 style="font-size:1.1rem;font-weight:700;color:#1d1f2f;margin-bottom:.2rem;">Maklermandat unterschreiben</h4>
+          <p style="font-size:.8rem;color:#8b8fa3;margin-bottom:1rem;">
+            Zeichnen Sie Ihre Unterschrift direkt oder senden Sie den Link an Ihr Smartphone.
+          </p>
+
+          <!-- Mode toggle: Sign here vs Send to Phone -->
+          <div class="sig-mode-toggle" id="sig-mode-toggle">
+            <button class="btn active" data-mode="embedded" onclick="switchSignMode('embedded')">
+              <i class="bi bi-pencil me-1"></i> Hier unterschreiben
+            </button>
+            <button class="btn" data-mode="remote" onclick="switchSignMode('remote')">
+              <i class="bi bi-phone me-1"></i> An Smartphone senden
+            </button>
+          </div>
+
+          <div id="sig-loading" class="text-center py-4">
+            <div class="spinner-border spinner-border-sm" style="color:var(--brand);" role="status"></div>
+            <p class="mt-2" style="font-size:.82rem;color:#8b8fa3;">Unterschriftenfeld wird geladen...</p>
+          </div>
+
+          <!-- ---- EMBEDDED MODE: signature pads ---- -->
+          <div id="embedded-mode">
+            <!-- Real name input (shown if realNameInputRequired) -->
+            <div id="realname-panel" class="realinput-panel d-none">
+              <label><i class="bi bi-person me-1"></i> Vollst&auml;ndiger Name <span id="realname-optional" class="d-none" style="font-weight:normal;color:#8b8fa3">(optional)</span></label>
+              <div class="input-row">
+                <input type="text" class="form-control" id="realNameInput" placeholder="Bitte Ihren vollst&auml;ndigen Namen eingeben">
+                <button class="btn btn-sm btn-brand" id="realname-ok" onclick="submitRealName()">OK</button>
+              </div>
+            </div>
+
+            <!-- Signature fields will be dynamically created here -->
+            <div id="sig-container" class="d-none"></div>
+
+            <!-- Signature pad template (cloned per field) -->
+            <template id="sigPadTemplate">
+              <div class="sig-field-wrap" data-sigidx="">
+                <div class="sig-label"></div>
+                <div class="sigPad">
+                  <div class="sig sigWrapper">
+                    <canvas class="pad" width="600" height="160"></canvas>
+                  </div>
+                </div>
+                <div class="sig-actions">
+                  <button type="button" class="btn btn-sm btn-outline-secondary btn-clear">
+                    <i class="bi bi-eraser me-1"></i>Clear
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <!-- ---- REMOTE MODE: Send to Phone ---- -->
+          <div id="remote-mode" class="d-none">
+            <!-- Phone panel (input + QR) -->
+            <div id="phone-panel" class="phone-panel">
+              <div class="panel-title"><i class="bi bi-phone me-1"></i> An Smartphone senden</div>
+              <div class="input-row">
+                <input type="tel" class="form-control" id="sms-phone" placeholder="+49 170 1234567">
+                <button class="btn btn-sm btn-brand" id="btn-send-sms" onclick="sendSmsLink()">
+                  <i class="bi bi-send me-1"></i> SMS senden
+                </button>
+              </div>
+              <div class="or-divider">- oder QR-Code scannen -</div>
+              <div class="qr-area">
+                <canvas id="qr-canvas"></canvas>
+                <div class="qr-label">QR-Code mit Smartphone scannen</div>
+              </div>
+            </div>
+
+            <!-- Remote status overlay (shown after SMS sent / phone connected) -->
+            <div id="remote-status" class="remote-status-overlay d-none">
+              <div class="status-spinner" id="remote-spinner"></div>
+              <div class="status-text" id="remote-status-text">SMS wird gesendet...</div>
+              <div class="status-sub" id="remote-status-sub">Bitte &ouml;ffnen Sie den Link auf Ihrem Smartphone.</div>
+              <button class="btn btn-sm btn-outline-secondary mt-3 d-none" id="btn-cancel-remote" onclick="cancelRemoteSigning()">
+                <i class="bi bi-x-circle me-1"></i> Abbrechen
+              </button>
+            </div>
+          </div>
+
+          <div id="insign-status-bar" class="d-none">Status: loading...</div>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-ghost" onclick="goTo(2)">
+              <i class="bi bi-arrow-left me-1"></i> Zur&uuml;ck
+            </button>
+            <button class="btn btn-brand" id="btn-finish" onclick="finishSigning()">
+              Abschlie&szlig;en &amp; Download <i class="bi bi-arrow-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STEP 4 — Done / Preview ===== -->
+    <div class="container d-none" id="step-4-panel">
+      <div class="card card-step">
+        <div class="card-body text-center">
+          <div class="done-badge"><i class="bi bi-check-lg"></i></div>
+          <div class="done-title">Maklermandat erfolgreich unterschrieben</div>
+          <p style="font-size:.84rem;color:#8b8fa3;margin-bottom:1.2rem;">Ihr Maklermandat wurde digital signiert und steht zum Download bereit.</p>
+          <div class="mb-3">
+            <iframe id="pdf-preview" class="pdf-frame" title="Signed PDF Preview"></iframe>
+          </div>
+          <div class="d-flex justify-content-center gap-2">
+            <a id="btn-download" class="btn btn-accent" download="Maklermandat-signed.pdf">
+              <i class="bi bi-download me-1"></i> PDF herunterladen
+            </a>
+            <button class="btn btn-ghost" onclick="location.reload()">
+              <i class="bi bi-arrow-repeat me-1"></i> Neues Mandat
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DEPLOY OPTIONS (shown on step 4) ===== -->
+    <div class="container d-none" id="deploy-panel">
+      <div class="general-manual">
+        <div class="card" style="border:1px solid #e0e2ec; border-radius:12px;">
+          <div class="card-body">
+            <h4 style="font-size:1.1rem;font-weight:700;color:#1d1f2f;margin-bottom:.3rem;"><i class="bi bi-cloud-arrow-up me-2" style="color:var(--brand);"></i>Deploy This Demo</h4>
+            <p style="font-size:.82rem;color:#8b8fa3;margin-bottom:1.2rem;">Run this demo on any of these platforms. The backend logic is shared across all variants.</p>
+
+            <div class="row g-3 deploy-grid">
+
+              <!-- Local -->
+              <div class="col-md-6">
+                <div class="card h-100" style="border-radius:10px;">
+                  <div class="card-body">
+                    <h6 class="fw-bold"><img src="https://www.google.com/s2/favicons?domain=nodejs.org&sz=32" width="20" class="me-2" alt="">Local (Node.js)</h6>
+                    <p class="small text-muted mb-2">Run on your machine. Requires Node.js 18+.</p>
+                    <div class="position-relative">
+                      <pre class="mb-0" style="font-size:.75rem;"><code>git clone &lt;repo-url&gt;
+cd sig-funnel
+npm install
+npm start</code></pre>
+                      <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-1 btn-copy" data-text="git clone <repo-url>&#10;cd sig-funnel&#10;npm install&#10;npm start" title="Copy to clipboard"><i class="bi bi-clipboard"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Glitch -->
+              <div class="col-md-6">
+                <div class="card h-100" style="border-radius:10px;">
+                  <div class="card-body">
+                    <h6 class="fw-bold"><img src="https://www.google.com/s2/favicons?domain=glitch.com&sz=32" width="20" class="me-2" alt="">Glitch <span class="badge bg-success ms-1">Free</span></h6>
+                    <p class="small text-muted mb-2">Edit &amp; run in the browser. Instant URL. No install.</p>
+                    <a href="https://glitch.com/edit/#!/import/github/getinsign/insign-getting-started" target="_blank" class="btn btn-sm btn-brand w-100 mb-2">
+                      <i class="bi bi-box-arrow-up-right me-1"></i> Remix on Glitch
+                    </a>
+                    <p class="small text-muted mb-0">Or paste in Glitch: <code>Import from GitHub</code> &rarr; repo URL</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- StackBlitz -->
+              <div class="col-md-6">
+                <div class="card h-100" style="border-radius:10px;">
+                  <div class="card-body">
+                    <h6 class="fw-bold"><img src="https://www.google.com/s2/favicons?domain=stackblitz.com&sz=32" width="20" class="me-2" alt="">StackBlitz <span class="badge bg-success ms-1">Free</span></h6>
+                    <p class="small text-muted mb-2">Runs Node.js <strong>inside your browser</strong> via WebContainers. Nothing to install.</p>
+                    <a href="https://stackblitz.com/github/getinsign/insign-getting-started" target="_blank" class="btn btn-sm btn-brand w-100 mb-2">
+                      <i class="bi bi-box-arrow-up-right me-1"></i> Open in StackBlitz
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vercel -->
+              <div class="col-md-6">
+                <div class="card h-100" style="border-radius:10px;">
+                  <div class="card-body">
+                    <h6 class="fw-bold"><img src="https://www.google.com/s2/favicons?domain=vercel.com&sz=32" width="20" class="me-2" alt="">Vercel <span class="badge bg-info ms-1">Serverless</span></h6>
+                    <p class="small text-muted mb-2">Deploys as serverless functions. Free tier. Set env vars in dashboard.</p>
+                    <a href="https://vercel.com/new/clone?repository-url=https://github.com/getinsign/insign-getting-started&env=INSIGN_URL,INSIGN_USER,INSIGN_PASS" target="_blank" class="btn btn-sm btn-brand w-100 mb-2">
+                      <i class="bi bi-box-arrow-up-right me-1"></i> Deploy to Vercel
+                    </a>
+                    <div class="position-relative">
+                      <pre class="mb-0" style="font-size:.72rem;"><code>INSIGN_URL=https://sandbox.test.getinsign.show
+INSIGN_USER=controller
+INSIGN_PASS=pwd.insign.sandbox.4561</code></pre>
+                      <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-1 btn-copy" data-text="INSIGN_URL=https://sandbox.test.getinsign.show&#10;INSIGN_USER=controller&#10;INSIGN_PASS=pwd.insign.sandbox.4561" title="Copy env vars"><i class="bi bi-clipboard"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Render -->
+              <div class="col-md-6">
+                <div class="card h-100" style="border-radius:10px;">
+                  <div class="card-body">
+                    <h6 class="fw-bold"><img src="https://www.google.com/s2/favicons?domain=render.com&sz=32" width="20" class="me-2" alt="">Render <span class="badge bg-success ms-1">Free</span></h6>
+                    <p class="small text-muted mb-2">Free web service. Spins down after inactivity (~30s cold start).</p>
+                    <a href="https://render.com/deploy" target="_blank" class="btn btn-sm btn-brand w-100 mb-2">
+                      <i class="bi bi-box-arrow-up-right me-1"></i> Deploy on Render
+                    </a>
+                    <p class="small text-muted mb-0">Connect your GitHub repo, set start command: <code>node src/server.js</code></p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Docker -->
+              <div class="col-md-6">
+                <div class="card h-100" style="border-radius:10px;">
+                  <div class="card-body">
+                    <h6 class="fw-bold"><img src="https://www.google.com/s2/favicons?domain=docker.com&sz=32" width="20" class="me-2" alt="">Docker</h6>
+                    <p class="small text-muted mb-2">Run anywhere with Docker. Self-hosted.</p>
+                    <div class="position-relative">
+                      <pre class="mb-0" style="font-size:.72rem;"><code>docker build -t sig-funnel .
+docker run -p 3000:3000 sig-funnel</code></pre>
+                      <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-1 btn-copy" data-text="docker build -t sig-funnel .&#10;docker run -p 3000:3000 sig-funnel" title="Copy to clipboard"><i class="bi bi-clipboard"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mt-3 p-3 rounded" style="background:#f0f4ff;">
+              <h6 class="fw-bold mb-2" style="color:var(--brand);"><i class="bi bi-diagram-3 me-2"></i>Shared Architecture</h6>
+              <p class="small mb-0">All platforms use the same core logic in <code>src/routes.js</code>. Express (<code>server.js</code>) and Vercel (<code>api/*.js</code>) are thin wrappers. No code is duplicated.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /funnel-scroll -->
+  </div><!-- /main-content -->
+</div><!-- /app-layout -->
+
+<!-- Load jQuery from inSign server (version-less URL, auto-updates with inSign) -->
+<script src="https://sandbox.test.getinsign.show/webjars/jquery/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  // ---------------------------------------------------------------------------
+  // Sidebar: toggle, tab switching, markdown loading
+  // ---------------------------------------------------------------------------
+  (function() {
+    var $sidebar = $('#devSidebar');
+    var $tabs = $('.sidebar-tab');
+    var $panels = $('.sidebar-doc-panel');
+    var loadedPanels = {};
+    var lastWidth = null;
+
+    // Toggle sidebar open/closed
+    $('#sidebarToggle').on('click', function() {
+      $sidebar.addClass('animating');
+      if ($sidebar.hasClass('collapsed')) {
+        $sidebar.removeClass('collapsed').css('width', lastWidth || '50%');
+      } else {
+        lastWidth = $sidebar.css('width') || $sidebar.outerWidth() + 'px';
+        $sidebar.addClass('collapsed');
+      }
+      setTimeout(function() { $sidebar.removeClass('animating'); }, 400);
+    });
+
+    // Draggable resize handle
+    var $handle = $('#resizeHandle');
+    var dragging = false;
+    $handle.on('mousedown', function(e) {
+      e.preventDefault();
+      dragging = true;
+      $handle.addClass('active');
+      $('body').css({ cursor: 'col-resize', 'user-select': 'none' });
+    });
+    $(document).on('mousemove', function(e) {
+      if (!dragging) return;
+      var newWidth = Math.min(Math.max(e.clientX, 280), window.innerWidth * 0.8);
+      $sidebar.css('width', newWidth + 'px');
+      if ($sidebar.hasClass('collapsed')) $sidebar.removeClass('collapsed');
+    });
+    $(document).on('mouseup', function() {
+      if (!dragging) return;
+      dragging = false;
+      $handle.removeClass('active');
+      $('body').css({ cursor: '', 'user-select': '' });
+      lastWidth = $sidebar.css('width');
+    });
+
+    // Tab switching
+    $tabs.on('click', function() {
+      if ($sidebar.hasClass('collapsed')) $sidebar.removeClass('collapsed');
+      var docId = $(this).data('doc');
+      $tabs.removeClass('active');
+      $(this).addClass('active');
+      $panels.removeClass('active');
+      var $panel = $('#doc-panel-' + docId);
+      if ($panel.length) {
+        $panel.addClass('active');
+        loadPanel($panel, docId);
+      }
+    });
+
+    // Load markdown into a panel
+    function loadPanel($panel, id) {
+      if (loadedPanels[id]) return;
+      var src = $panel.data('src');
+      if (!src) return;
+      loadedPanels[id] = true;
+      $.get(src)
+        .done(function(md) {
+          $panel.html('<div class="doc-rendered">' + marked.parse(md) + '</div>');
+          $panel.find('pre code').each(function() {
+            var $code = $(this);
+            var $pre = $code.parent();
+            var $btn = $('<button class="code-copy-btn" title="Copy"><i class="bi bi-clipboard"></i></button>');
+            $btn.on('click', function() {
+              navigator.clipboard.writeText($code.text()).then(function() {
+                $btn.html('<i class="bi bi-check-lg" style="color:var(--doc-accent2);"></i>');
+                setTimeout(function() { $btn.html('<i class="bi bi-clipboard"></i>'); }, 1500);
+              });
+            });
+            $pre.css('position', 'relative').append($btn);
+          });
+        })
+        .fail(function() {
+          $panel.html('<div style="color:#f85149;padding:1rem;">Failed to load ' + src + '</div>');
+        });
+    }
+
+    // Load the first panel (Step 1) immediately
+    var $firstPanel = $('#doc-panel-1');
+    if ($firstPanel.length) loadPanel($firstPanel, '1');
+
+    // Sync sidebar tab with funnel step
+    window._syncSidebarTab = function(step) {
+      var docId = String(step);
+      $tabs.removeClass('active');
+      $panels.removeClass('active');
+      var $matchTab = $('.sidebar-tab[data-doc="' + docId + '"]');
+      var $matchPanel = $('#doc-panel-' + docId);
+      if ($matchTab.length) $matchTab.addClass('active');
+      if ($matchPanel.length) {
+        $matchPanel.addClass('active');
+        loadPanel($matchPanel, docId);
+      }
+    };
+  })();
+
+  // ---------------------------------------------------------------------------
+  // Markdown doc loader for general-manual (inline, not sidebar)
+  // ---------------------------------------------------------------------------
+  $('.general-manual .doc-md').each(function() {
+    var $el = $(this);
+    var src = $el.data('src');
+    if (!src) return;
+    var loaded = false;
+    var $panel = $el.closest('[id]');
+    if ($panel.length) {
+      new MutationObserver(function(_, obs) {
+        if (!$panel.hasClass('d-none') && !loaded) {
+          loaded = true;
+          $.get(src)
+            .done(function(md) { $el.html(marked.parse(md)); })
+            .fail(function() { $el.html('<div class="alert alert-danger">Failed to load ' + src + '</div>'); });
+          obs.disconnect();
+        }
+      }).observe($panel[0], { attributes: true, attributeFilter: ['class'] });
+    }
+  });
+</script>
+
+<script>
+  // ==========================================================================
+  // Frontend JavaScript — inSign Embedded Signature Pad Integration
+  // ==========================================================================
+  //
+  // This script handles the 4-step signing flow:
+  //   Step 1: Welcome page (static)
+  //   Step 2: Collect user data -> POST to backend -> receive JWT + inSign URL
+  //   Step 3: Load inSign JS -> render signature pad (embedded) or send to phone (SMS/QR)
+  //   Step 4: Download signed PDF from backend
+  //
+  // After Step 2, the browser talks DIRECTLY to the inSign server.
+  // The backend is NOT involved in the signature capture — only the JWT is used.
+  // ==========================================================================
+
+  let currentStep = 1;
+  let sessionKey = null;       // Our backend's internal session reference
+  let insignSessionId = null;  // inSign's session ID (needed for script loading)
+  let insignJwt = null;        // JWT token — passed to inSign JS for authentication
+  let INSIGN_ROOT = '';        // inSign server base URL (set after session creation)
+  let userRequestedNameInput = false;
+  let userRequestedNameSkippable = false;
+
+  function showToast(msg) {
+    $('#toast-msg').text(msg);
+    new bootstrap.Toast($('#app-toast')[0], { delay: 3000 }).show();
+  }
+
+  // Prefill form with test data (remove this in production!)
+  $(function () {
+    $('#title').val('Herr');
+    $('#firstName').val('Max');
+    $('#lastName').val('Mustermann');
+    $('#birthdate').val('1985-03-14');
+    $('#birthplace').val('Frankfurt am Main');
+    $('#nationality').val('deutsch');
+    $('#street').val('Kaiserstra\u00dfe 27');
+    $('#zip').val('60311');
+    $('#city').val('Frankfurt am Main');
+    $('#country').val('Deutschland');
+    $('#phone').val('+49 170 9876543');
+    $('#email').val('max.mustermann@example.de');
+    $('#idType').val('Personalausweis');
+    $('#idNumber').val('L01X00T47');
+    $('#contract1').val('Allianz / Privathaftpflicht / VS-3847561');
+    $('#contract2').val('HUK-Coburg / KFZ-Versicherung / KH-9912034');
+    $('#contract3').val('Debeka / Private Krankenversicherung / 7781923');
+  });
+
+  // ---------- Step Navigation ----------
+  function goTo(step) {
+    for (var i = 1; i <= 4; i++) {
+      $('#step-' + i + '-panel').toggleClass('d-none', i !== step);
+    }
+    $('#deploy-panel').toggleClass('d-none', step !== 4);
+
+    $('.step-pill').each(function () {
+      var $pill = $(this);
+      var s = parseInt($pill.data('step'));
+      $pill.removeClass('active done');
+      if (s < step) {
+        $pill.addClass('done');
+        $pill.find('.s-num').html('<i class="bi bi-check-lg"></i>');
+      } else {
+        $pill.find('.s-num').text(s);
+      }
+      if (s === step) $pill.addClass('active');
+    });
+    $('.step-conn').each(function () {
+      $(this).toggleClass('done', parseInt($(this).data('after')) < step);
+    });
+    currentStep = step;
+    $('.funnel-scroll').scrollTop(0);
+
+    if (window._syncSidebarTab) window._syncSidebarTab(step);
+  }
+
+  // ==========================================================================
+  // Step 2: Form Submit -> Create inSign Session -> Receive JWT
+  // ==========================================================================
+  //
+  // When the user submits the form:
+  //   1. POST user data to our backend (/api/session)
+  //   2. Backend creates an inSign session (with controller auth) and returns:
+  //      - sessionKey:       our internal reference for later API calls
+  //      - insignSessionId:  inSign's session ID (needed to load config JS)
+  //      - jwt:              the token the browser uses to talk to inSign
+  //      - insignBase:       the inSign server URL (where to load JS from)
+  //   3. Browser stores these values and proceeds to Step 3
+  //
+  $('#user-form').on('submit', async function (e) {
+    e.preventDefault();
+    if (!this.checkValidity()) { $(this).addClass('was-validated'); return; }
+
+    const btn = $('#btn-submit');
+    btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Wird erstellt\u2026');
+
+    try {
+      // Collect form data to send to our backend
+      const payload = {
+        title:       $('#title').val(),
+        firstName:   $('#firstName').val().trim(),
+        lastName:    $('#lastName').val().trim(),
+        birthdate:   $('#birthdate').val(),
+        birthplace:  $('#birthplace').val().trim() || undefined,
+        nationality: $('#nationality').val().trim() || undefined,
+        street:      $('#street').val().trim(),
+        zip:         $('#zip').val().trim(),
+        city:        $('#city').val().trim(),
+        country:     $('#country').val().trim() || undefined,
+        phone:       $('#phone').val().trim() || undefined,
+        email:       $('#email').val().trim() || undefined,
+        idType:      $('#idType').val() || undefined,
+        idNumber:    $('#idNumber').val().trim() || undefined,
+        contract1:   $('#contract1').val().trim() || undefined,
+        contract2:   $('#contract2').val().trim() || undefined,
+        contract3:   $('#contract3').val().trim() || undefined,
+        nameInputRequired:      $('#opt-realname').is(':checked') || undefined,
+        nameInputSkippable:     $('#opt-realname-skip').is(':checked') || undefined,
+        locationInputRequired:  false,
+        locationInputSkippable: false
+      };
+
+      // Remember checkbox choices for step 3 panel visibility
+      userRequestedNameInput = $('#opt-realname').is(':checked');
+      userRequestedNameSkippable = $('#opt-realname-skip').is(':checked');
+
+      // POST to our backend — this triggers the inSign /configure/session call
+      const res = await $.post({ url: '/api/session', data: JSON.stringify(payload), contentType: 'application/json' });
+
+      // Store the values we need for the rest of the flow
+      sessionKey = res.sessionKey;            // Our internal reference
+      insignSessionId = res.insignSessionId;  // inSign session ID
+      insignJwt = res.jwt;                    // JWT for authenticating with inSign
+      INSIGN_ROOT = res.insignBase.replace(/\/?$/, '/'); // inSign base URL (trailing slash!)
+
+      // Prefill SMS phone from form
+      if (payload.phone) $('#sms-phone').val(payload.phone);
+
+      // Move to step 3 and load the inSign embedded signature pad
+      goTo(3);
+      loadInsignEmbedded();
+    } catch (err) {
+      alert('Error: ' + (err.responseJSON?.error || 'Something went wrong.'));
+    } finally {
+      btn.prop('disabled', false).html('Mandat erstellen <i class="bi bi-arrow-right ms-1"></i>');
+    }
+  });
+
+  // ==========================================================================
+  // Step 3: Load inSign Embedded Signature Pad
+  // ==========================================================================
+  //
+  // This is where the browser talks DIRECTLY to the inSign server.
+  // Three scripts/calls are made in sequence:
+  //
+  //   1. Load insign-standalonesignature-pad.js — the main inSign JS library
+  //      (public endpoint, no auth needed, creates the INSIGNAPP global object)
+  //
+  //   2. Load configjs.js?sessionid=... — session-specific configuration
+  //      (authenticated via INSIGN_JWT header, sets INSIGNAPP.config)
+  //
+  //   3. Call INSIGNAPP.embedded.initEmbeddedData() — fetches signature fields
+  //      and document metadata from inSign. The JWT (4th parameter) is stored
+  //      as INSIGNAPP.config.jwt and sent as "INSIGN_JWT: Bearer <token>"
+  //      header on every subsequent XHR the library makes.
+  //
+  // After initEmbeddedData returns the signature field data, we create a
+  // <canvas> for each field and initialize the inSign signature pad on it.
+  //
+  function loadInsignEmbedded() {
+    var $container = $('#sig-container');
+    var $loading = $('#sig-loading');
+    $container.addClass('d-none').empty();
+    $loading.removeClass('d-none');
+
+    // STEP 3a: Load the inSign JS library directly from the inSign server.
+    // This is a PUBLIC endpoint — no authentication needed.
+    // It creates the global INSIGNAPP object with INSIGNAPP.embedded.* methods.
+    loadScript(INSIGN_ROOT + 'js/insign-standalonesignature-pad.js', function () {
+
+      // STEP 3b: Load the cryptographic signing bundle from the inSign server.
+      loadScript(INSIGN_ROOT + 'js/insign-sign-crypt-bundle.js', function () {
+
+      // STEP 3c: Load the session-specific config from inSign.
+      // This sets INSIGNAPP.config with settings like realNameInputRequired, etc.
+      // The sessionid tells inSign which session's config to return.
+      loadScript(INSIGN_ROOT + 'configjs.js?sessionid=' + insignSessionId, function () {
+
+        // STEP 3d: Initialize embedded data — this is the KEY call.
+        // It fetches all signature fields and document metadata from inSign.
+        //
+        // Parameters:
+        //   insignSessionId — the inSign session ID
+        //   INSIGN_ROOT     — base URL of the inSign server (with trailing slash)
+        //   callback        — called with (signatures, documents) when ready
+        //   insignJwt       — JWT token, stored as INSIGNAPP.config.jwt and used
+        //                     as "INSIGN_JWT: Bearer <token>" on all XHR requests
+        //
+        // Internally, this calls POST /get/documents/full?includeAnnotations=true
+        // on the inSign server with { sessionid: "..." } in the body.
+        INSIGNAPP.embedded.initEmbeddedData(insignSessionId, INSIGN_ROOT, function (signatures, documents) {
+          console.log('inSign signatures:', signatures);
+          console.log('inSign documents:', documents);
+
+          $loading.addClass('d-none');
+          $container.removeClass('d-none');
+
+          // Check if inSign found any signature fields in the PDF
+          // (requires ##SIG{...} tags and scanSigTags: true in session config)
+          if (!signatures.data || signatures.data.length === 0) {
+            $container.html('<div class="alert alert-warning">No signature fields found in the document. Make sure the PDF contains ##SIG{} tags.</div>');
+            return;
+          }
+
+          // Reset sigFieldsData for remote signing
+          sigFieldsData = [];
+
+          // Create a signature pad <canvas> for each signature field
+          var $tpl = $('#sigPadTemplate');
+          signatures.data.forEach(function (sigData, idx) {
+            if (sigData.signatureBitmap) {
+              // This field was already signed - show the signature image
+              $container.append($('<img>').attr('src', sigData.signatureBitmap).addClass('sig-done-img'));
+            } else {
+              // Clone the HTML template for a new signature pad
+              var $clone = $($tpl[0].content.cloneNode(true));
+              var $wrap = $clone.find('.sig-field-wrap');
+              $wrap.attr('data-sigidx', idx);
+              $wrap.find('.sig-label').text(
+                (sigData.document?.displayname || 'Document') + ' \u2014 Signature ' + (idx + 1));
+
+              $container.append($clone);
+
+              // IMPORTANT: Match the canvas internal resolution to its CSS display size.
+              // Without this, strokes are offset or clipped because the canvas's
+              // internal coordinate system (width/height attributes) doesn't match
+              // the CSS-rendered size (width: 100%).
+              var $wrap = $container.find('.sig-field-wrap[data-sigidx="' + idx + '"]');
+              const canvas = $wrap.find('canvas.pad')[0];
+              canvas.width = canvas.offsetWidth;
+              canvas.height = canvas.offsetHeight;
+
+              // Initialize the inSign signature pad on this canvas.
+              // initSignaturePad: binds mouse/touch events for drawing
+              // initSignatureObject: creates the internal data structure for
+              //   stroke data (coordinates, pressure, timing) that will be
+              //   sent to inSign when the signature is submitted.
+              INSIGNAPP.embedded.initSignaturePad(sigData.docid, sigData.id, $wrap);
+              INSIGNAPP.embedded.initSignatureObject(sigData.docid, sigData.id, $wrap);
+
+              // Store field reference for remote signing
+              sigFieldsData.push({ sigData: sigData, $wrap: $wrap });
+
+              // Wire up the "Clear" button to reset the canvas
+              $wrap.find('.btn-clear').on('click', function () {
+                INSIGNAPP.embedded.clearSignature($wrap);
+              });
+            }
+          });
+
+          // Show real name / location panels if required by inSign config
+          setupRealInputPanels();
+
+          startStatusPolling();
+          checkAllSigned();
+        }, insignJwt);  // <- The JWT is the 4th parameter!
+      });
+      });
+    });
+  }
+
+  function loadScript(src, callback) {
+    $.getScript(src).done(callback).fail(function () {
+      console.error('Failed to load script:', src);
+      $('#sig-loading').html('<div class="alert alert-danger">Failed to load inSign scripts. Please try again.</div>');
+    });
+  }
+
+  // ==========================================================================
+  // Sign Mode Toggle — switch between embedded canvas and remote (phone) mode
+  // ==========================================================================
+  let currentSignMode = 'embedded';  // 'embedded' or 'remote'
+
+  function switchSignMode(mode) {
+    currentSignMode = mode;
+    $('#sig-mode-toggle .btn').each(function () {
+      $(this).toggleClass('active', $(this).data('mode') === mode);
+    });
+    $('#embedded-mode').toggleClass('d-none', mode !== 'embedded');
+    $('#remote-mode').toggleClass('d-none', mode !== 'remote');
+
+    if (mode === 'remote') generateQrCode();
+  }
+
+  // ==========================================================================
+  // QR Code — render the inSign accessURL so the signer can scan with phone
+  // ==========================================================================
+  function generateQrCode() {
+    var canvas = $('#qr-canvas')[0];
+    if (!canvas || typeof QRCode === 'undefined') return;
+
+    // The accessURL is the inSign signing URL for this session.
+    // On the phone, opening this link pairs the device and shows the sig pad.
+    var url = INSIGN_ROOT + 'start/sigpad/show?sessionid=' + insignSessionId
+            + '&jwt=' + encodeURIComponent(insignJwt);
+
+    QRCode.toCanvas(canvas, url, { width: 180, margin: 2 }, function (err) {
+      if (err) console.error('QR generation error:', err);
+    });
+  }
+
+  // ==========================================================================
+  // SMS Link — send signing link to phone via inSign /applos/send
+  // ==========================================================================
+  //
+  // INSIGNAPP.embedded.initSignSMS(phoneNumber, onSent, onPaired, onAlreadyPaired, onError)
+  //   - onSent:           SMS successfully sent, waiting for phone to connect
+  //   - onPaired:         Phone connected and paired — ready to trigger remote sign
+  //   - onAlreadyPaired:  Device was already paired (skip waiting)
+  //   - onError:          Sending SMS failed
+  //
+  function sendSmsLink() {
+    var phone = $('#sms-phone').val().trim();
+    if (!phone) { showToast('Bitte geben Sie eine Handynummer ein.'); return; }
+
+    var $btn = $('#btn-send-sms');
+    $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span>');
+
+    showRemoteStatus('SMS wird gesendet...', 'Bitte warten...');
+
+    INSIGNAPP.embedded.initSignSMS(phone,
+      // onSent — SMS delivered, waiting for phone to pair
+      function () {
+        console.log('SMS sent successfully');
+        showRemoteStatus('SMS gesendet!', 'Bitte \u00f6ffnen Sie den Link auf Ihrem Smartphone.');
+        $('#btn-cancel-remote').removeClass('d-none');
+        $btn.prop('disabled', false).html('<i class="bi bi-send me-1"></i> SMS senden');
+      },
+      // onPaired — phone connected, now trigger the actual remote signature
+      function () {
+        console.log('Phone paired — starting remote sign');
+        startRemoteSign();
+      },
+      // onAlreadyPaired — device was already connected
+      function () {
+        console.log('Device already paired');
+        startRemoteSign();
+      },
+      // onError — SMS sending failed
+      function () {
+        showToast('SMS konnte nicht gesendet werden. Bitte Nummer pr\u00fcfen.');
+        hideRemoteStatus();
+        $btn.prop('disabled', false).html('<i class="bi bi-send me-1"></i> SMS senden');
+      }
+    );
+  }
+
+  // ==========================================================================
+  // Remote Signing — trigger signature on paired phone
+  // ==========================================================================
+  //
+  // After the phone is paired, we call INSIGNAPP.embedded.sign() for each
+  // signature field. The phone shows its own signature pad; when the user
+  // signs there, inSign receives the data and we get a callback.
+  //
+  // INSIGNAPP.embedded.sign(sigId, docId, position, onDone, onCancel, onError, onNotPaired)
+  //
+  let sigFieldsData = [];  // populated by loadInsignEmbedded
+
+  function startRemoteSign() {
+    if (sigFieldsData.length === 0) {
+      showToast('Keine Signaturfelder gefunden.');
+      return;
+    }
+
+    showRemoteStatus(
+      '<i class="bi bi-phone-vibrate" style="font-size:1.5rem;"></i> Smartphone verbunden!',
+      'Bitte unterschreiben Sie jetzt auf Ihrem Smartphone.'
+    );
+    $('#remote-spinner').hide();
+    $('#btn-cancel-remote').removeClass('d-none');
+
+    // Sign each field sequentially on the remote device
+    (function signFieldRemote(i) {
+      if (i >= sigFieldsData.length) {
+        // All fields signed remotely — proceed to finish
+        onAllRemoteSigned();
+        return;
+      }
+      var sf = sigFieldsData[i];
+      var $wrap = sf.$wrap;
+
+      showRemoteStatus(
+        'Unterschrift ' + (i + 1) + ' von ' + sigFieldsData.length,
+        'Bitte auf dem Smartphone unterschreiben...'
+      );
+      $('#remote-spinner').show();
+
+      INSIGNAPP.embedded.sign(
+        INSIGNAPP.embedded.getSigIDForObject($wrap),
+        INSIGNAPP.embedded.getDocIDForObject($wrap),
+        INSIGNAPP.embedded.getPositionForObject($wrap),
+        // onDone — signature completed on phone
+        function () {
+          INSIGNAPP.embedded.setSignatureImageForField($wrap);
+          $wrap.find('.sigPad').replaceWith(
+            '<div class="text-center py-2"><i class="bi bi-check-circle text-success" style="font-size:2rem;"></i><br><small class="text-muted">Auf Smartphone unterschrieben</small></div>'
+          );
+          signFieldRemote(i + 1);
+        },
+        // onCancel — user cancelled on phone
+        function () {
+          showToast('Signatur auf Smartphone abgebrochen.');
+          hideRemoteStatus();
+        },
+        // onError
+        function () {
+          showToast('Fehler bei der Smartphone-Signatur.');
+          hideRemoteStatus();
+        },
+        // onNotPaired
+        function () {
+          showToast('Kein Smartphone verbunden. Bitte erneut senden.');
+          hideRemoteStatus();
+        }
+      );
+    })(0);
+  }
+
+  function onAllRemoteSigned() {
+    // Show success, then proceed
+    $('#remote-spinner').hide();
+    $('#remote-status-text').html(
+      '<i class="bi bi-check-circle text-success" style="font-size:2rem;"></i><br>Alle Unterschriften erfolgreich!');
+    $('#remote-status-sub').text('Dokument wird fertiggestellt...');
+    $('#btn-cancel-remote').addClass('d-none');
+
+    // Unpair and proceed to Step 4
+    try { INSIGNAPP.embedded.unpair(function () {}); } catch (e) { /* ignore */ }
+
+    setTimeout(function () {
+      if (statusTimer) clearTimeout(statusTimer);
+      goTo(4);
+      var docUrl = '/api/session/' + sessionKey + '/document';
+      var dlUrl = '/api/session/' + sessionKey + '/document/download';
+      $('#pdf-preview').attr('src', docUrl);
+      $('#btn-download').attr('href', dlUrl);
+    }, 1500);
+  }
+
+  function cancelRemoteSigning() {
+    try {
+      // Cancel any in-progress remote signature
+      sigFieldsData.forEach(function (sf) {
+        try {
+          INSIGNAPP.embedded.cancelSign(
+            INSIGNAPP.embedded.getSigIDForObject(sf.$wrap),
+            INSIGNAPP.embedded.getDocIDForObject(sf.$wrap)
+          );
+        } catch (e) { /* ignore */ }
+      });
+      INSIGNAPP.embedded.unpair(function () {});
+    } catch (e) { /* ignore */ }
+    hideRemoteStatus();
+  }
+
+  // ==========================================================================
+  // Remote Status Display helpers
+  // ==========================================================================
+  function showRemoteStatus(text, sub) {
+    $('#remote-status').removeClass('d-none');
+    $('#phone-panel').addClass('d-none');
+    $('#remote-status-text').html(text);
+    $('#remote-status-sub').text(sub || '');
+    $('#remote-spinner').show();
+  }
+
+  function hideRemoteStatus() {
+    $('#remote-status').addClass('d-none');
+    $('#phone-panel').removeClass('d-none');
+    $('#btn-cancel-remote').addClass('d-none');
+  }
+
+  // ==========================================================================
+  // Real Name & Location Input handling
+  // ==========================================================================
+  //
+  // When realNameInputRequired is set in the
+  // inSign session config, we show our own UI for collecting these values.
+  // The inSign JS library handles this via:
+  //   INSIGNAPP.embedded.waitForRealNameInput(field)  — shows the name prompt
+  //   INSIGNAPP.embedded.submitRealName(button)       — submits the name
+  //   INSIGNAPP.embedded.skipRealName(button)         — skips (if skippable)
+  //
+  // We wire our custom UI to these library functions.
+  //
+  function setupRealInputPanels() {
+    if (typeof INSIGNAPP === 'undefined' || !INSIGNAPP.config) return;
+
+    // The inSign embedded API only supports realName (via $wrap.data('realname')).
+    // There is no embedded API for location - it's only in the full inSign UI.
+    // Override the server config so sendSignature doesn't block on missing input.
+    INSIGNAPP.config.realNameInputRequired = false;
+    INSIGNAPP.config.realLocationInputRequired = false;
+
+    // Show our custom name panel when the user requested it.
+    // We handle it ourselves: store the value via $wrap.data('realname')
+    // which sendSignature reads internally.
+    if (userRequestedNameInput) {
+      $('#realname-panel').removeClass('d-none');
+      if (userRequestedNameSkippable) {
+        $('#realname-optional').removeClass('d-none');
+        $('#realNameInput').attr('placeholder', 'Name eingeben oder leer lassen');
+      }
+    }
+  }
+
+  function submitRealName() {
+    var name = $('#realNameInput').val().trim();
+    if (!name) { showToast('Bitte geben Sie Ihren Namen ein.'); return; }
+    $('#sig-container .sig-field-wrap').each(function () {
+      $(this).data('realname', name);
+    });
+    $('#realname-panel').css({ opacity: '.5', 'pointer-events': 'none' });
+    $('#realname-ok').html('<i class="bi bi-check-lg"></i>');
+  }
+
+
+  // ==========================================================================
+  // Status Polling — track signature completion client-side
+  // ==========================================================================
+  // INSIGNAPP.embedded.getEmbeddedStatus() returns:
+  //   { signaturesdone: { sum: N }, signaturefields: { sum: M } }
+  // When signaturesdone.sum >= signaturefields.sum, all fields are signed.
+  //
+  let statusTimer = null;
+  function startStatusPolling() {
+    var $bar = $('#insign-status-bar');
+    $bar.removeClass('d-none');
+
+    function poll() {
+      if (typeof INSIGNAPP === 'undefined' || !INSIGNAPP.embedded) return;
+      try {
+        var status = INSIGNAPP.embedded.getEmbeddedStatus();
+        $bar.text('Signatures: ' + (status?.signaturesdone?.sum || 0)
+          + ' / ' + (status?.signaturefields?.sum || '?') + ' completed');
+
+        if (status && status.signaturesdone && status.signaturefields
+            && status.signaturesdone.sum >= status.signaturefields.sum
+            && status.signaturefields.sum > 0) {
+          $bar.text($bar.text() + ' \u2014 All signed!');
+          $('#btn-finish').prop('disabled', false);
+        }
+      } catch (e) { /* ignore */ }
+      statusTimer = setTimeout(poll, 1000);
+    }
+    poll();
+  }
+
+  function checkAllSigned() {
+    if (typeof INSIGNAPP === 'undefined' || !INSIGNAPP.embedded) return;
+    try {
+      const status = INSIGNAPP.embedded.getEmbeddedStatus();
+      if (status && status.signaturesdone && status.signaturefields
+          && status.signaturesdone.sum >= status.signaturefields.sum
+          && status.signaturefields.sum > 0) {
+        $('#btn-finish').prop('disabled', false);
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  // ==========================================================================
+  // Step 3 -> 4: Finish — send signatures to inSign and show signed PDF
+  // ==========================================================================
+  //
+  // When the user clicks "Finish & Download":
+  //   1. Check that all signature pads have been drawn on
+  //   2. Call INSIGNAPP.embedded.sendSignature() for each pad sequentially
+  //      (wait for each /store/document response before sending the next) —
+  //      this sends stroke data directly to inSign via POST /put/signaturedata
+  //      (authenticated by the INSIGN_JWT header, no backend involvement)
+  //   3. Once all signatures are sent in order, move to Step 4
+  //   4. Step 4 loads the signed PDF from our backend (GET /api/session/:key/document)
+  //      — the backend fetches it from inSign using controller credentials
+  //   5. Call INSIGNAPP.embedded.unpair() to clean up the inSign session
+  //
+  async function finishSigning() {
+    // Confirm all unsigned signature pads first
+    const pads = $('#sig-container .sig-field-wrap');
+    let allReady = true;
+    pads.each(function () {
+      const $wrap = $(this);
+      if ($wrap.find('canvas.pad').length === 0) return; // already confirmed
+      if (!INSIGNAPP.embedded.isSignatureReady($wrap)) {
+        allReady = false;
+        return false; // break
+      }
+    });
+
+    if (!allReady) {
+      showToast('Bitte zeichnen Sie zuerst Ihre Unterschrift.');
+      return;
+    }
+
+    // Validate name input before sending (skip validation if skippable)
+    if (userRequestedNameInput) {
+      var name = $('#realNameInput').val().trim();
+      if (!name && !userRequestedNameSkippable) {
+        showToast('Bitte geben Sie Ihren Namen ein.');
+        $('#realNameInput').focus();
+        return;
+      }
+      if (name && !pads.first().data('realname')) submitRealName();
+    }
+
+    // Send all signatures sequentially (wait for each /store/document to return before sending the next)
+    const btn = $('#btn-finish');
+    btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Wird gesendet\u2026');
+
+    const wraps = pads.filter(function () {
+      return $(this).find('canvas.pad').length > 0;
+    }).toArray();
+
+    (function sendNext(i) {
+      if (i >= wraps.length) { proceedToStep4(); return; }
+      const $wrap = $(wraps[i]);
+      INSIGNAPP.embedded.sendSignature($wrap, function (id, imgB64, field) {
+        field.replaceWith('<img src="' + imgB64 + '" class="sig-done-img" style="height:150px;" />');
+        sendNext(i + 1);
+      });
+    })(0);
+
+    function proceedToStep4() {
+      if (statusTimer) clearTimeout(statusTimer);
+      btn.prop('disabled', false).html('Abschlie\u00dfen & Download <i class="bi bi-arrow-right ms-1"></i>');
+      goTo(4);
+
+      // Set preview and download URLs
+      const docUrl = `/api/session/${sessionKey}/document`;
+      const dlUrl = `/api/session/${sessionKey}/document/download`;
+      $('#pdf-preview').attr('src', docUrl);
+      $('#btn-download').attr('href', dlUrl);
+
+      // Unpair inSign
+      try {
+        if (typeof INSIGNAPP !== 'undefined' && INSIGNAPP.embedded) {
+          INSIGNAPP.embedded.unpair(function () {});
+        }
+      } catch (e) { /* ignore */ }
+    }
+  }
+
+  // Copy-to-clipboard buttons
+  $(document).on('click', '.btn-copy', function() {
+    var $btn = $(this);
+    var text = $btn.data('text').toString().replace(/&#10;/g, '\n');
+    navigator.clipboard.writeText(text).then(function() {
+      var $icon = $btn.find('i');
+      $icon.attr('class', 'bi bi-check-lg text-success');
+      setTimeout(function() { $icon.attr('class', 'bi bi-clipboard'); }, 1500);
+    });
+  });
+</script>
+</body>
+</html>

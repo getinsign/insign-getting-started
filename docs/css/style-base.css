@@ -1,0 +1,584 @@
+/* ==========================================================================
+   inSign API Explorer - Structural Styles
+   Layout, positioning, sizing, spacing, and structural properties.
+   Cosmetic/theming styles are in style-theme.css.
+   ========================================================================== */
+
+/* === Dark Mode ======================================================== */
+
+.form-switch .form-check-input {
+    width: 2.4em;
+    height: 1.3em;
+    cursor: pointer;
+}
+
+/* === Base ============================================================== */
+
+body {
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+}
+
+code {
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* === Navbar ============================================================ */
+
+.navbar-insign {
+    padding: 0.5rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    flex-wrap: wrap;
+}
+.navbar-insign > .container-fluid {
+    justify-content: space-between;
+}
+.navbar-insign .step-indicator {
+    flex: 1;
+    justify-content: center;
+}
+
+.navbar-insign .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.navbar-insign .navbar-brand img {
+    height: 16px;
+}
+
+.navbar-brand-sub {
+    font-size: 0.5rem;
+    line-height: 1;
+    opacity: 0.6;
+}
+
+/* === Sidebar =========================================================== */
+
+.sidebar {
+    padding: 1.25rem;
+    position: sticky;
+    top: 70px;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.sidebar h6 {
+    margin-bottom: 0.75rem;
+}
+
+.sidebar .form-label {
+    margin-bottom: 0.25rem;
+}
+
+.sidebar .form-control {
+    padding: 0.4rem 0.75rem;
+}
+
+/* === Cards ============================================================= */
+
+.card-insign {
+    margin-bottom: 1.25rem;
+    overflow: visible;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-insign .card-header {
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-insign .card-header h5 {
+    margin: 0;
+}
+
+.card-insign .card-header .badge-method {
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.card-insign .card-body {
+    padding: 1.25rem;
+}
+
+
+/* === Step Indicator ===================================================== */
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.step-indicator .step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.step-indicator .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+/* === Buttons ============================================================ */
+
+.btn-insign {
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s;
+}
+
+.btn-insign-sm {
+    padding: 0.3rem 1rem;
+}
+
+/* Auth mode selector - prominent toggle */
+/* === Sandbox button ======================================================= */
+.btn-sandbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+.btn-sandbox:hover {
+    border-style: solid;
+}
+.btn-sandbox i {
+    font-size: 1rem;
+}
+.btn-sandbox code {
+    margin-left: auto;
+}
+
+.auth-mode-selector {
+    display: inline-flex;
+    gap: 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.auth-mode-btn {
+    padding: 4px 12px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+/* Extern option buttons */
+[id^="extern-opt-"] .btn {
+    padding: 0.15rem 0.45rem;
+    line-height: 1.3;
+}
+
+/* Mixed state (users have different values) */
+.btn-group .btn.mixed {
+    border-style: dashed;
+}
+
+/* === Editor Containers ================================================== */
+
+.editor-container {
+    overflow: hidden;
+    min-height: 60px;
+    max-height: 600px;
+    position: relative;
+}
+.editor-container.no-max-height {
+    max-height: none;
+}
+
+/* Monaco suggest details widget: bigger, non-scrolling tooltip */
+.monaco-editor .suggest-details-container {
+    max-height: none !important;
+    height: auto !important;
+}
+.monaco-editor .suggest-details {
+    max-height: none !important;
+    height: auto !important;
+}
+.monaco-editor .suggest-details .body {
+    max-height: none !important;
+    overflow: visible !important;
+}
+.monaco-editor .suggest-details .body .docs {
+    max-height: none !important;
+    overflow: visible !important;
+    white-space: pre-wrap;
+}
+.monaco-editor .suggest-widget.docs-side {
+    width: auto !important;
+    min-width: 660px;
+}
+.monaco-editor .suggest-widget.docs-side > .details {
+    min-width: 360px;
+    max-width: 500px;
+    max-height: none !important;
+    border-left: 1px solid var(--vscode-editorSuggestWidget-border, #454545);
+}
+
+/* === Floating Action Buttons ============================================ */
+
+.floating-actions {
+    position: sticky;
+    bottom: 16px;
+    z-index: 100;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    pointer-events: none;
+    padding: 0 4px;
+}
+.btn-floating {
+    pointer-events: auto;
+    border-radius: 24px !important;
+    padding: 8px 18px;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-floating:hover {
+    transform: translateY(-2px);
+}
+
+.editor-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+}
+
+/* === Headers Display ==================================================== */
+
+.headers-display {
+    padding: 0.4rem 0.65rem;
+    margin-bottom: 1rem;
+}
+
+/* === Response Panel ===================================================== */
+
+.response-panel {
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.response-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+}
+
+
+/* === Operation Tabs ===================================================== */
+
+.nav-operations {
+    gap: 0;
+    flex-wrap: wrap;
+}
+
+.nav-operations .nav-link {
+    padding: 0.6rem 1rem;
+    border: none;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border-radius: 0;
+}
+
+/* === Code Snippets ====================================================== */
+
+.code-tabs .nav-link {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid transparent;
+}
+
+.code-snippet-container {
+    overflow: hidden;
+}
+
+/* === Webhook Viewer ===================================================== */
+
+.webhook-panel {
+    overflow-y: visible;
+}
+
+.webhook-entry {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+/* Webhook detail panels - wrap long lines to stay within the sidebar */
+.wh-pre {
+    line-height: 1.5;
+    margin: 0;
+    padding: 8px 10px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+.wh-section-toggle {
+    padding: 2px 0;
+}
+
+.wh-section-toggle .wh-chevron {
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.webhook-url-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.3rem 0.75rem;
+    overflow: hidden;
+}
+
+/* Step action buttons with subtext */
+.step-indicator .step-action {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    line-height: 1.2;
+}
+.step-action-label {
+    white-space: nowrap;
+}
+.step-action-sub {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.5rem;
+    opacity: 0.75;
+    max-width: 20ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+.step-action-sub:empty {
+    display: none;
+}
+
+.webhook-url-display input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 2px 6px;
+    height: 28px;
+    text-overflow: ellipsis;
+}
+
+/* === Document Selector (Dropdown) ======================================= */
+
+/* Document selector header with thumbnail */
+.doc-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.doc-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.doc-header-top .feature-configurator-chevron {
+    position: static;
+}
+.doc-header-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.doc-header-doc-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.doc-header-thumb-wrap {
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.doc-header-thumb {
+    width: 48px;
+    height: 64px;
+    border-radius: 5px;
+    object-fit: contain;
+}
+.doc-header-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.45);
+    color: #fff;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.15s;
+    border-radius: 5px;
+}
+.doc-header-thumb-wrap:hover .doc-header-thumb-overlay {
+    opacity: 1;
+}
+.doc-header-info {
+    flex: 1;
+    min-width: 0;
+}
+/* Skeleton shimmer for thumbnails and icons */
+@keyframes skeleton-shimmer {
+    0% { background-position: -200px 0; }
+    100% { background-position: 200px 0; }
+}
+.skeleton-pulse {
+    background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+    background-size: 400px 100%;
+    animation: skeleton-shimmer 1.5s infinite ease-in-out;
+}
+[data-theme="dark"] .skeleton-pulse {
+    background: linear-gradient(90deg, #2a2d31 25%, #353840 50%, #2a2d31 75%);
+    background-size: 400px 100%;
+}
+
+/* Inline document list (inside collapsible section) */
+.doc-selector-list {
+    padding: 4px 0;
+}
+/* 2-column grid for document items */
+.doc-dd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+@media (max-width: 680px) {
+    .doc-dd-grid { grid-template-columns: 1fr; }
+}
+
+/* Group labels */
+.doc-dd-group-label {
+    padding: 6px 12px 3px;
+}
+.doc-dd-count {
+    display: inline-block;
+    border-radius: 10px;
+    padding: 0 6px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+/* Divider */
+.doc-dd-divider {
+    height: 1px;
+    margin: 4px 10px;
+}
+
+/* Each item row */
+.doc-dd-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background 0.12s;
+}
+
+/* Thumbnail (canvas or icon placeholder) */
+.doc-dd-thumb {
+    width: 80px;
+    height: 106px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+.doc-dd-thumb-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Info column */
+.doc-dd-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+.doc-dd-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.doc-dd-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+.doc-dd-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 1px;
+}
+.doc-dd-sep {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.doc-dd-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 3px;
+}
+.doc-dd-role {
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 3px;
+}
+.doc-dd-role-email {
+    font-size: 0.56rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+

@@ -1,0 +1,551 @@
+/* === CORS Proxy dropdown ================================================= */
+.proxy-dd-icon-safe {
+    background: rgba(10, 135, 101, 0.1);
+    color: var(--insign-success);
+}
+.proxy-dd-icon-warn {
+    background: rgba(198, 40, 40, 0.08);
+    color: var(--insign-danger);
+}
+[data-theme="dark"] .proxy-dd-icon-safe { background: rgba(10, 135, 101, 0.2); }
+[data-theme="dark"] .proxy-dd-icon-warn { background: rgba(198, 40, 40, 0.15); }
+
+.proxy-dd-badge {
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.proxy-dd-badge-safe {
+    background: rgba(10, 135, 101, 0.12);
+    color: var(--insign-success);
+}
+.proxy-dd-badge-warn {
+    background: rgba(198, 40, 40, 0.1);
+    color: var(--insign-danger);
+}
+[data-theme="dark"] .proxy-dd-badge-safe { background: rgba(10, 135, 101, 0.25); }
+[data-theme="dark"] .proxy-dd-badge-warn { background: rgba(198, 40, 40, 0.2); }
+
+.proxy-dd-role-warn {
+    background: rgba(198, 40, 40, 0.08) !important;
+    color: var(--insign-danger) !important;
+}
+[data-theme="dark"] .proxy-dd-role-warn {
+    background: rgba(198, 40, 40, 0.18) !important;
+}
+
+.proxy-dd-warn-label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--insign-danger);
+}
+
+/* === Toggle pill switches ================================================= */
+.toggle-pill {
+    border: 1px solid var(--insign-border);
+    background: var(--insign-card-bg);
+    font-size: 0.74rem;
+    color: var(--insign-gray);
+}
+.toggle-pill:hover {
+    border-color: var(--insign-blue);
+}
+.toggle-pill-switch {
+    background: var(--insign-border);
+}
+.toggle-pill-switch::after {
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.toggle-pill input:checked ~ .toggle-pill-switch {
+    background: var(--insign-blue);
+}
+.toggle-pill input:checked ~ .toggle-pill-label {
+    color: var(--insign-text);
+}
+.toggle-pill-label {
+    font-weight: 500;
+}
+.toggle-pill-warn input:checked ~ .toggle-pill-switch {
+    background: var(--insign-orange);
+}
+.toggle-pill-warn input:checked ~ .toggle-pill-label {
+    color: var(--insign-orange);
+}
+
+/* === Proxy probe dots ==================================================== */
+.proxy-probe-dot {
+    background: var(--insign-border);
+}
+.proxy-probe-dot.probe-ok {
+    background: var(--insign-success);
+    box-shadow: 0 0 4px rgba(10, 135, 101, 0.5);
+}
+.proxy-probe-dot.probe-fail {
+    background: var(--insign-danger);
+    box-shadow: 0 0 4px rgba(198, 40, 40, 0.4);
+}
+.proxy-probe-dot.probe-pending {
+    background: var(--insign-border);
+}
+
+/* === Local proxy panel ==================================================== */
+.proxy-local-panel {
+    border: 1px solid var(--insign-border);
+    background: var(--insign-card-bg);
+    font-size: 0.75rem;
+}
+.proxy-probe-label {
+    font-size: 0.7rem;
+    color: var(--insign-gray);
+}
+.proxy-probe-label.probe-label-ok { color: var(--insign-success); font-weight: 600; }
+.proxy-probe-label.probe-label-fail { color: var(--insign-danger); font-weight: 600; }
+
+/* === Proxy probe toast =================================================== */
+.proxy-toast {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.proxy-toast.toast-ok { background: var(--insign-success); }
+.proxy-toast.toast-fail { background: var(--insign-danger); }
+
+/* === Security hint panels ================================================= */
+.security-hint {
+    font-size: 0.82rem;
+    color: var(--insign-text);
+}
+.security-hint-info {
+    border: 1px solid rgba(230, 126, 34, 0.25);
+    background: rgba(230, 126, 34, 0.05);
+}
+.security-hint-danger {
+    border: 1px solid rgba(198, 40, 40, 0.25);
+    background: rgba(198, 40, 40, 0.04);
+}
+.security-hint-info .security-hint-icon { color: var(--insign-orange); }
+.security-hint-danger .security-hint-icon { color: var(--insign-danger); }
+.security-hint-list {
+    font-size: 0.78rem;
+    color: var(--insign-gray);
+}
+.security-hint-list li strong { color: var(--insign-text); }
+.security-hint-rec {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--insign-success);
+}
+
+/* === CORS hint banner ===================================================== */
+.cors-hint-banner {
+    border: 1px solid rgba(var(--insign-orange-rgb, 230, 126, 34), 0.3);
+    background: rgba(var(--insign-orange-rgb, 230, 126, 34), 0.07);
+    font-size: 0.74rem;
+    color: var(--insign-text);
+}
+.cors-hint-banner > i {
+    color: var(--insign-orange);
+}
+
+/* === CORS info panel ===================================================== */
+.cors-info-toggle {
+    font-weight: 600;
+    font-size: 0.76rem;
+    color: var(--insign-blue);
+}
+.cors-info-toggle:hover { color: var(--insign-blue-hover, var(--insign-blue)); }
+.cors-info-chevron {
+    font-size: 0.6rem;
+}
+
+.cors-info-panel {
+    background: var(--insign-card-bg);
+    color: var(--insign-text);
+    border: 1px solid var(--insign-border);
+}
+
+.cors-info-section {
+    border-bottom: 1px solid var(--insign-border);
+}
+
+/* CORS config property table */
+.cors-config-table {
+    border: 1px solid var(--insign-border);
+    font-size: 0.74rem;
+}
+.cors-config-row {
+    border-bottom: 1px solid var(--insign-border);
+}
+.cors-config-key {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--insign-blue);
+}
+.cors-config-val {
+    color: var(--insign-text);
+}
+.cors-config-default {
+    font-size: 0.68rem;
+    color: var(--insign-gray);
+}
+.cors-config-hint {
+    font-size: 0.7rem;
+    color: var(--insign-orange);
+}
+
+.cors-info-heading {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--insign-text);
+}
+.cors-info-heading i { font-size: 1rem; }
+
+.cors-info-text {
+    font-size: 0.74rem;
+    color: var(--insign-text-muted, var(--insign-gray));
+}
+
+/* Flow diagram */
+.cors-flow-node {
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+.cors-flow-node i { font-size: 1.3rem; }
+.cors-flow-browser {
+    background: rgba(1, 101, 188, 0.1);
+    color: var(--insign-blue);
+}
+.cors-flow-server {
+    background: rgba(10, 135, 101, 0.1);
+    color: var(--insign-success);
+}
+.cors-flow-proxy {
+    background: rgba(255, 165, 0, 0.1);
+    color: #e68a00;
+}
+[data-theme="dark"] .cors-flow-browser { background: rgba(1, 101, 188, 0.2); }
+[data-theme="dark"] .cors-flow-server { background: rgba(10, 135, 101, 0.2); }
+[data-theme="dark"] .cors-flow-proxy { background: rgba(255, 165, 0, 0.15); }
+
+.cors-flow-arrow {
+    font-size: 0.6rem;
+    font-weight: 600;
+}
+.cors-flow-arrow i { font-size: 1rem; }
+.cors-flow-blocked { color: var(--insign-danger); }
+.cors-flow-blocked i { font-size: 1.2rem; }
+.cors-flow-ok { color: var(--insign-success); }
+
+/* Danger section */
+.cors-info-danger {
+    background: rgba(198, 40, 40, 0.04);
+    border-left: 3px solid var(--insign-danger);
+}
+[data-theme="dark"] .cors-info-danger {
+    background: rgba(198, 40, 40, 0.08);
+}
+.cors-danger-icon {
+    font-size: 2rem;
+    color: var(--insign-danger);
+    opacity: 0.6;
+}
+.cors-danger-items span {
+    font-size: 0.68rem;
+    font-weight: 600;
+    background: rgba(198, 40, 40, 0.08);
+    color: var(--insign-danger);
+}
+[data-theme="dark"] .cors-danger-items span {
+    background: rgba(198, 40, 40, 0.15);
+}
+
+/* Decision grid */
+.cors-decision-card {
+    background: var(--insign-light);
+    border: 1px solid var(--insign-border);
+}
+.cors-decision-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--insign-text);
+}
+.cors-decision-answer {
+    font-size: 0.68rem;
+    color: var(--insign-gray);
+}
+
+/* Setup tabs */
+.cors-setup-tabs {
+    border-bottom: 1px solid var(--insign-border);
+}
+.cors-setup-tab {
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    color: var(--insign-gray);
+}
+.cors-setup-tab:hover { color: var(--insign-text); }
+.cors-setup-tab.active {
+    color: var(--insign-blue);
+    border-bottom-color: var(--insign-blue);
+}
+
+.cors-code {
+    font-size: 0.72rem;
+    background: var(--insign-light);
+    color: var(--insign-text);
+    border: 1px solid var(--insign-border);
+}
+
+/* File Delivery mini-dropdown */
+.fd-dd-btn {
+    background: var(--insign-input-bg);
+    border: 1px solid var(--insign-input-border); border-radius: var(--insign-radius-input);
+    font-size: 0.74rem; font-weight: 500; color: var(--insign-text);
+}
+.fd-dd-btn:hover { border-color: var(--insign-blue); }
+.fd-dd-btn.open { border-color: var(--insign-blue); }
+.fd-dd-icon { font-size: 0.8rem; color: var(--insign-blue); }
+.fd-dd-chevron { color: var(--insign-gray); font-size: 0.6rem; }
+.fd-dd-menu {
+    background: var(--insign-card-bg); border: 1px solid var(--insign-border);
+    border-radius: var(--insign-radius-input); box-shadow: var(--insign-shadow-lg);
+}
+.fd-dd-item {
+    font-size: 0.74rem;
+    border-left: 2px solid transparent;
+}
+.fd-dd-item:hover { background: rgba(1,101,188,0.04); }
+.fd-dd-item.fd-dd-item-selected { background: rgba(1,101,188,0.07); border-left-color: var(--insign-blue); }
+.fd-dd-item i { color: var(--insign-blue); }
+
+/* Webhook provider dropdown */
+.wh-dd-selected {
+    background: var(--insign-input-bg);
+    border: 1px solid var(--insign-input-border); border-radius: var(--insign-radius-input);
+    color: var(--insign-text);
+}
+.wh-dd-selected:hover { border-color: var(--insign-blue); }
+.wh-dd-selected.open { border-color: var(--insign-blue); }
+.wh-dd-icon { font-size: 0.85rem; color: var(--insign-orange); }
+.wh-dd-badge {
+    font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
+    background: rgba(1,101,188,0.1); color: var(--insign-blue);
+}
+.wh-dd-chevron { font-size: 0.6rem; color: var(--insign-gray); }
+.wh-dd-menu {
+    background: var(--insign-card-bg); border: 1px solid var(--insign-border);
+    border-radius: var(--insign-radius-input); box-shadow: var(--insign-shadow-lg);
+}
+.wh-dd-item {
+    border-left: 3px solid transparent;
+}
+.wh-dd-item:hover { background: rgba(1,101,188,0.04); }
+.wh-dd-item.wh-dd-item-selected { background: rgba(1,101,188,0.07); border-left-color: var(--insign-blue); }
+.wh-dd-item + .wh-dd-item { border-top: 1px solid var(--insign-border); }
+.wh-dd-item-icon-wrap {
+    background: rgba(1,101,188,0.08); color: var(--insign-blue);
+    font-size: 1.53rem;
+}
+.wh-dd-item-icon-wrap img { width: 27px; height: 27px; }
+.wh-dd-item-title { font-size: 0.92rem; font-weight: 600; }
+.wh-dd-tag {
+    font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+}
+.wh-dd-tag-sse { background: rgba(10,135,101,0.12); color: var(--insign-success); }
+.wh-dd-tag-poll { background: rgba(1,101,188,0.1); color: var(--insign-blue); }
+.wh-dd-tag-self-host { background: rgba(108,117,125,0.12); color: var(--insign-gray); }
+.wh-dd-tag-custom { background: rgba(108,117,125,0.08); color: var(--insign-gray); }
+.wh-dd-item-desc { font-size: 0.82rem; color: var(--insign-gray); }
+.wh-dd-item-link {
+    font-size: 0.77rem; color: var(--insign-blue);
+}
+.wh-dd-item-link:hover { text-decoration: underline; }
+.wh-dd-sec {
+    font-size: 0.73rem; font-weight: 600;
+}
+.wh-dd-sec-pub { background: rgba(230,126,34,0.1); color: var(--insign-orange); }
+.wh-dd-sec-safe { background: rgba(10,135,101,0.1); color: var(--insign-success); }
+
+/* Webhook probe dots */
+.wh-probe-dot {
+    background: var(--insign-border);
+}
+.wh-probe-ok { background: var(--insign-success); box-shadow: 0 0 3px rgba(10,135,101,0.5); }
+.wh-probe-fail { background: var(--insign-danger); box-shadow: 0 0 3px rgba(198,40,40,0.4); }
+.wh-probe-pending { background: var(--insign-border); }
+
+/* === Field Descriptions Tooltip ========================================= */
+
+.field-desc {
+    background: var(--insign-light);
+    color: var(--insign-gray);
+    font-size: 0.65rem;
+}
+
+/* === Loading Spinner ==================================================== */
+
+.spinner-insign {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+}
+
+.spinner-dark {
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: var(--insign-blue);
+}
+
+/* === Toast / Alert ====================================================== */
+
+.alert-insign {
+    border-radius: var(--insign-radius-input);
+    font-size: 0.85rem;
+}
+
+/* === Utility ============================================================ */
+
+.text-mono {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.text-muted-sm {
+    font-size: 0.78rem;
+    color: var(--insign-gray);
+}
+
+.section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--insign-gray);
+    font-weight: 500;
+    border-bottom: 1px solid var(--insign-border);
+}
+/* === Doc dropdown item actions (edit/delete) ============================ */
+
+.doc-dd-actions {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+.doc-dd-item:hover .doc-dd-actions {
+    opacity: 1;
+}
+.doc-dd-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.72rem;
+    color: var(--insign-gray);
+    transition: background 0.12s, color 0.12s;
+}
+.doc-dd-action:hover {
+    background: rgba(1, 101, 188, 0.1);
+    color: var(--insign-blue);
+}
+.doc-dd-action-danger:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--insign-danger);
+}
+.doc-dd-rename-input {
+    border: 1px solid var(--insign-blue);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--insign-text);
+    background: var(--insign-input-bg);
+    outline: none;
+    width: 100%;
+    min-width: 0;
+}
+.doc-dd-item-add:hover {
+    background: rgba(1, 101, 188, 0.05);
+}
+.doc-dd-item-add .doc-dd-thumb-icon {
+    color: var(--insign-blue);
+}
+.doc-dd-item-hidden {
+    opacity: 0.6;
+}
+.doc-dd-item-hidden:hover {
+    opacity: 1;
+}
+.doc-dd-hint {
+    padding: 8px 14px;
+    font-size: 0.72rem;
+    color: var(--insign-gray);
+    text-align: center;
+    font-style: italic;
+}
+.doc-dd-hint i {
+    color: var(--insign-blue);
+}
+
+/* === Drag-and-drop overlay ============================================== */
+
+.drop-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(1, 101, 188, 0.12);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.drop-overlay.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.drop-overlay-content {
+    text-align: center;
+    padding: 48px 64px;
+    border: 3px dashed var(--insign-blue);
+    border-radius: 20px;
+    background: var(--insign-card-bg);
+    box-shadow: var(--insign-shadow-lg);
+}
+.drop-overlay-icon {
+    font-size: 4rem;
+    color: var(--insign-blue);
+    display: block;
+    margin-bottom: 12px;
+}
+.drop-overlay-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--insign-text);
+    margin-bottom: 6px;
+}
+.drop-overlay-sub {
+    font-size: 0.85rem;
+    color: var(--insign-text-muted);
+}
+
+/* === Responsive ========================================================= */
+
+@media (max-width: 575.98px) {
+    .navbar-insign .navbar-brand {
+        font-size: 0.95rem;
+    }
+}
+
+/* === Trust Hint ======================================================= */
+
+.trust-hint {
+    background: rgba(40, 167, 69, 0.06);
+    border: 1px solid rgba(40, 167, 69, 0.15);
+    border-radius: var(--insign-radius-input);
+    font-size: 0.8rem;
+}
+

@@ -1,0 +1,72 @@
+<body>
+
+<!-- ====================================================================
+     NAVBAR
+     ==================================================================== -->
+<nav class="navbar navbar-insign">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="./">
+            <div class="navbar-brand-stack">
+                <img src="https://www.getinsign.com/wp-content/uploads/inSign_blank-1.svg" alt="inSign" onerror="this.src='img/inSign_logo.svg'">
+                <span class="navbar-brand-sub">API Explorer</span>
+            </div>
+        </a>
+
+        <!-- Step navigation + action buttons (centered together) -->
+        <div class="step-indicator" id="navbar-steps">
+            <div class="step active" data-step="1" onclick="window.app.goToStep(1)">
+                <span class="step-number">1</span>
+                Connection
+            </div>
+            <div class="step" data-step="2" onclick="window.app.goToStep(2)">
+                <span class="step-number">2</span>
+                Create Session
+            </div>
+            <div class="step" data-step="3" onclick="window.app.goToStep(3)">
+                <span class="step-number">3</span>
+                Operate &amp; Trace
+            </div>
+            <div class="step" data-step="4" onclick="window.app.goToStep(4)">
+                <span class="step-number">4</span>
+                Live Code Snippets
+            </div>
+            <!-- Open in inSign button -->
+            <button class="step step-action step-action-cta d-none" id="navbar-btn-open" onclick="window.app.openInSign()">
+                <span class="step-action-label"><i class="bi bi-box-arrow-up-right"></i> Open in inSign</span>
+                <span class="step-action-sub" id="navbar-session-id-display"></span>
+            </button>
+            <!-- Session Manager button -->
+            <button class="step step-action step-action-outline d-none" id="navbar-btn-session-mgr" onclick="window.app.openSessionManager()">
+                <span class="step-action-label"><i class="bi bi-kanban"></i> Session Manager</span>
+                <span class="step-action-sub" id="navbar-foruser-id-display"></span>
+            </button>
+        </div>
+
+        <!-- OpenAPI schema loading indicator -->
+        <span class="openapi-badge d-none" id="openapi-badge">
+            <i class="bi bi-arrow-repeat openapi-badge-spin"></i>
+            <span class="openapi-badge-text">Loading API schema...</span>
+        </span>
+
+        <!-- More menu (Docs, Swagger, GitHub, Dark mode) -->
+        <div class="dropdown">
+            <button class="btn btn-insign btn-insign-sm btn-insign-outline dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding:2px 8px;height:28px">
+                <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="./"><i class="bi bi-house me-2"></i>Home</a></li>
+                <li><a class="dropdown-item" href="guide.html"><i class="bi bi-rocket-takeoff me-2"></i>Getting Started Guide</a></li>
+                <li><a class="dropdown-item data-github-link" href="#" data-github-path="/blob/main/docs/DOCUMENTATION.md" target="_blank"><i class="bi bi-file-earmark-text me-2"></i>Docs</a></li>
+                <li><a class="dropdown-item" id="github-repo-link" href="#" target="_blank"><i class="bi bi-github me-2"></i>GitHub</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item" onclick="window.app.toggleDarkMode()" id="btn-dark-mode"><i class="bi bi-moon me-2"></i>Toggle dark mode</button></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="https://www.getinsign.de/impressum/" target="_blank"><i class="bi bi-building me-2"></i>Impressum</a></li>
+                <li><a class="dropdown-item" href="https://www.getinsign.de/datenschutz/" target="_blank"><i class="bi bi-shield-check me-2"></i>Datenschutz</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Hidden inputs to preserve JS compatibility -->
+    <input type="hidden" id="navbar-session-id" name="navbar-session-id">
+    <input type="hidden" id="navbar-foruser-id" name="navbar-foruser-id">
+</nav>

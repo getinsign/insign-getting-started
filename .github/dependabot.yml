@@ -1,0 +1,34 @@
+version: 2
+updates:
+  # Maven dependencies in src/java
+  - package-ecosystem: "maven"
+    directory: "/src/java"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+
+  # GitHub Actions versions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # npm dependencies (root package.json)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # npm dependencies (sign-widget-demo-application)
+  - package-ecosystem: "npm"
+    directory: "/src/sign-widget-demo-application"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # NOTE: Dependabot cannot scan CDN <script>/<link> tags in HTML files.
+  # For automated CDN dependency updates (jsdelivr, cdnjs, unpkg), consider
+  # using Renovate Bot which supports HTML file scanning:
+  # https://github.com/apps/renovate

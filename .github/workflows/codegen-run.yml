@@ -1,0 +1,36 @@
+name: Codegen Integration Run
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    name: run generated snippets (all languages) vs sandbox
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Run codegen integration test
+        run: node test/codegen-run.js
+
+      - name: Upload run output on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: codegen-run-output
+          path: test/run/output/
+          retention-days: 7

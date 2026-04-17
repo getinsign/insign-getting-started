@@ -1,0 +1,395 @@
+            <div id="step-1-panel">
+
+                <!-- Connection Settings -->
+                <div class="card-insign">
+                    <div class="card-header">
+                        <i class="bi bi-gear" style="font-size:1.1rem"></i>
+                        <h5 class="ms-0 mb-0" style="font-size:0.9rem">Connection Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 d-none" id="saved-profiles-group">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <label class="form-label fw-semibold mb-0" style="font-size:0.88rem"><i class="bi bi-bookmark-star" style="font-size:0.85rem"></i> Saved connections</label>
+                                <button type="button" class="btn btn-link text-danger p-0" id="btn-clear-all-storage" style="font-size:0.72rem;text-decoration:none" title="Delete all saved data from browser localStorage"><i class="bi bi-trash3"></i> Clear all saved data</button>
+                            </div>
+                            <div id="saved-profiles-list"></div>
+                        </div>
+                        <div id="manual-connection-fields">
+                            <label class="form-label text-muted" style="font-size:0.72rem; letter-spacing:0.03em; text-transform:uppercase">Manual connection</label>
+                            <div class="mb-2">
+                                <label class="form-label" style="font-size:0.72rem" for="cfg-base-url">API Base URL <span class="d-none" id="cors-direct-version" style="font-size:0.68rem;font-weight:400;color:var(--insign-success)"></span></label>
+                                <input type="text" class="form-control form-control-sm" id="cfg-base-url" name="api-base-url"
+                                       autocomplete="url" value="https://sandbox.test.getinsign.show">
+                            </div>
+                            <div class="d-flex gap-2 mb-2">
+                                <div class="flex-grow-1">
+                                    <label class="form-label" style="font-size:0.72rem" for="cfg-username">Username</label>
+                                    <input type="text" class="form-control form-control-sm" id="cfg-username" name="api-username"
+                                           autocomplete="username" value="controller">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <label class="form-label" style="font-size:0.72rem" for="cfg-password">Password</label>
+                                    <input type="password" class="form-control form-control-sm" id="cfg-password" name="api-password"
+                                           autocomplete="current-password" value="pwd.insign.sandbox.4561">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Save connection button -->
+                        <div class="mt-2 mb-2">
+                            <button type="button" class="btn btn-insign btn-insign-primary btn-insign-sm" id="btn-save-connection" style="padding:5px 18px">
+                                <i class="bi bi-save"></i> Save connection in browser
+                            </button>
+                        </div>
+
+                        <!-- Security warning: Save in browser -->
+                        <div class="security-hint security-hint-info d-none" id="save-credentials-warning">
+                            <div class="security-hint-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                            <div>
+                                <strong>localStorage is not secure storage.</strong>
+                                Your credentials are sent only to the inSign server above - this app runs entirely in your browser. However, saved data is stored in <code>localStorage</code> unencrypted.
+                                <ul class="security-hint-list">
+                                    <li>Any browser extension or XSS vulnerability could read the stored credentials</li>
+                                    <li>Data persists even after closing the browser - anyone with access to this device can retrieve it</li>
+                                    <li>Delete saved entries anytime via the <strong>&times;</strong> button in the "Saved connections" dropdown above</li>
+                                </ul>
+                                <div class="security-hint-rec"><i class="bi bi-shield-check"></i> Only save on trusted devices for non-production credentials.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Authentication -->
+                <div class="card-insign">
+                    <div class="card-header">
+                        <i class="bi bi-shield-lock" style="font-size:1.1rem"></i>
+                        <h5 class="ms-0 mb-0" style="font-size:0.9rem">API Authentication</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="auth-mode-selector mb-3" id="auth-mode-toggle">
+                            <button type="button" class="auth-mode-btn active" data-mode="basic"
+                                    onclick="window.app.setAuthMode('basic')">
+                                <i class="bi bi-key"></i> Basic Auth
+                            </button>
+                            <button type="button" class="auth-mode-btn" data-mode="oauth2"
+                                    onclick="window.app.setAuthMode('oauth2')">
+                                <i class="bi bi-shield-check"></i> OAuth2
+                            </button>
+                        </div>
+
+                        <!-- ===== Basic Auth info ===== -->
+                        <div id="auth-basic-panel">
+                            <p class="text-muted-sm mb-3">
+                                Using <strong>HTTP Basic Auth</strong> - credentials above are sent as
+                                <code>Authorization: Basic base64(username:password)</code> with every request.
+                            </p>
+                            <div class="headers-display mb-3" id="auth-basic-headers"></div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-success" style="font-size:0.75rem"><i class="bi bi-check-circle"></i> Active</span>
+                                <span class="text-muted-sm">All API calls use the credentials configured above.</span>
+                            </div>
+                        </div>
+
+                        <!-- ===== OAuth2 panel ===== -->
+                        <div id="auth-oauth2-panel" style="display:none">
+                            <p class="text-muted-sm mb-3">
+                                Request a Bearer token via <strong>OAuth2 Client Credentials</strong> flow.
+                                The token is then used as <code>Authorization: Bearer &lt;token&gt;</code> for all subsequent API calls.
+                            </p>
+
+                            <div class="card-insign mb-3" style="border:1px solid var(--insign-border)">
+                                <div class="card-header" style="padding:8px 12px">
+                                    <span class="badge-method badge-method-post">POST</span>
+                                    <span class="endpoint-path">/oauth2/token</span>
+                                    <span class="text-muted-sm ms-2">RFC 6749 §5 - Client Credentials Grant</span>
+                                </div>
+                                <div class="card-body" style="padding:12px">
+
+                                    <!-- Request Headers -->
+                                    <div class="section-title">Request Headers</div>
+                                    <div class="headers-display mb-3" id="auth-oauth2-headers">
+                                        <div><span class="header-name">Content-Type:</span> <span class="header-value">application/x-www-form-urlencoded</span></div>
+                                    </div>
+
+                                    <!-- Request Body -->
+                                    <div class="section-title">Request Body <span class="text-muted-sm">(form-urlencoded)</span></div>
+                                    <div class="mb-3" style="font-family:'Roboto Mono',monospace;font-size:0.82rem;background:var(--insign-bg);border:1px solid var(--insign-border);border-radius:6px;padding:10px">
+                                        <div class="row g-2 align-items-center mb-2">
+                                            <div class="col-auto"><span class="text-muted-sm" style="width:100px;display:inline-block">grant_type</span></div>
+                                            <div class="col"><input type="text" class="form-control form-control-sm" id="oauth2-grant-type" name="oauth2-grant-type" value="client_credentials" readonly style="font-family:monospace;font-size:0.8rem"></div>
+                                        </div>
+                                        <div class="row g-2 align-items-center mb-2">
+                                            <div class="col-auto"><span class="text-muted-sm" style="width:100px;display:inline-block">client_id</span></div>
+                                            <div class="col"><input type="text" class="form-control form-control-sm" id="oauth2-client-id" name="oauth2-client-id" autocomplete="username" style="font-family:monospace;font-size:0.8rem"></div>
+                                        </div>
+                                        <div class="row g-2 align-items-center">
+                                            <div class="col-auto"><span class="text-muted-sm" style="width:100px;display:inline-block">client_secret</span></div>
+                                            <div class="col"><input type="password" class="form-control form-control-sm" id="oauth2-client-secret" name="oauth2-client-secret" autocomplete="current-password" style="font-family:monospace;font-size:0.8rem"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Send button -->
+                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                        <button class="btn btn-insign btn-insign-cta" onclick="window.app.executeOAuth2Token()">
+                                            <i class="bi bi-send"></i> Request Token
+                                        </button>
+                                        <button class="btn btn-insign btn-insign-outline btn-insign-sm" onclick="window.app.clearOAuth2Token()" title="Clear token and revert to Basic Auth">
+                                            <i class="bi bi-x-circle"></i> Clear Token
+                                        </button>
+                                    </div>
+
+                                    <!-- Token status -->
+                                    <div id="oauth2-token-status" style="display:none">
+                                        <div class="section-title">Active Token</div>
+                                        <div class="d-flex align-items-center gap-2 mb-2">
+                                            <span class="badge bg-success" id="oauth2-status-badge"><i class="bi bi-check-circle"></i> Valid</span>
+                                            <span class="text-muted-sm" id="oauth2-token-ttl"></span>
+                                        </div>
+                                        <div class="headers-display mb-2" id="oauth2-active-header"></div>
+                                    </div>
+
+                                    <!-- Response -->
+                                    <div class="section-title">Response</div>
+                                    <div class="response-status" data-op="oauth2-token" style="display:none"></div>
+                                    <div class="editor-container" id="editor-op-oauth2-token-response" style="min-height:80px"></div>
+                                </div>
+                            </div>
+
+                            <div class="text-muted-sm" style="font-size:0.78rem">
+                                <i class="bi bi-info-circle"></i>
+                                The <code>client_id</code> and <code>client_secret</code> are synced from the Username/Password fields above.
+                                Tokens expire after ~30 minutes. When expired, requests fall back to Basic Auth automatically.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Webhook Relay -->
+                <div class="card-insign">
+                    <div class="card-header">
+                        <i class="bi bi-broadcast" style="font-size:1.1rem"></i>
+                        <h5 class="ms-0 mb-0" style="font-size:0.9rem">Webhook Relay</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                            <label class="toggle-pill toggle-pill-warn" for="cfg-webhooks">
+                                <input type="checkbox" id="cfg-webhooks">
+                                <span class="toggle-pill-switch"></span>
+                                <span class="toggle-pill-label"><i class="bi bi-broadcast" style="font-size:0.7rem"></i> Enable webhook relay</span>
+                            </label>
+                        </div>
+
+                        <!-- Security warning: Webhook relay -->
+                        <div class="security-hint security-hint-danger d-none" id="webhook-relay-warning">
+                            <div class="security-hint-icon"><i class="bi bi-shield-exclamation"></i></div>
+                            <div>
+                                <strong>Webhook data passes through 3rd party servers.</strong>
+                                When inSign sends a webhook callback, the payload is routed through a public relay service that you do not control. The webhook payload may contain:
+                                <ul class="security-hint-list">
+                                    <li><strong>Session IDs</strong> and <strong>transaction IDs</strong> that could be used to query or manipulate signing sessions</li>
+                                    <li><strong>Signer names</strong>, <strong>email addresses</strong>, and other personal data embedded in callback parameters</li>
+                                    <li><strong>Document metadata</strong> including filenames and status information</li>
+                                    <li><strong>Status changes</strong> that reveal the signing workflow and timing</li>
+                                </ul>
+                                <p style="margin-bottom:0">The relay service operator can <strong>see, log, and store all of this data</strong> in plain text. Endpoints are typically public URLs that anyone with the link could monitor.</p>
+                                <div class="security-hint-rec"><i class="bi bi-shield-check"></i> Acceptable for sandbox/demo use. For production data, use a self-hosted webhook endpoint (Val.town or custom).</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-2" id="webhook-provider-group" style="display:none">
+                            <label class="form-label">
+                                Webhook Provider
+                                <span class="text-muted-sm" style="font-size:0.66rem;font-weight:400"> - 3rd party services, data passes through external servers</span>
+                            </label>
+                            <div class="wh-dropdown position-relative" id="wh-dropdown">
+                                <div class="wh-dd-selected" id="wh-dd-toggle"></div>
+                                <div class="wh-dd-menu" id="wh-dd-menu"></div>
+                            </div>
+                            <div id="webhook-custom-url-group" style="display:none" class="mt-1">
+                                <input type="text" class="form-control form-control-sm" id="cfg-webhook-custom-url" name="cfg-webhook-custom-url"
+                                       placeholder="https://your-endpoint.example.com/webhook"
+                                       onchange="window.app.onWebhookCustomUrlChange()">
+                            </div>
+                        </div>
+                        <div class="cors-hint-banner d-none" id="cors-hint-banner-webhook">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <span>Webhook provider blocked by CORS. Enable the <strong>CORS proxy</strong> to route webhook requests through your local proxy.
+                            <a href="#cors-proxy-info" data-bs-toggle="collapse" style="font-size:0.74rem">Learn more</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CORS Proxy -->
+                <div class="card-insign">
+                    <div class="card-header">
+                        <i class="bi bi-shuffle" style="font-size:1.1rem"></i>
+                        <h5 class="ms-0 mb-0" style="font-size:0.9rem">CORS Proxy</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="cors-hint-banner d-none" id="cors-hint-banner-api">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <span>Your inSign server may block browser requests (CORS). Enable the <strong>CORS proxy</strong> below, or configure CORS on your server.
+                            <a href="#cors-proxy-info" data-bs-toggle="collapse" style="font-size:0.74rem">Learn more</a></span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 mb-2 flex-wrap" id="cors-proxy-toggle-wrap">
+                            <label class="toggle-pill" for="cfg-cors-proxy">
+                                <input type="checkbox" id="cfg-cors-proxy">
+                                <span class="toggle-pill-switch"></span>
+                                <span class="toggle-pill-label">Enable CORS proxy</span>
+                            </label>
+                        </div>
+                        <div class="text-muted-sm d-none" id="cors-proxy-security-warning" style="color:var(--insign-blue);margin-top:8px"><i class="bi bi-shuffle me-1"></i><strong>CORS proxy active</strong> - requests are routed through your local proxy. <a href="#cors-proxy-info" data-bs-toggle="collapse" style="font-size:0.76rem">Learn more</a></div>
+                        <div class="text-mono text-muted-sm d-none mt-1" id="trust-target-url" style="font-size:0.72rem"></div>
+                        <div class="mb-2" id="cors-proxy-url-group" style="display:none">
+                            <!-- Probe status + download + run instructions -->
+                            <div class="proxy-local-panel">
+                                <div class="proxy-local-status">
+                                    <span class="proxy-probe-dot" id="proxy-probe-dot"></span>
+                                    <span class="proxy-probe-label" id="proxy-probe-label">Checking...</span>
+                                </div>
+                                <div class="proxy-local-actions">
+                                    <a href="cors-proxy.js" download="cors-proxy.js" class="btn btn-insign btn-insign-sm btn-insign-outline" style="font-size:0.74rem;padding:2px 10px">
+                                        <i class="bi bi-download"></i> Download cors-proxy.js
+                                    </a>
+                                    <span class="text-muted-sm" style="font-size:0.72rem">then run:</span>
+                                    <code style="font-size:0.72rem">node cors-proxy.js</code>
+                                </div>
+                                <div class="text-muted-sm mt-1" style="font-size:0.7rem">
+                                    Single-file Node.js proxy (~80 lines, zero dependencies). Runs on <code>localhost:9009</code>. Credentials never leave your machine.
+                                </div>
+                            </div>
+
+                            <input type="text" class="form-control form-control-sm mt-2" id="cfg-cors-proxy-url" name="cors-proxy-url"
+                                   autocomplete="url" value="http://localhost:9009/?" style="font-family:'Roboto Mono',monospace;font-size:0.78rem">
+
+                            <!-- Expandable: Why is this needed? -->
+                            <div class="mt-2" style="font-size:0.76rem">
+                                <a href="#cors-proxy-info" data-bs-toggle="collapse" class="cors-info-toggle">
+                                    <i class="bi bi-info-circle me-1"></i>Why is this needed? What are my options?
+                                    <i class="bi bi-chevron-down cors-info-chevron"></i>
+                                </a>
+                                <div class="collapse mt-2" id="cors-proxy-info">
+                                    <div class="cors-info-panel">
+
+                                        <!-- The problem -->
+                                        <div class="cors-info-section">
+                                            <div class="cors-info-heading"><i class="bi bi-diagram-3"></i> The problem: browsers block cross-origin requests</div>
+                                            <div class="cors-flow">
+                                                <div class="cors-flow-node cors-flow-browser">
+                                                    <i class="bi bi-window"></i>
+                                                    <span>Browser</span>
+                                                </div>
+                                                <div class="cors-flow-arrow cors-flow-blocked">
+                                                    <i class="bi bi-x-circle-fill"></i>
+                                                    <span>blocked</span>
+                                                </div>
+                                                <div class="cors-flow-node cors-flow-server">
+                                                    <i class="bi bi-server"></i>
+                                                    <span>inSign</span>
+                                                </div>
+                                            </div>
+                                            <p class="cors-info-text">This app runs in your browser (e.g. on GitHub Pages) but needs to talk to your inSign server on a different domain. Browsers enforce <em>Cross-Origin Resource Sharing (CORS)</em> and block these requests unless the server explicitly allows them.</p>
+                                        </div>
+
+                                        <!-- Option A: local proxy (recommended) -->
+                                        <div class="cors-info-section">
+                                            <div class="cors-info-heading" style="color:var(--insign-success)"><i class="bi bi-star-fill"></i> Option A: Local CORS proxy (recommended)</div>
+                                            <div class="cors-flow">
+                                                <div class="cors-flow-node cors-flow-browser">
+                                                    <i class="bi bi-window"></i>
+                                                    <span>Browser</span>
+                                                </div>
+                                                <div class="cors-flow-arrow cors-flow-ok">
+                                                    <i class="bi bi-arrow-right"></i>
+                                                </div>
+                                                <div class="cors-flow-node cors-flow-proxy">
+                                                    <i class="bi bi-shuffle"></i>
+                                                    <span>Proxy</span>
+                                                </div>
+                                                <div class="cors-flow-arrow cors-flow-ok">
+                                                    <i class="bi bi-arrow-right"></i>
+                                                </div>
+                                                <div class="cors-flow-node cors-flow-server">
+                                                    <i class="bi bi-server"></i>
+                                                    <span>inSign</span>
+                                                </div>
+                                            </div>
+                                            <p class="cors-info-text">A tiny Node.js proxy runs on your machine, forwards requests to inSign, and adds the CORS headers the browser expects. No server configuration needed, credentials never leave localhost.</p>
+                                            <div class="cors-setup-tabs">
+                                                <button class="cors-setup-tab active" onclick="document.querySelectorAll('.cors-setup-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.cors-setup-pane').forEach(p=>p.style.display='none');document.getElementById('cors-setup-quick').style.display=''">
+                                                    <i class="bi bi-lightning-charge"></i> Quick start
+                                                </button>
+                                                <button class="cors-setup-tab" onclick="document.querySelectorAll('.cors-setup-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.cors-setup-pane').forEach(p=>p.style.display='none');document.getElementById('cors-setup-windows').style.display=''">
+                                                    <i class="bi bi-windows"></i> Windows
+                                                </button>
+                                                <button class="cors-setup-tab" onclick="document.querySelectorAll('.cors-setup-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.cors-setup-pane').forEach(p=>p.style.display='none');document.getElementById('cors-setup-mac').style.display=''">
+                                                    <i class="bi bi-apple"></i> macOS
+                                                </button>
+                                                <button class="cors-setup-tab" onclick="document.querySelectorAll('.cors-setup-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.cors-setup-pane').forEach(p=>p.style.display='none');document.getElementById('cors-setup-linux').style.display=''">
+                                                    <i class="bi bi-ubuntu"></i> Linux
+                                                </button>
+                                                <button class="cors-setup-tab" onclick="document.querySelectorAll('.cors-setup-tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.querySelectorAll('.cors-setup-pane').forEach(p=>p.style.display='none');document.getElementById('cors-setup-docker').style.display=''">
+                                                    <i class="bi bi-box-seam"></i> Docker
+                                                </button>
+                                            </div>
+                                            <div class="cors-setup-pane" id="cors-setup-quick">
+                                                <pre class="cors-code"><code>node cors-proxy.js</code></pre>
+                                                <p class="cors-info-text">Proxy runs on <code>http://localhost:9009</code>. That's it.</p>
+                                            </div>
+                                            <div class="cors-setup-pane" id="cors-setup-windows" style="display:none">
+                                                <p class="cors-info-text mb-1">Install <a href="https://nodejs.org" target="_blank">Node.js LTS</a>, then open PowerShell:</p>
+                                                <pre class="cors-code"><code>cd $env:USERPROFILE\Downloads
+node cors-proxy.js</code></pre>
+                                            </div>
+                                            <div class="cors-setup-pane" id="cors-setup-mac" style="display:none">
+                                                <pre class="cors-code"><code>brew install node
+node ~/Downloads/cors-proxy.js</code></pre>
+                                            </div>
+                                            <div class="cors-setup-pane" id="cors-setup-linux" style="display:none">
+                                                <pre class="cors-code"><code>sudo apt install nodejs
+node ~/Downloads/cors-proxy.js</code></pre>
+                                            </div>
+                                            <div class="cors-setup-pane" id="cors-setup-docker" style="display:none">
+                                                <p class="cors-info-text mb-1">No Node.js install needed:</p>
+                                                <pre class="cors-code"><code>docker run --rm -p 9009:9009 -v ./cors-proxy.js:/app.js node:alpine node /app.js</code></pre>
+                                            </div>
+                                        </div>
+
+                                        <!-- Option B: inSign server CORS config -->
+                                        <div class="cors-info-section">
+                                            <div class="cors-info-heading"><i class="bi bi-gear"></i> Option B: Configure CORS on the inSign server</div>
+                                            <p class="cors-info-text">If you have access to the inSign server configuration, you can allow this app's origin directly. Two properties are needed:</p>
+                                            <div class="cors-config-table">
+                                                <div class="cors-config-row">
+                                                    <code class="cors-config-key">cors.filteringenabled</code>
+                                                    <div class="cors-config-val">
+                                                        Must be set to <code>true</code> to activate CORS header processing.
+                                                        <span class="cors-config-default">Default: <strong>off</strong></span>
+                                                    </div>
+                                                </div>
+                                                <div class="cors-config-row">
+                                                    <code class="cors-config-key">cors.alloworigin</code>
+                                                    <div class="cors-config-val">
+                                                        Comma-separated list of allowed origins. The <code>Access-Control-Allow-Origin</code> header is set to the matching value.
+                                                        <span class="cors-config-default">Default includes origins for Azure SAML login and the Word add-in</span>
+                                                        <div class="cors-config-hint mt-1"><i class="bi bi-lightbulb"></i> Add this app's origin to the list: <code id="cors-origin-hint"></code></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="cors-info-text mt-2"><i class="bi bi-exclamation-triangle" style="color:var(--insign-orange)"></i> Be careful not to remove the existing default origins - they are required for Azure SAML and the Word add-in. Append your origin to the existing list.</p>
+                                        </div>
+
+                                        <!-- When you don't need either -->
+                                        <div class="cors-info-section">
+                                            <div class="cors-info-heading"><i class="bi bi-check2-circle"></i> When you don't need any of this</div>
+                                            <p class="cors-info-text"><strong>The inSign sandbox</strong> at <code>sandbox.test.getinsign.show</code> has relaxed CORS settings and works directly from any origin - no proxy or server configuration needed. That's why the CORS proxy option is hidden when the sandbox is selected.</p>
+                                            <p class="cors-info-text">For your own server: if it is on the same origin as this app, or if you have already set <code>cors.filteringenabled=true</code> with your origin in <code>cors.alloworigin</code>, then you can disable the CORS proxy toggle - no proxy needed.</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end cors-proxy-url-group -->
+                    </div>
+                </div>
+            </div>
