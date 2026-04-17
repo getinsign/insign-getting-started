@@ -60,6 +60,12 @@ code {
     height: 16px;
 }
 
+/* Logo variant swap: show dark-text logo in light mode, white-text in dark mode */
+[data-theme="dark"]  .navbar-insign .navbar-brand img.logo-light,
+[data-theme="light"] .navbar-insign .navbar-brand img.logo-dark {
+    display: none;
+}
+
 .navbar-brand-sub {
     font-size: 0.5rem;
     line-height: 1;
