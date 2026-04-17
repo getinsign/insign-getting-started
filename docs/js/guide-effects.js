@@ -256,11 +256,18 @@
         rootMargin: '0px 0px -40px 0px'
     });
 
-    // Observe on DOM ready (skip step1 - it waits for Monaco)
+    // Observe after first layout pass. DOMContentLoaded fires before layout is
+    // guaranteed; observing too early makes the initial IntersectionObserver
+    // callback see a stale (often zero) rect → reports isIntersecting:false →
+    // never fires again because nothing changes. Double rAF waits until after
+    // the browser has painted at least once.
     $(function () {
-        document.querySelectorAll('.scroll-reveal').forEach(function (el) {
-            if (el.id === 'step1') return;
-            observer.observe(el);
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                document.querySelectorAll('.scroll-reveal').forEach(function (el) {
+                    observer.observe(el);
+                });
+            });
         });
     });
 
