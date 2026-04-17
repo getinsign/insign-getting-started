@@ -1,0 +1,37 @@
+{
+  "error" : 0,
+  "message" : "ok",
+  "errormessage" : null,
+  "trace" : null,
+  "messages" : null,
+  "usermessage" : "Der Vorgang wurde erfolgreich übergeben.",
+  "externUsers" : [ {
+    "error" : 0,
+    "message" : "ok",
+    "trace" : null,
+    "messages" : null,
+    "sessionid" : null,
+    "usermessage" : null,
+    "externUser" : "signer1@example.test",
+    "password" : "0072084156",
+    "token" : "bd4b67bc5da32e88-7b0caafa-60f4-4600-8646-1d366b9e4140",
+    "externAccessLink" : "https://sandbox.test.getinsign.show/extern/direktbearbeitung?direkttoken=bd4b67bc5da32e88-7b0caafa-60f4-4600-8646-1d366b9e4140",
+    "sendEmails" : false,
+    "orderNumber" : 0,
+    "userType" : null
+  }, {
+    "error" : 0,
+    "message" : "ok",
+    "trace" : null,
+    "messages" : null,
+    "sessionid" : null,
+    "usermessage" : null,
+    "externUser" : "signer2@example.test",
+    "password" : "5239495403",
+    "token" : "b1afe394f58bfb43-d7721a0a-dfd6-4dc0-8019-72044a47651a",
+    "externAccessLink" : "https://sandbox.test.getinsign.show/extern/direktbearbeitung?direkttoken=b1afe394f58bfb43-d7721a0a-dfd6-4dc0-8019-72044a47651a",
+    "sendEmails" : false,
+    "orderNumber" : 0,
+    "userType" : null
+  } ]
+}

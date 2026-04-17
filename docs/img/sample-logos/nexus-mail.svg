@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 420 76" width="1260" height="228">
+  <defs>
+    <linearGradient id="nxm-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1B3A5C"/>
+      <stop offset="100%" stop-color="#0F2440"/>
+    </linearGradient>
+    <radialGradient id="nxm-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C9963A" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#C9963A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="nxm-line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C9963A" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#C75B4A" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#C9963A" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="72" height="72" rx="12" fill="url(#nxm-bg)"/>
+  <!-- Network nodes -->
+  <circle cx="40" cy="22" r="10" fill="#C9963A" fill-opacity="0.8"/>
+  <circle cx="22" cy="50" r="10" fill="#C75B4A" fill-opacity="0.8"/>
+  <circle cx="56" cy="50" r="10" fill="#C9963A" fill-opacity="0.8"/>
+  <!-- Connecting lines -->
+  <line x1="40" y1="22" x2="22" y2="50" stroke="#C9963A" stroke-width="1.8" stroke-opacity="0.4"/>
+  <line x1="40" y1="22" x2="56" y2="50" stroke="#C9963A" stroke-width="1.8" stroke-opacity="0.4"/>
+  <line x1="22" y1="50" x2="56" y2="50" stroke="#C75B4A" stroke-width="1.8" stroke-opacity="0.4"/>
+  <!-- Central glow -->
+  <circle cx="39" cy="40" r="12" fill="url(#nxm-glow)"/>
+  <!-- Node highlights -->
+  <circle cx="40" cy="22" r="4" fill="#fff" fill-opacity="0.2"/>
+  <circle cx="22" cy="50" r="4" fill="#fff" fill-opacity="0.15"/>
+  <circle cx="56" cy="50" r="4" fill="#fff" fill-opacity="0.2"/>
+  <!-- Company name -->
+  <text x="102" y="38" font-family="'Segoe UI',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="1">
+    <tspan fill="#C9963A">Nexus</tspan><tspan fill="#C75B4A" dx="4">Group</tspan>
+  </text>
+  <!-- Tagline -->
+  <text x="102" y="58" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" fill="#8DA4BE" letter-spacing="0.5">Venture Capital · M&amp;A Advisory · Growth Partners</text>
+  <rect x="102" y="66" width="260" height="1.5" rx="0.75" fill="url(#nxm-line)"/>
+</svg>

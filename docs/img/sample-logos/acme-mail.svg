@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 12 393 76" width="1179" height="228">
+  <defs>
+    <linearGradient id="amg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E88E5"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+  </defs>
+  <rect x="14" y="14" width="72" height="72" rx="14" fill="url(#amg)"/>
+  <path d="M50 26 L66 58 H56 L53.5 53 H46.5 L44 58 H34 Z M50 36 L46 49 H54 Z" fill="#fff"/>
+  <rect x="34" y="62" width="32" height="3" rx="1.5" fill="rgba(255,255,255,0.4)"/>
+  <text x="102" y="48" font-family="'Segoe UI',system-ui,sans-serif" font-weight="700" font-size="34" fill="#0D47A1" letter-spacing="-0.5">ACME</text>
+  <text x="206" y="48" font-family="'Segoe UI',system-ui,sans-serif" font-weight="300" font-size="34" fill="#42A5F5" letter-spacing="-0.5">Corp</text>
+  <text x="102" y="70" font-family="'Segoe UI',system-ui,sans-serif" font-weight="400" font-size="14" fill="#78909C">Enterprise Solutions &amp; Digital Services</text>
+  <line x1="102" y1="78" x2="340" y2="78" stroke="#E3F2FD" stroke-width="1.5"/>
+</svg>

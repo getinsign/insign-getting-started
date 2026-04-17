@@ -1,0 +1,41 @@
+            <div id="step-4-panel" class="d-none">
+                <div class="row g-3">
+                    <!-- Live Code Snippets -->
+                    <div class="col-12">
+                        <div class="card-insign">
+                            <div class="card-header">
+                                <i class="bi bi-code-slash" style="color:var(--insign-blue)"></i>
+                                <h5>Live Code Snippets</h5>
+                                <span class="text-muted-sm ms-auto">Generated from your current request</span>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted-sm mb-3">
+                                    These code snippets are generated from your last <code>/configure/session</code> request.
+                                    They reflect the exact options, features, and document settings you configured and show how to reproduce the same call in different programming languages.
+                                </p>
+                                <div class="d-flex align-items-center flex-wrap gap-2 mb-0">
+                                    <ul class="nav code-tabs mb-0 me-auto" id="code-lang-tabs" role="tablist">
+                                        <!-- populated by app.js -->
+                                    </ul>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="form-check form-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" id="code-docs-toggle" checked>
+                                            <label class="form-check-label text-muted-sm" for="code-docs-toggle">Docs</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" id="code-samples-toggle">
+                                            <label class="form-check-label text-muted-sm" for="code-samples-toggle">Additional</label>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-secondary" id="code-copy-btn" title="Copy to clipboard">
+                                            <i class="bi bi-clipboard"></i> Copy
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="code-snippet-container">
+                                    <div class="editor-container" id="editor-code-snippet"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>

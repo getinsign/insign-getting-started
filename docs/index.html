@@ -1,0 +1,547 @@
+<!--
+  index.html - inSign Developer Hub
+
+  Central landing page that helps developers find the right starting point
+  based on their goal: learn the API, explore interactively, or see working
+  integration examples. Links to guide.html, explorer.html, and the demo apps.
+
+  Hosted via GitHub Pages from the docs/ directory.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>!function(){var d=!0;try{var s=localStorage.getItem('insign-dark-mode');if(s!==null)d=s==='true'}catch(e){}document.documentElement.setAttribute('data-theme',d?'dark':'light')}()</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inSign for Developers - Electronic Signatures API</title>
+    <link rel="icon" href="favicon.png" sizes="32x32">
+    <link rel="icon" href="favicon-192.png" sizes="192x192">
+
+    <!-- Fonts (self-hosted via @fontsource) -->
+    <link href="vendor/fonts/roboto.css" rel="stylesheet">
+
+    <!-- Bootstrap 5 (self-hosted via npm) -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Reuse existing theme -->
+    <link href="css/style-base.css" rel="stylesheet">
+    <link href="css/theme-base.css" rel="stylesheet">
+    <link href="css/theme-components.css" rel="stylesheet">
+
+    <style>
+        /* ===== Hub-specific styles ===== */
+        .hub-wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2rem 1rem 1rem;
+        }
+
+        /* Hero */
+        .hub-hero {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+        }
+        .hub-hero h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .hub-hero .lead {
+            font-size: 1.05rem;
+            color: var(--insign-text);
+            margin-bottom: 0.25rem;
+        }
+        .hub-hero .sub {
+            font-size: 0.85rem;
+            color: var(--insign-text-muted);
+        }
+
+        /* Path cards */
+        .path-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin: 2rem 0;
+        }
+        .path-card {
+            background: var(--insign-card-bg);
+            border: 1px solid var(--insign-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .path-card:hover {
+            border-color: var(--insign-blue);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .path-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+        .path-card-icon.green  { background: rgba(40,167,69,0.12); color: #28a745; }
+        .path-card-icon.blue   { background: rgba(0,123,255,0.12); color: #007bff; }
+        .path-card-icon.purple { background: rgba(111,66,193,0.12); color: #6f42c1; }
+        .path-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+        .path-card p {
+            font-size: 0.82rem;
+            color: var(--insign-text-muted);
+            margin-bottom: 0.75rem;
+            flex-grow: 1;
+        }
+        .path-card .audience {
+            font-size: 0.72rem;
+            color: var(--insign-gray);
+            margin-bottom: 0.75rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--insign-border);
+        }
+        .path-card .btn { width: 100%; text-align: center; }
+
+        /* What's inside section */
+        .overview-table {
+            width: 100%;
+            font-size: 0.82rem;
+            border-collapse: collapse;
+        }
+        .overview-table th {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--insign-gray);
+            padding: 0.5rem 0.75rem;
+            border-bottom: 2px solid var(--insign-border);
+            text-align: left;
+        }
+        .overview-table td {
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--insign-border);
+            color: var(--insign-text);
+            vertical-align: top;
+        }
+        .overview-table tr:last-child td { border-bottom: none; }
+        .overview-table a { color: var(--insign-blue); }
+        .overview-table .tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: var(--insign-code-bg);
+            color: var(--insign-text-muted);
+            white-space: nowrap;
+        }
+
+        /* Learning path diagram */
+        .learning-path {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .lp-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--insign-card-bg);
+            border: 1px solid var(--insign-border);
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .lp-step i { font-size: 1rem; }
+        .lp-step.active {
+            border-color: var(--insign-blue);
+            background: rgba(0,123,255,0.06);
+        }
+        .lp-arrow {
+            font-size: 1.2rem;
+            color: var(--insign-gray);
+            padding: 0 0.4rem;
+        }
+
+        /* Section headers */
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--insign-border);
+        }
+
+        /* Persona matcher */
+        .persona-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        .persona-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            font-size: 0.82rem;
+            border-bottom: 1px solid var(--insign-border);
+        }
+        .persona-list li:last-child { border-bottom: none; }
+        .persona-list .scenario {
+            color: var(--insign-text-muted);
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+        .persona-list .recommendation {
+            color: var(--insign-text);
+            font-weight: 500;
+        }
+        .persona-list .recommendation a { color: var(--insign-blue); }
+
+        /* Navbar */
+        .navbar-insign {
+            background: var(--insign-card-bg);
+            border-bottom: 1px solid var(--insign-border);
+            padding: 0.35rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-brand-stack {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar-brand-stack img {
+            height: 22px;
+        }
+        .navbar-brand-sub {
+            font-size: 0.72rem;
+            color: var(--insign-text-muted);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .hub-footer {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+            font-size: 0.8rem;
+            color: var(--insign-text-muted);
+            margin-top: 2rem;
+            border-top: 1px solid var(--insign-border);
+        }
+        .hub-footer a { color: var(--insign-text-muted); }
+        .hub-footer a:hover { color: var(--insign-blue); }
+
+        .trust-badges { display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem; }
+        .trust-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--insign-code-bg);
+            color: var(--insign-text-muted);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 640px) {
+            .hub-hero h1 { font-size: 1.5rem; }
+            .persona-list li { flex-direction: column; gap: 0.25rem; }
+            .persona-list .scenario { min-width: 0; }
+            .lp-arrow { display: none; }
+            .learning-path { flex-direction: column; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ====================================================================
+     NAVBAR
+     ==================================================================== -->
+<nav class="navbar navbar-insign">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="./">
+            <div class="navbar-brand-stack">
+                <img src="img/inSign_logo.svg" alt="inSign">
+                <span class="navbar-brand-sub">Developer Hub</span>
+            </div>
+        </a>
+
+        <!-- Page navigation -->
+        <div class="nav-links d-none d-md-flex align-items-center" style="gap:0.25rem">
+            <a href="./" class="btn btn-insign btn-insign-sm btn-insign-primary" style="padding:2px 10px;font-size:0.75rem;line-height:24px"><i class="bi bi-house me-1"></i>Home</a>
+            <a href="guide.html" class="btn btn-insign btn-insign-sm btn-insign-outline" style="padding:2px 10px;font-size:0.75rem;line-height:24px"><i class="bi bi-rocket-takeoff me-1"></i>Guide</a>
+            <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-outline" style="padding:2px 10px;font-size:0.75rem;line-height:24px"><i class="bi bi-play-circle me-1"></i>Explorer</a>
+        </div>
+
+        <!-- More menu -->
+        <div class="dropdown">
+            <button class="btn btn-insign btn-insign-sm btn-insign-outline dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding:2px 8px;height:28px">
+                <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item d-md-none" href="guide.html"><i class="bi bi-rocket-takeoff me-2"></i>Getting Started Guide</a></li>
+                <li><a class="dropdown-item d-md-none" href="explorer.html"><i class="bi bi-play-circle me-2"></i>API Explorer</a></li>
+                <li class="d-md-none"><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="https://www.getinsign.com/" target="_blank"><i class="bi bi-globe me-2"></i>getinsign.com</a></li>
+                <li><a class="dropdown-item data-github-link" href="#" target="_blank"><i class="bi bi-github me-2"></i>GitHub</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item" onclick="toggleDarkMode()" id="btn-dark-mode"><i class="bi bi-moon me-2"></i>Toggle dark mode</button></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- ====================================================================
+     MAIN CONTENT
+     ==================================================================== -->
+<div class="hub-wrap">
+
+    <!-- Hero -->
+    <div class="hub-hero">
+        <h1>inSign for Developers</h1>
+        <p class="lead"><strong>Add electronic signatures to your application.</strong></p>
+        <p class="sub">EU-hosted. eIDAS-compliant. Free sandbox with zero setup - no registration, no API key, no credit card.</p>
+    </div>
+
+
+    <!-- ============================================================
+         THREE PATHS
+         ============================================================ -->
+    <div class="path-grid">
+
+        <!-- Path 1: Learn -->
+        <div class="path-card">
+            <div class="path-card-icon green"><i class="bi bi-rocket-takeoff"></i></div>
+            <h3>Learn the API</h3>
+            <p>Step-by-step guide through the core signing workflow. Create a session, upload a PDF, sign it, download the result - all live in the browser against the free sandbox.</p>
+            <div class="audience"><i class="bi bi-person me-1"></i>New to inSign? Start here. Takes about 5 minutes.</div>
+            <a href="guide.html" class="btn btn-insign btn-insign-sm btn-insign-cta"><i class="bi bi-rocket-takeoff me-1"></i>Open Getting Started Guide</a>
+        </div>
+
+        <!-- Path 2: Explore -->
+        <div class="path-card">
+            <div class="path-card-icon blue"><i class="bi bi-play-circle"></i></div>
+            <h3>Explore the API</h3>
+            <p>Full interactive playground with schema-aware JSON editor, autocomplete, code snippets in 13 languages, webhook viewer, and request tracing. Your complete API reference.</p>
+            <div class="audience"><i class="bi bi-person me-1"></i>Already know the basics? Dive deeper here.</div>
+            <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-primary"><i class="bi bi-play-circle me-1"></i>Open API Explorer</a>
+        </div>
+
+        <!-- Path 3: Build -->
+        <div class="path-card">
+            <div class="path-card-icon purple"><i class="bi bi-code-square"></i></div>
+            <h3>See it in Action</h3>
+            <p>Working demo applications showing real integrations: an embedded signature pad (Node.js) and a full backend integration (Java/Spring Boot). Clone, run, and adapt.</p>
+            <div class="audience"><i class="bi bi-person me-1"></i>Ready to integrate? Use these as your starting point.</div>
+            <a href="#demos" class="btn btn-insign btn-insign-sm btn-insign-outline"><i class="bi bi-code-square me-1"></i>See Demo Apps</a>
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         LEARNING PATH
+         ============================================================ -->
+    <div class="learning-path">
+        <div class="lp-step active"><i class="bi bi-rocket-takeoff"></i> Getting Started</div>
+        <span class="lp-arrow"><i class="bi bi-arrow-right"></i></span>
+        <div class="lp-step"><i class="bi bi-play-circle"></i> API Explorer</div>
+        <span class="lp-arrow"><i class="bi bi-arrow-right"></i></span>
+        <div class="lp-step"><i class="bi bi-code-square"></i> Demo App</div>
+        <span class="lp-arrow"><i class="bi bi-arrow-right"></i></span>
+        <div class="lp-step"><i class="bi bi-rocket"></i> Production</div>
+    </div>
+
+
+    <!-- ============================================================
+         WHERE DO I START?
+         ============================================================ -->
+    <h2 class="section-title"><i class="bi bi-signpost-split me-2"></i>Where should I start?</h2>
+
+    <ul class="persona-list">
+        <li>
+            <span class="scenario"><i class="bi bi-laptop me-1"></i> Building a web app that needs signatures?</span>
+            <span class="recommendation"><a href="guide.html">Getting Started Guide</a> + <a href="#demo-sigfunnel">Embedded Signature Pad Demo</a></span>
+        </li>
+        <li>
+            <span class="scenario"><i class="bi bi-server me-1"></i> Building a backend with signature workflows?</span>
+            <span class="recommendation"><a href="guide.html">Getting Started Guide</a> + <a href="#demo-java">Java Spring Boot Sample</a></span>
+        </li>
+        <li>
+            <span class="scenario"><i class="bi bi-search me-1"></i> Evaluating inSign for your team?</span>
+            <span class="recommendation"><a href="guide.html">Getting Started Guide</a> - click through in 5 minutes, live in the browser</span>
+        </li>
+        <li>
+            <span class="scenario"><i class="bi bi-book me-1"></i> Already know the API, looking for a specific field?</span>
+            <span class="recommendation"><a href="explorer.html">API Explorer</a> - schema-aware editor with autocomplete from the live OpenAPI spec</span>
+        </li>
+        <li>
+            <span class="scenario"><i class="bi bi-braces me-1"></i> Need code snippets in your language?</span>
+            <span class="recommendation"><a href="explorer.html#step4">API Explorer, Step 4</a> - code generation in 13 variants (Java, Python, PHP, C#, Node.js, Go, Rust, ...)</span>
+        </li>
+    </ul>
+
+
+    <!-- ============================================================
+         WHAT'S INSIDE
+         ============================================================ -->
+    <h2 class="section-title"><i class="bi bi-box-seam me-2"></i>What's in this repository?</h2>
+
+    <table class="overview-table">
+        <thead>
+            <tr>
+                <th>Component</th>
+                <th>What it is</th>
+                <th>Stack</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="guide.html"><strong>Getting Started Guide</strong></a></td>
+                <td>Interactive 4-step walkthrough of the core signing workflow with live API calls against the sandbox</td>
+                <td><span class="tag">Browser</span></td>
+            </tr>
+            <tr>
+                <td><a href="explorer.html"><strong>API Explorer</strong></a></td>
+                <td>Full interactive playground: schema-aware editor, code snippets in 13 languages, webhook viewer, request tracing</td>
+                <td><span class="tag">Browser</span></td>
+            </tr>
+            <tr>
+                <td><a href="#demo-sigfunnel"><strong>Signature Pad Demo</strong></a></td>
+                <td>SEPA mandate signing flow with embedded signature pad. Clone and run - connects to the sandbox out of the box</td>
+                <td><span class="tag">Node.js</span> <span class="tag">Express</span></td>
+            </tr>
+            <tr>
+                <td><a href="#demo-java"><strong>Java Sample App</strong></a></td>
+                <td>Full backend integration with pluggable API client architecture, SSE events, webhook handling</td>
+                <td><span class="tag">Java</span> <span class="tag">Spring Boot</span></td>
+            </tr>
+            <tr>
+                <td><strong>Postman Collection</strong></td>
+                <td>Pre-built collection for quick API testing in Postman, pre-configured for the sandbox</td>
+                <td><span class="tag">Postman</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- ============================================================
+         DEMO APPS
+         ============================================================ -->
+    <h2 class="section-title" id="demos"><i class="bi bi-code-square me-2"></i>Demo Applications</h2>
+
+    <!-- Sig-Funnel -->
+    <div class="path-card" id="demo-sigfunnel" style="margin-bottom:1.25rem">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+            <div class="path-card-icon purple" style="margin-bottom:0"><i class="bi bi-pen"></i></div>
+            <div>
+                <h3 style="margin-bottom:0">Embedded Signature Pad</h3>
+                <span style="font-size:0.72rem;color:var(--insign-gray)">Node.js / Express</span>
+            </div>
+        </div>
+        <p>A realistic SEPA Direct Debit Mandate signing flow. The user fills in personal data, the server generates a mandate PDF on the fly, creates an inSign session, and the signature pad is rendered inline - all without leaving the page.</p>
+        <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
+            <strong>Key concepts:</strong> Embedded mode, JWT authentication, <code>##SIG{...}</code> tags, cookieless browser-to-server communication, dynamic PDF generation with signature fields
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            <a href="https://github.com/getinsign/insign-getting-started/tree/main/src/sign-widget-demo-application" target="_blank" class="btn btn-insign btn-insign-sm btn-insign-outline"><i class="bi bi-github me-1"></i>View on GitHub</a>
+        </div>
+        <pre style="margin-top:0.75rem;background:var(--insign-code-bg);border:1px solid var(--insign-border);border-radius:8px;padding:0.75rem;font-size:0.78rem;font-family:'Roboto Mono',monospace;color:var(--insign-text)"><code>cd src/sign-widget-demo-application
+./run.sh              # installs deps if needed, starts the server
+# Open http://localhost:3000</code></pre>
+    </div>
+
+    <!-- Java App -->
+    <div class="path-card" id="demo-java">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+            <div class="path-card-icon blue" style="margin-bottom:0"><i class="bi bi-cup-hot"></i></div>
+            <div>
+                <h3 style="margin-bottom:0">Java Spring Boot Sample</h3>
+                <span style="font-size:0.72rem;color:var(--insign-gray)">Java / Spring Boot / Maven</span>
+            </div>
+        </div>
+        <p>Full backend integration demonstrating session creation, document upload, external signing invitations, real-time status tracking, webhook handling, and document download. Features a pluggable API client architecture - swap implementations by changing one Maven dependency.</p>
+        <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
+            <strong>Key concepts:</strong> Pluggable API clients, convention-based JSON mapping, forward-compatible POJO model, SSE real-time events, webhook integration
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            <a href="https://github.com/getinsign/insign-getting-started/tree/main/src/java" target="_blank" class="btn btn-insign btn-insign-sm btn-insign-outline"><i class="bi bi-github me-1"></i>View on GitHub</a>
+        </div>
+        <pre style="margin-top:0.75rem;background:var(--insign-code-bg);border:1px solid var(--insign-border);border-radius:8px;padding:0.75rem;font-size:0.78rem;font-family:'Roboto Mono',monospace;color:var(--insign-text)"><code>cd src/java/app
+mvn spring-boot:run -Pspring-client    # Option A: Spring REST client
+mvn spring-boot:run -Pinsign-client    # Option B: Java API client
+# Open http://localhost:8090</code></pre>
+    </div>
+
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <div class="hub-footer">
+        <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:0.5rem;font-size:0.85rem">
+            <a href="guide.html"><i class="bi bi-rocket-takeoff me-1"></i>Getting Started</a>
+            <a href="explorer.html"><i class="bi bi-play-circle me-1"></i>API Explorer</a>
+            <a class="data-github-link" href="#" target="_blank"><i class="bi bi-github me-1"></i>GitHub</a>
+            <a href="https://www.linkedin.com/company/insign-gmbh/"><i class="bi bi-linkedin me-1"></i>LinkedIn</a>
+            <a href="https://www.getinsign.com/"><i class="bi bi-globe me-1"></i>getinsign.com</a>
+        </div>
+        <a href="https://www.getinsign.com/"><strong>inSign GmbH</strong></a> - Simple signature processes<br>
+        <div class="trust-badges">
+            <span class="trust-badge"><i class="bi bi-flag"></i> EU</span>
+            <span class="trust-badge"><i class="bi bi-shield-check"></i> eIDAS</span>
+            <span class="trust-badge"><i class="bi bi-award"></i> ISO 27001</span>
+        </div>
+        <span style="font-size:0.72rem"><a href="https://www.getinsign.de/impressum/">Impressum</a> &middot; <a href="https://www.getinsign.de/datenschutz/">Datenschutz</a></span>
+    </div>
+
+</div>
+
+<!-- ==================================================================
+     SCRIPTS
+     ================================================================== -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+'use strict';
+function toggleDarkMode() {
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    try { localStorage.setItem('insign-dark-mode', next === 'dark' ? 'true' : 'false'); } catch(e) {}
+    var btn = document.getElementById('btn-dark-mode');
+    if (btn) {
+        var icon = btn.querySelector('i');
+        if (icon) { icon.className = next === 'dark' ? 'bi bi-sun me-2' : 'bi bi-moon me-2'; }
+    }
+}
+
+// Resolve GitHub link from repo (reuse pattern from other pages)
+(function() {
+    var ghLinks = document.querySelectorAll('.data-github-link');
+    // Default - will be detected from meta or hardcoded
+    var repoUrl = 'https://github.com/getinsign/insign-getting-started';
+    ghLinks.forEach(function(a) {
+        var path = a.getAttribute('data-github-path') || '';
+        a.href = repoUrl + path;
+    });
+})();
+</script>
+
+</body>
+</html>

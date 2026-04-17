@@ -1,0 +1,153 @@
+name: Node.js CI - Lint and Test
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'src/sign-widget-demo-application/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/**'
+      - 'test/**'
+      - 'docs/data/cf-webhook-worker.js'
+      - '.github/workflows/node.yml'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'src/sign-widget-demo-application/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/**'
+      - 'test/**'
+      - 'docs/data/cf-webhook-worker.js'
+      - '.github/workflows/node.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  sign-widget-demo:
+    name: sign-widget-demo-application tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/sign-widget-demo-application
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/sign-widget-demo-application/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npm test
+
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: sign-widget-playwright-results
+          path: src/sign-widget-demo-application/.target/test-results/
+          retention-days: 7
+
+  docker:
+    name: Docker build & push (sign-widget-demo)
+    needs: sign-widget-demo
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}/sig-funnel
+          tags: |
+            type=sha,prefix=
+            type=raw,value=latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: src/sign-widget-demo-application
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  ui-tests:
+    name: UI integration tests (root)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build vendor assets
+        run: npm run build:vendor
+
+      - name: Commit updated vendor assets if changed
+        run: |
+          if git diff --quiet docs/vendor/; then
+            echo "docs/vendor/ is up-to-date."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/vendor/
+            git commit -m "chore: rebuild docs/vendor/ after dependency update"
+            git push
+            echo "::notice::docs/vendor/ was out of date and has been updated automatically."
+          fi
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run UI integration tests
+        run: npm run test:ui
+
+  cf-worker:
+    name: Cloudflare Worker tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Run CF worker integration tests
+        run: node test/cf-worker-test.js

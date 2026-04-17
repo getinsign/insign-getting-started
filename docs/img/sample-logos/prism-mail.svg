@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 417 76" width="1251" height="228">
+  <defs>
+    <linearGradient id="prm-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#16213E"/>
+    </linearGradient>
+    <linearGradient id="prm-prism" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#B0BEC5" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon area background -->
+  <rect x="4" y="4" width="72" height="72" rx="12" fill="url(#prm-bg)"/>
+  <!-- Incoming beam -->
+  <polygon points="14,38 26,36.5 26,41.5 14,40" fill="#ffffff" fill-opacity="0.8"/>
+  <!-- Prism -->
+  <polygon points="40,12 26,62 54,62" fill="url(#prm-prism)" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.4"/>
+  <!-- Rainbow beams -->
+  <polygon points="54,26 70,14 70,19" fill="#FF1744" fill-opacity="0.9"/>
+  <polygon points="54,31 70,21 70,26" fill="#FF9100" fill-opacity="0.9"/>
+  <polygon points="54,36 70,28 70,33" fill="#FFD600" fill-opacity="0.9"/>
+  <polygon points="54,41 70,35 70,40" fill="#00E676" fill-opacity="0.9"/>
+  <polygon points="54,46 70,42 70,47" fill="#2979FF" fill-opacity="0.9"/>
+  <polygon points="54,51 70,49 70,54" fill="#D500F9" fill-opacity="0.9"/>
+  <!-- Company name with multicolor letters -->
+  <text x="102" y="38" font-family="'Segoe UI',system-ui,sans-serif" font-size="28" font-weight="700" letter-spacing="1">
+    <tspan fill="#FF1744">P</tspan><tspan fill="#FF9100">r</tspan><tspan fill="#FFD600">i</tspan><tspan fill="#00E676">s</tspan><tspan fill="#2979FF">m</tspan>
+    <tspan fill="#D500F9" dx="6">D</tspan><tspan fill="#FF1744">i</tspan><tspan fill="#FF9100">g</tspan><tspan fill="#00E676">i</tspan><tspan fill="#2979FF">t</tspan><tspan fill="#D500F9">a</tspan><tspan fill="#FFD600">l</tspan>
+  </text>
+  <!-- Tagline -->
+  <text x="102" y="58" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" fill="#90A4AE" letter-spacing="0.5">
+    Creative Agency · Digital Media · Brand Strategy
+  </text>
+</svg>

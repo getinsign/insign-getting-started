@@ -1,0 +1,9 @@
+{
+  "install": "cd src/sign-widget-demo-application && npm install",
+  "start": "node src/sign-widget-demo-application/src/server.js",
+  "watch": {
+    "restart": {
+      "include": ["src/sign-widget-demo-application/src/"]
+    }
+  }
+}

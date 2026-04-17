@@ -1,0 +1,109 @@
+<!-- RIGHT SIDEBAR - Webhooks, Polling, API Trace -->
+<div class="sidebar" id="trace-sidebar" style="top:70px;max-height:calc(100vh - 90px);display:flex;flex-direction:column;overflow-y:auto">
+
+                <!-- Sidebar collapse button -->
+                <div class="d-flex justify-content-end mb-1" style="flex-shrink:0">
+                    <button class="btn btn-insign btn-insign-sm btn-insign-outline" onclick="window.app.collapseSidebar()" title="Collapse sidebar" style="padding:1px 6px;font-size:0.68rem">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Section: Webhooks (visible at step 3+) -->
+                <div class="sidebar-section d-none" id="section-webhooks">
+                    <div class="sidebar-section-header" onclick="window.app.toggleSection('webhooks')">
+                        <i class="bi bi-broadcast" style="color:var(--insign-orange)"></i>
+                        <span>Webhooks</span>
+                        <span class="badge bg-success ms-1" style="font-size:0.6rem" id="webhook-live-badge">live</span>
+                        <div class="form-check form-switch ms-auto mb-0" onclick="event.stopPropagation()">
+                            <input class="form-check-input" type="checkbox" id="sidebar-webhooks-toggle" checked
+                                   onchange="window.app.toggleWebhookSection(this.checked)">
+                        </div>
+                        <i class="bi bi-chevron-down sidebar-section-chevron"></i>
+                    </div>
+                    <div class="sidebar-section-body" id="sidebar-webhook-content">
+                        <div id="sidebar-webhook-container">
+                            <div class="webhook-url-section mb-2">
+                                <div class="text-center text-muted-sm py-2">
+                                    <span class="spinner-insign spinner-dark me-2"></span>
+                                    Creating endpoint...
+                                </div>
+                            </div>
+                            <div class="webhook-requests webhook-panel">
+                                <div class="text-center text-muted-sm py-3">
+                                    <i class="bi bi-hourglass-split"></i> Waiting for webhooks...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Status Polling (visible at step 3+) -->
+                <div class="sidebar-section d-none" id="section-polling">
+                    <div class="sidebar-section-header" onclick="window.app.toggleSection('polling')">
+                        <i class="bi bi-arrow-repeat" style="color:var(--insign-blue)"></i>
+                        <span>Status Polling</span>
+                        <div class="form-check form-switch ms-auto mb-0" onclick="event.stopPropagation()">
+                            <input class="form-check-input" type="checkbox" id="sidebar-polling-toggle"
+                                   onchange="window.app.togglePollingSection(this.checked)">
+                        </div>
+                        <i class="bi bi-chevron-down sidebar-section-chevron"></i>
+                    </div>
+                    <div class="sidebar-section-body" id="sidebar-polling-content" style="display:none">
+                        <div class="mb-2">
+                            <label for="polling-endpoint-select" class="text-muted-sm d-block" style="font-size:0.72rem;margin-bottom:4px">Endpoint to poll:</label>
+                            <select id="polling-endpoint-select" class="form-select form-select-sm" style="font-size:0.78rem" onchange="window.app.onPollingEndpointChange()">
+                                <option value="/get/status">/get/status - Full session status</option>
+                                <option value="/get/checkstatus">/get/checkstatus - Lightweight status check</option>
+                                <option value="/get/externInfos">/get/externInfos - External signing progress</option>
+                                <option value="/get/audit">/get/audit - Audit trail / event log</option>
+                            </select>
+                            <div id="polling-endpoint-desc" class="text-muted-sm mt-1" style="font-size:0.68rem;line-height:1.3;color:var(--insign-text-muted)">
+                                Returns full document details, signature fields, roles and their signing status.
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-1 mb-2">
+                            <span class="text-muted-sm text-nowrap" style="font-size:0.65rem">3s</span>
+                            <input type="range" id="polling-interval-slider" class="polling-slider" min="3" max="30" step="1" value="15"
+                                   style="--poll-progress:0%"
+                                   oninput="window.app.onPollingIntervalChange(this.value)">
+                            <span class="text-muted-sm text-nowrap" style="font-size:0.65rem">30s</span>
+                            <span id="polling-interval-label" class="polling-interval-badge">15s</span>
+                        </div>
+                        <div class="d-flex gap-2 mb-2 align-items-center">
+                            <button class="btn btn-insign btn-insign-sm btn-insign-outline" id="btn-polling-toggle" onclick="window.app.togglePolling()">
+                                <i class="bi bi-arrow-repeat polling-spin"></i> Polling
+                            </button>
+                            <button class="btn btn-insign btn-insign-sm btn-insign-outline" onclick="window.app.pollNow()">
+                                <i class="bi bi-arrow-clockwise"></i> Poll Now
+                            </button>
+                            <span class="text-muted-sm" id="polling-status-text" style="font-size:0.72rem"></span>
+                        </div>
+                        <div id="polling-changes">
+                            <div class="text-center text-muted-sm py-3">
+                                <i class="bi bi-hourglass-split"></i> Waiting for status changes...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: API Trace -->
+                <div class="sidebar-section" id="section-trace">
+                    <div class="sidebar-section-header" onclick="window.app.toggleSection('trace')">
+                        <i class="bi bi-journal-text" style="color:var(--insign-blue)"></i>
+                        <span>API Trace</span>
+                        <span class="badge bg-secondary ms-1" style="font-size:0.6rem" id="trace-count">0</span>
+                        <button class="btn btn-insign btn-insign-sm btn-insign-outline ms-auto" onclick="event.stopPropagation();window.app.clearTrace()" title="Clear trace" style="padding:1px 6px;font-size:0.68rem">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                        <i class="bi bi-chevron-down sidebar-section-chevron"></i>
+                    </div>
+                    <div class="sidebar-section-body">
+                        <div id="trace-entries">
+                            <div class="text-center text-muted-sm py-3" id="trace-empty">
+                                <i class="bi bi-hourglass-split"></i> No API calls yet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>

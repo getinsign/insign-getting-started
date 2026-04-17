@@ -1,0 +1,327 @@
+
+:root {
+    /*---------------
+    # Fonts #
+    ---------------*/
+    --insignFont: "Roboto", sans-serif;
+    --insignMainFont: var(--insignFont);
+
+    /*---------------
+    # Bootstrap CSS palette #
+    ---------------*/
+    --bs-border-width: 1px;
+    --bs-border-color: #dee2e6;
+
+    /*---------------
+    # Color palette #
+    ---------------*/
+    --800: #3076d0;
+
+
+
+    --insignNavy: #2769A2;
+	--insignBlue: #0165BC;
+    --insignModernBlue: #3F8CE9;
+    --insignMediumBlue: #2F86EB;
+    --insignLightBlue: var(--800);
+    --insignLightBlue2: #0c9eff;
+    --insignLighterBlue: #83BDE1;
+    --insignUltraLightBlue: #ECF5FA;
+    --insignLightestBlue: #D4E9FC;
+    --insignHighlightBlue: #E6F4FF;
+    --insignHigherLightBlue: #EBF7FF;
+    --insignWhite: #FFFFFF;
+    --insignLightestGrey: #F9F9F9;
+    --insignLightestGrey2: #FCFDFD;
+    --insignLigtherGrey: #F0F3F6;
+    --insignLightGrey: #EAEDF3;
+    --insignGrey: #EEEEEE;
+    --insignGrey2: #F5F5F5;
+    --insignGrey3: #F1F4F9;
+    --insignGrey4: #DADFE3;
+    --insignGrey5: #E6E9EC;
+    --insignMiddleGrey: #CED4DA;
+    --insignMediumGrey: #A8A8A8;
+    --insignMediumGrey2: #6C757D;
+    --insignDarkGrey: #919191;
+    --insignDarkerGrey: #757575;
+    --insignDarkestGrey: #6B6C6F;
+    --insignVioletGrey: #636E95;
+    --insignLightBlack: #5E5E5E;
+    --insignAlternativeBlack: #3B4859;
+    --insignBlack: #3E3F42;
+    --insignLightDarkBlack: #3F3B3B;
+	--insignDarkBlack: #2C2C2C;
+    --insignDarkerBlack: #0000004D;
+    --insignDarkestBlack: #00000029;
+    --insignYellow: #FCC868;
+    --insignAlternativeYellow: #FFC021;
+    --insignLightGreen: #47D764;
+    --insignGreen: #0B831C;
+    --insignMiddleGreen: #00B69B;
+    --insignDarkGreen: #0A8765;
+    --insignLightOrange: #FB941D;
+    --insignOrange: #E48803;
+    --insignBlueInverted: #FE9A43;
+    --insignLightestRed: #FFE9EA;
+    --insignLighterRed: #FFBBBB;
+    --insignLightRed: #fE0000;
+    --insignRed: #BD2318;
+
+    /*---------
+    # Old colors #
+    ---------*/
+    --insignLightBlueOld: #128CDA;
+
+    /*---------
+    # General #
+    ---------*/
+    --insignMain: var(--insignBlue);
+    --insignLightMain: var(--insignLightBlue);
+    --insignLighterMain: var(--insignLightBlue2);
+    --insignLightestMain: var(--insignLighterBlue);
+    --insignTransparentMain: var(--insignMain)25;
+    --insignErrorColorOld: var(--insignLightRed);
+    --insignErrorColor: var(--insignRed);
+    --insignSuccessColorOld: var(--insignGreen);
+    --insignSuccessColor: var(--insignDarkGreen);
+    --insignWarnColor: var(--insignAlternativeYellow);
+    --insignHoverBackground: var(--insignGrey2);
+    --insignLightHoverBackground: var(--insignGrey2);
+    
+    
+
+    /*General Styling*/
+    --insignBackgroundColor: var(--insignLigtherGrey);
+    --insignTextColor: var(--insignLightBlack);
+    --insignLabelColor: var(--insignBlack);
+    --insignBorderColor: var(--insignMiddleGrey);
+
+    /*Primary Buttons*/
+    --insignButtonPrimaryBackground: var(--insignMain);
+    --insignButtonPrimaryBorder: var(--insignMain);
+    --insignButtonPrimaryColor: var(--insignWhite);
+    --insignButtonPrimaryHoverBackground: var(--insignLightMain);
+    --insignButtonPrimaryHoverBorder: var(--insignLightMain);
+    --insignButtonPrimaryHoverColor: var(--insignWhite);
+
+    /*Secondray Buttons*/
+    --insignButtonSecondaryBackground: var(--insignLightestGrey);
+    --insignButtonSecondaryBorder: var(--insignMiddleGrey);
+    --insignButtonSecondaryColor: var(--insignMain);
+    --insignButtonSecondaryHoverBackground: var(--insignLigtherGrey);
+    --insignButtonSecondaryHoverBorder: var(--insignGrey);
+    --insignButtonSecondaryHoverColor: var(--insignMain);
+
+    /*Transparent Buttons*/
+    --insignButtonTransparentHoverBackground: var(--insignLigtherGrey);
+    --insignButtonTransparentActiveBackground: var(--insignWhite);
+    --insignButtonTransparentHoverColor: var(--insignLighterMain);
+
+    /*Links*/
+    --insignLinkColor: var(--insignMain);
+    --insignLinkHoverColor: var(--800);
+    --insignCookieLink:  var(--insignLinkColor);
+
+    /*Footer in Start-Module*/
+    --insignFooterBackground: var(--insignLigtherGrey);
+    --insignFooterColor: var(--insignDarkBlack);
+    --insignFooterBorderColor: var(--insignGrey);
+
+    /*Popup-Dialog*/
+    --insignDialogBackground: var(--insignWhite);
+    --insignDialogColor: var(--insignBlack);
+
+    /*Popup-Dialog-Header*/
+    --insignDialogHeaderColor: var(--insignMain);
+    --insignDialogHeaderBackground: var(--insignGrey);
+
+    /*Toast*/
+    --insignToastBackground: var(--insignWhite);
+    --insignToastBorder: var(--insignGrey);
+    --insignToastText: var(--insignLightBlack);
+    --insignToastTitle: var(--insignBlack);
+
+    --insignHeaderUsernameColor: var(--insignBlack);
+
+    /*--------
+    # Editor #
+    --------*/
+    --insignField: var(--insignUltraLightBlue);
+	--insignFieldBorder: var(--insignLightestMain);
+    --insignFieldEditorBorder: var(--insignBlue);
+    --insignRequiredField: var(--insignLightestRed);
+	--insignRequiredFieldBorder: var(--insignRed);
+
+    /*Upload*/
+    --insignUploadHeadline: var(--insignAlternativeBlack);
+    --dragAndDrop: var(--insignLightDarkBlack);
+	
+    /*Formular Editor*/
+    --insignFormEditor: var(--insignLightBlack);
+    --insignVerticalDivider: var(--insignMiddleGrey);
+
+	/*Nav-Bar und normale Buttons*/
+    --insignNavBackground: var(--insignDarkBlack);
+    --insignNavColor: var(--insignWhite);
+	--insignNavSeparater: var(--insignGrey5);
+	
+    /*Signature Count Bar*/
+    --insignSigCountBackground: var(--insignWhite);
+    --insignSigCountColor: var(--insignDarkBlack);
+    
+
+
+
+	/*Nav-Bar Hover normale Buttons*/
+    --insignNavHoverBackground: var(--insignGrey2);
+    --insignNavHoverColor: var(--insignLightMain);
+    --insignNavHoverBorderColor: var(--insignMain);
+    
+
+	/*Nav-Bar Next-Action*/
+    --insignNavNextActionBackground: var(--insignMain);
+    --insignNavNextActionColor: var(--insignWhite);
+    --insignNavNextActionHoverBackground: var(--insignLightMain);
+    --insignNavNextActionHoverColor: var(--insignWhite);
+    /*Nav toolbar*/
+    --insignNavToolbarIconColor: var(--insignDarkBlack);
+    /*Sidebar text color*/
+    --insignSideBarTextColor: var(--insignDarkBlack);
+    
+    /*Burger nose*/
+    --burgerNoseBackgroundColor: var(--insignWhite);
+    /*Assitant*/
+    --insignGuideArrowBackgroundColor: var(--800);
+    --insignGuideArrowSecondaryBackgroundColor: var(--insignLightBlack);
+    --insignGuideAbsoluteGuideTextColor: var(--insignBlack);
+
+	/*Header im Menu*/
+    --insignNavHeaderBackground: var(--insignLightBlack);
+    --insignNavHeaderColor: var(--insignWhite);
+
+	/*Aktiver Menu-Knopf*/
+    --insignNavActiveBackground: var(--insignLightBlack);
+    --insignNavActiveColor: var(--insignWhite);
+
+	/*Dokument Name*/
+    --insignNavDocNameBackground: var(--insignMiddleGrey);
+    --insignNavDocNameColor: var(--insignMain);
+    --insignNavDocNameInactivColor: var(--insignDarkBlack);
+    --insignNavDocThumbsBackground: var(--insignLightestGrey);
+
+	/*E-Mails*/
+	--insignMailHeadingColor: var(--insignDarkBlack);
+	--insignMailHeadingBlockColor: var(--insignLightBlack);
+	--insignMailHeadingBorderColor: var(--insignMain);
+	--insignMailTextColor: var(--insignDarkerGrey);
+	--insignMailBorderColor:  var(--insignGrey);
+    --insignMailButtonPrimaryBackground: var(--insignMain);
+    --insignMailButtonPrimaryColor: var(--insignWhite);
+    --insignMailFooter: var(--insignGrey);
+    /*E-Mails NEW*/
+    --insignMailBackground: var(--insignLigtherGrey);
+	--insignMailBackgroundMain: var(--insignLightestGrey);
+	--insignMailBackgroundBlock: var(--insignWhite);
+	--insignMailMainTextColor: var(--insignBlack);
+	--insignMailLighterTextColor: var(--insignLightBlack);
+	--insignMailImprintColor: var(--insignMediumGrey);
+	--insignMailAdColor: var(--insignLightBlack);
+	--inSignMailWarningColor: var(--insignRed);
+	
+	/*RW: Probably not the right place to add these values but makes sense*/
+	--insignMailLogoHeight: 50;
+	--insignMailWidth: 800px;
+
+    /*Mail modals*/
+    --insignMailFormBorderColor: var(--insignGrey);
+    --insignMailFormTitleColor: var(--insignBlack);
+    --insignMailFormHeaderButtonColor: var(--insignLightBlack);
+    --insignMailFormHeaderButtonFocusColor: var(--insignGrey);
+    --insignMailFormHeaderBackgrounColor: var(--insignLightestGrey);
+    --insignMailAddFormButtonColor: var(--insignLightBlack);
+
+    /*Styling Farben*/
+    --insignBorderFocusColor: var(--insignWarnColor);
+
+    /*Pairing Modal*/
+    --insignPairingOptionBackgroundColor: var(--insignLightestGrey);
+
+    /*---------
+    # Gallery #
+    ---------*/
+    --insignGalleryHeaderIcon: var(--insignWhite); /*Used in old header*/
+    --insignGalleryFocusColor: var(--insignBlue);
+
+    --insignGalleryDocumentTitleColor: var(--insignBlack);
+    --insignGalleryRowIcon: var(--insignLightBlack);
+	--insignGalleryRowIconBackGroundColor: var(--insignLightestGrey);
+	--insignGalleryHeaderColor: var(--insignBlack);
+	--insignGalleryTableHeadColor: var(--insignLightBlack);
+	--insignGalleryTextColor: var(--insignDarkestGrey);
+	--insignGalleryDropdownTextColor: var(--insignLightBlack);
+	--insignGalleryHoverColor: var(--insignNavHoverColor);
+	--insignGalleryHoverBorderColor: var(--insignNavHoverBorderColor);
+    --insignGalleryHoverBackground: var(--insignNavHoverBackground);
+
+    /* process status colors */
+	--insignGalleryStatusNeedAction: var(--insignModernBlue);
+	--insignGalleryStatusExtern: var(--insignSuccessColor);
+    --insignGalleryStatusFinished: var(--insignLightBlack);
+    --insignGalleryStatusError: var(--insignErrorColor);
+
+    --insignGalleryFormPlaceholderColor: var(--insignDarkGrey);
+	
+	--insignGallerySettingsNavColor: var(--insignLightBlack);
+	--insignGallerySettingsLabelColor: var(--insignLabelColor);
+	--insignGallerySettingsInputTextColor: var(--insignBlack);
+	
+	--insignStartProcessTemplateColor: var(--insignLightestGrey);
+	--insignStartProcessTemplateTextColor: var(--insignBlack);
+	--insignStartProcessTemplateBorderColor: var(--insignLightGrey);
+
+    --insignSeparatorColor: #0000001A;
+
+    /*-------
+    # Login #
+    -------*/
+	--insignLoginHeaderColor: var(--insignBlack);
+	--insignLoginSubheaderColor: var(--insignLightBlack);
+	--insignLoginTextColor: var(--insignLightBlack);
+	--insignLoginLinkTextColor: var(--insignDarkestGrey);
+	--insignLoginShowHideIconColor: var(--insignDarkGrey);
+
+    /* Error and message icon colors */
+    --insignSuccessIconColor: var(--insignDarkGreen);
+    --insignWarningIconColor: var(--insignLightOrange);
+    --insignLockedIconColor: var(--insignLightMain);
+    --insignErrorIconColor: var(--insignLightRed);
+    --insignNoteIconColor: var(--insignMediumBlue);
+    --insignRejecetedIconColor: var(--insignLightBlack);
+    --insignToastWarningIconColor: var(--insignAlternativeYellow);
+    /*Insign customer portal */
+    --insignCustomerPortalBgColor: var(--insignGrey2);
+    --insignCustomerPortalTable1Header:var(--insignLightestGrey2);
+    --insignCustomerPortalTable2Header:var(--insignGrey3);
+    --insignCustomerPortalStatusGreen: var(--insignGreen);
+    --insignCustomerPortalStatusVioletGrey: var(--insignVioletGrey);
+    --insignCustomerPortalStatusDeactivated: var(--insignMediumGrey2);
+    --insignCustomerPortalCancelBackgroundColor: var(--insignLightestGrey);
+    --insignCustomerPortalCancelInfo: var(--insignOrange);
+    --insignCustomerPortalBurgerCollapsed: var(--insignLightestGrey);
+    --insignCustomerPortalBurger: var(--insignGrey);
+    --insignCustomerPortalCardColor: var(--insignGrey4);
+    --insignCustomerPortalDisableTextColor: var(--insignMediumGrey2);
+    --insignCustomerPortalBorderColor: var(--insignMiddleGrey);
+    --insignCustomerPortalLabelColor: var(--insignLightBlack);
+    --insignCustomerPortalInsignBlack: var(--insignBlack);
+    /*Quicktip*/
+    --insignQuickTipBackgroundColor: var(--insignBlue);
+    --insignQuickTipTextColor: var(--insignWhite);
+    --insignQuickTipFocusPointColor: var(--insignMediumBlue);
+    --insignAttentionDotColor1: var(--800);
+    --insignAttentionDotColor2: var(--insignLightBlue2);
+    
+    
+    
+}

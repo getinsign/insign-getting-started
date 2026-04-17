@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="13 18 445 105" width="1335" height="315">
+  <defs>
+    <linearGradient id="glg2" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#66BB6A"/>
+      <stop offset="100%" stop-color="#1B5E20"/>
+    </linearGradient>
+  </defs>
+  <circle cx="65" cy="70" r="50" fill="url(#glg2)"/>
+  <path d="M65 24 Q92 40 88 70 Q80 58 65 55 Q50 58 42 70 Q38 40 65 24Z" fill="#C8E6C9" fill-opacity="0.85"/>
+  <path d="M65 38 Q82 48 79 66 Q74 58 65 56 Q56 58 51 66 Q48 48 65 38Z" fill="#fff" fill-opacity="0.65"/>
+  <line x1="65" y1="55" x2="65" y2="110" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+  <path d="M52 88 Q65 78 78 88" fill="none" stroke="#fff" stroke-width="2" opacity="0.4"/>
+  <path d="M56 98 Q65 90 74 98" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.3"/>
+  <text x="132" y="62" font-family="'Segoe UI',system-ui,sans-serif" font-weight="700" font-size="46" fill="#1B5E20" letter-spacing="-1">GreenLeaf</text>
+  <text x="132" y="90" font-family="'Segoe UI',system-ui,sans-serif" font-weight="300" font-size="20" fill="#4CAF50" letter-spacing="2">SUSTAINABILITY</text>
+  <line x1="132" y1="100" x2="370" y2="100" stroke="#C8E6C9" stroke-width="2"/>
+  <text x="132" y="118" font-family="'Segoe UI',system-ui,sans-serif" font-weight="400" font-size="12" fill="#81C784">Clean Energy · Smart Agriculture · Carbon Neutral</text>
+</svg>

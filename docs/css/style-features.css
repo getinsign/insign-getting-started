@@ -1,0 +1,542 @@
+/* === Feature Configurator ============================================= */
+
+/* Feature changed count badge */
+.feature-changed-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+/* Branding header layout (text wraps, summary on right) */
+.branding-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+.branding-header-text {
+    flex: 1 1 50%;
+    min-width: 0;
+}
+.branding-header-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 50%;
+    justify-content: center;
+    margin-right: 20px;
+}
+.branding-header-dots {
+    display: flex;
+    gap: 3px;
+}
+.branding-header-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.branding-header-logo {
+    width: 200px;
+    border-radius: 6px;
+    object-fit: contain;
+    margin: 0;
+    display: block;
+}
+
+.feature-configurator-box {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Shine sweep animation */
+.feature-configurator-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+}
+.feature-configurator-box.shine::after {
+    animation: configurator-shine 1.8s ease-in-out 3;
+}
+@keyframes configurator-shine {
+    0%   { left: -60%; opacity: 1; }
+    100% { left: 120%; opacity: 1; }
+}
+
+.feature-configurator-header {
+    padding: 12px 16px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+}
+
+.feature-configurator-title i {
+    margin-right: 4px;
+}
+
+.feature-configurator-subtitle {
+    margin-top: 3px;
+    line-height: 1.4;
+}
+
+.feature-configurator-chevron {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    transition: transform 0.2s;
+}
+[aria-expanded="true"] .feature-configurator-chevron,
+.feature-configurator-header:not(.collapsed) .feature-configurator-chevron {
+    transform: rotate(180deg);
+}
+
+/* Logo set cards */
+.logo-set-card {
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 150px;
+    min-width: 120px;
+    flex-shrink: 1;
+    text-align: center;
+}
+.logo-set-card .logo-set-name {
+    margin-top: 4px;
+}
+.logo-set-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.logo-set-row img {
+    border-radius: 3px;
+    padding: 2px;
+}
+.logo-set-icon { width: 28px; height: 28px; object-fit: contain; }
+.logo-set-mail { width: 70px; height: 35px; object-fit: contain; }
+.logo-set-login { height: 22px; max-width: 140px; object-fit: contain; margin-top: 2px; }
+
+/* Color scheme preset buttons */
+.color-scheme-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.color-scheme-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Rich CSS Editor with color swatches */
+.css-rich-editor {
+    line-height: 1.65;
+    padding: 8px 18px;
+    max-height: 120px;
+    overflow-y: auto;
+    white-space: pre;
+    tab-size: 2;
+    scrollbar-width: thin;
+    cursor: pointer;
+    transition: max-height 0.3s ease;
+}
+.css-rich-editor.expanded {
+    max-height: none;
+    cursor: default;
+}
+.css-rich-editor::-webkit-scrollbar { width: 6px; }
+.css-rich-editor::-webkit-scrollbar-thumb { border-radius: 3px; }
+
+.css-color-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-right: 2px;
+    margin-top: -1px;
+}
+
+/* Mail header preview */
+#brand-app-icon-preview img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 4px;
+    padding: 2px;
+}
+#brand-mail-header-preview img {
+    width: 60px;
+    height: 30px;
+    object-fit: contain;
+    border-radius: 4px;
+    padding: 2px;
+}
+#brand-logo-extern-preview img {
+    width: 80px;
+    height: 26px;
+    object-fit: contain;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.feature-group {
+    padding-bottom: 8px;
+}
+
+.feature-group:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.feature-group-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 0;
+    user-select: none;
+}
+
+.feature-toggle {
+    padding: 4px 0 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.feature-info-btn {
+    cursor: pointer;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
+.feature-info-btn:hover { opacity: 1; }
+.feature-info-btn.pinned { opacity: 1; }
+
+/* Description panel: hidden by default */
+.feature-desc {
+    line-height: 1.45;
+    padding: 6px 10px 8px 10px;
+    border-radius: 6px;
+    display: none;
+    z-index: 50;
+}
+/* Pinned: inline (pushes content, sticky) */
+.feature-desc.pinned {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 2px 0 4px 0;
+}
+/* Floating tooltip that follows cursor */
+#feature-float-tooltip {
+    position: fixed;
+    z-index: 9999;
+    max-width: 420px;
+    line-height: 1.45;
+    padding: 8px 12px;
+    border-radius: 8px;
+    pointer-events: none;
+    display: none;
+    font-size: 0.75rem;
+}
+
+/* JSON hover tooltip for trace/polling <pre> elements */
+#json-hover-tooltip {
+    position: fixed;
+    z-index: 9999;
+    max-width: 420px;
+    line-height: 1.45;
+    padding: 8px 12px;
+    border-radius: 8px;
+    pointer-events: none;
+    display: none;
+    font-size: 0.75rem;
+}
+/* Hoverable JSON key in trace/polling */
+.json-key-hover {
+    cursor: help;
+    border-radius: 2px;
+    transition: background 0.15s;
+}
+.json-key-hover:hover {
+    background: rgba(121, 184, 255, 0.15);
+}
+
+.feature-toggle .feature-label {
+    flex: 1;
+    min-width: 0;
+}
+
+.feature-key {
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
+.feature-prop-inline {
+    margin-left: 4px;
+}
+
+/* Three-state control: default / on / off */
+.tri-state {
+    display: inline-flex;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.tri-state input[type="radio"] {
+    display: none;
+}
+
+.tri-state label {
+    padding: 1px 7px;
+    cursor: pointer;
+    margin: 0;
+    line-height: 1.6;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+}
+
+.tri-state label:last-child {
+    border-right: none;
+}
+
+.feature-toggle .form-select-sm {
+    max-width: 160px;
+    display: inline-block;
+}
+
+.feature-toggle .form-control-sm.feature-input {
+    max-width: 180px;
+}
+
+/* === Signing Link Cards =============================================== */
+
+.signing-link-card {
+    transition: border-color 0.2s;
+}
+
+/* === Sidebar sections (collapsible) ================================== */
+.sidebar-section {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+.sidebar-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.sidebar-section-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 0;
+    cursor: pointer;
+    user-select: none;
+}
+.sidebar-section-chevron {
+    transition: transform 0.2s;
+    margin-left: 4px;
+}
+.sidebar-section.collapsed .sidebar-section-chevron {
+    transform: rotate(-90deg);
+}
+.sidebar-section.collapsed .sidebar-section-body {
+    display: none !important;
+}
+
+/* === Sidebar expand tab ============================================== */
+.sidebar-expand-tab {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    width: 28px;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar-expand-right {
+    right: 0;
+    border-radius: 6px 0 0 6px;
+    border-right: none;
+}
+.expand-tab-badge {
+    position: absolute;
+    top: -4px;
+    right: -2px;
+    min-width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+}
+.expand-tab-badge.has-count {
+    display: block;
+}
+
+/* === API Trace ======================================================== */
+
+.trace-entry {
+    border-radius: 6px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+}
+
+.trace-summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    cursor: pointer;
+    user-select: none;
+    flex-wrap: wrap;
+}
+
+.trace-method {
+    flex-shrink: 0;
+}
+
+.trace-path {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.trace-status {
+    flex-shrink: 0;
+}
+
+.trace-duration {
+    flex-shrink: 0;
+}
+
+.trace-proxy-badge {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.trace-detail {
+    display: none;
+    padding: 6px 8px;
+}
+.trace-entry.open .trace-detail {
+    display: block;
+}
+
+.trace-section-label {
+    margin: 4px 0 2px;
+}
+.trace-section-label:first-child {
+    margin-top: 0;
+}
+
+.trace-headers {
+    line-height: 1.5;
+    word-break: break-all;
+}
+
+.trace-body-preview {
+    line-height: 1.45;
+    border-radius: 4px;
+    padding: 4px 6px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.trace-url {
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+.trace-desc {
+    margin-bottom: 2px;
+}
+
+/* === JSON copy button & ellipsis ========================================= */
+
+.btn-copy-json {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    font-size: 0.72rem;
+    opacity: 0.5;
+    transition: opacity 0.15s;
+    vertical-align: middle;
+}
+.btn-copy-json:hover {
+    opacity: 1;
+}
+
+.btn-copy-editor {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 10;
+    font-size: 0.8rem;
+    padding: 3px 7px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.editor-container:hover .btn-copy-editor {
+    opacity: 0.5;
+}
+.btn-copy-editor:hover {
+    opacity: 1 !important;
+}
+
+.json-ellipsis {
+    opacity: 0.5;
+    font-style: italic;
+}
+
+/* === Polling toggle button states ======================================== */
+@keyframes polling-spin {
+    to { transform: rotate(360deg); }
+}
+.polling-spin {
+    display: inline-block;
+    animation: polling-spin 1s linear infinite;
+}
+
+@keyframes highlight-flash-anim {
+    0%, 100% { outline: 2px solid transparent; }
+    20%, 80% { outline: 2px solid var(--insign-orange); outline-offset: 4px; border-radius: 8px; }
+}
+.highlight-flash {
+    animation: highlight-flash-anim 1.5s ease;
+}

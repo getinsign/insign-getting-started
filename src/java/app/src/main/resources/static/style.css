@@ -1,0 +1,387 @@
+/* ==========================================================================
+   inSign Getting Started - Java Sample
+   Based on the inSign API Explorer design system
+   ========================================================================== */
+
+:root {
+    --insign-blue: #4DA6E8;
+    --insign-blue-hover: #5CB8F5;
+    --insign-blue-dark: #3A8FD0;
+    --insign-orange: #D4A030;
+    --insign-orange-hover: #E0B040;
+    --insign-danger: #E05565;
+    --insign-success: #28a745;
+    --insign-radius-btn: 40px;
+    --insign-radius-card: 12px;
+    --insign-radius-input: 8px;
+    --insign-bg: #141618;
+    --insign-card-bg: #1c1f23;
+    --insign-text: #e8e8e8;
+    --insign-text-muted: #b0b0b0;
+    --insign-dark: #e8e8e8;
+    --insign-gray: #b0b0b0;
+    --insign-light: #141618;
+    --insign-border: #3a3f44;
+    --insign-input-bg: #1a1d21;
+    --insign-input-border: #444a50;
+    --insign-code-bg: rgba(255, 255, 255, 0.08);
+    --insign-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --insign-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--insign-input-bg);
+    border-color: var(--insign-input-border);
+    color: var(--insign-text);
+}
+
+.form-control::placeholder {
+    color: #808080;
+}
+
+.text-muted {
+    color: var(--insign-text-muted) !important;
+}
+
+.badge.bg-secondary {
+    background-color: #4a5058 !important;
+}
+
+/* === Base ============================================================== */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--insign-text);
+    background: var(--insign-bg);
+    font-size: 14px;
+    line-height: 1.6;
+    padding-bottom: 170px;
+}
+
+a {
+    color: var(--insign-blue);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--insign-blue-hover);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    color: var(--insign-dark);
+}
+
+code {
+    font-size: 0.875em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--insign-code-bg);
+}
+
+/* === Navbar ============================================================ */
+
+.navbar-insign {
+    background: var(--insign-card-bg);
+    box-shadow: var(--insign-shadow);
+    padding: 0.5rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+.navbar-insign .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--insign-dark);
+}
+
+.navbar-insign .badge-version {
+    background: var(--insign-light);
+    color: var(--insign-gray);
+    font-size: 0.7rem;
+    font-weight: 400;
+}
+
+/* === Cards ============================================================= */
+
+.card-insign {
+    background: var(--insign-card-bg);
+    border: none;
+    border-radius: var(--insign-radius-card);
+    box-shadow: var(--insign-shadow);
+    margin-bottom: 1.25rem;
+    overflow: visible;
+}
+
+.card-insign .card-header {
+    background: var(--insign-card-bg);
+    border-bottom: 1px solid var(--insign-border);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: var(--insign-radius-card) var(--insign-radius-card) 0 0;
+}
+
+.card-insign .card-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.card-insign .card-body {
+    padding: 1.25rem;
+}
+
+/* === Buttons ============================================================ */
+
+.btn-insign {
+    border-radius: var(--insign-radius-btn);
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s;
+}
+
+.btn-insign-primary {
+    background: var(--insign-blue);
+    color: #fff;
+}
+.btn-insign-primary:hover {
+    background: var(--insign-blue-hover);
+    color: #fff;
+}
+
+.btn-insign-cta {
+    background: var(--insign-orange);
+    color: #fff;
+}
+.btn-insign-cta:hover {
+    background: var(--insign-orange-hover);
+    color: #fff;
+}
+
+.btn-insign-outline {
+    background: transparent;
+    border: 1px solid var(--insign-border);
+    color: var(--insign-dark);
+}
+.btn-insign-outline:hover {
+    background: var(--insign-light);
+}
+
+.btn-insign-outline {
+    color: var(--insign-text);
+    border-color: var(--insign-border);
+}
+.btn-insign-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-insign-sm {
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+}
+
+.btn-insign-danger {
+    background: var(--insign-danger);
+    color: #fff;
+}
+.btn-insign-danger:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+/* === Section titles ===================================================== */
+
+.section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--insign-gray);
+    font-weight: 700;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+/* === Status bar ========================================================= */
+
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    background: var(--insign-card-bg);
+    border-top: 2px solid var(--insign-blue);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+    font-size: 0.78rem;
+    color: var(--insign-text);
+}
+
+.status-bar .status-section {
+    padding: 4px 12px;
+}
+
+.status-bar .label {
+    color: var(--insign-gray);
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.status-bar .badge-signed {
+    background: var(--insign-success);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+}
+
+.status-bar .badge-unsigned {
+    background: var(--insign-danger);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+}
+
+.status-bar .badge-completed {
+    background: var(--insign-success);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+}
+
+.status-bar .badge-incomplete {
+    background: var(--insign-orange);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+}
+
+/* === Response cards ===================================================== */
+
+.response-card {
+    margin-bottom: 8px;
+    background: var(--insign-card-bg);
+    border: 1px solid var(--insign-border);
+    border-radius: var(--insign-radius-input);
+    overflow: hidden;
+}
+
+.response-card .card-header {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+    background: #22262a;
+    border-bottom: 1px solid var(--insign-border);
+    color: var(--insign-text);
+}
+
+.response-card .card-body {
+    padding: 8px;
+}
+
+.response-card pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 0.8rem;
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    color: var(--insign-text);
+    background: transparent;
+}
+
+.response-card .timestamp {
+    color: var(--insign-gray);
+    font-size: 0.72rem;
+}
+
+.response-card.border-danger {
+    border-color: var(--insign-danger);
+}
+
+.response-card pre.text-danger {
+    color: var(--insign-danger) !important;
+}
+
+/* === Request/Response labels ============================================= */
+
+.response-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--insign-gray);
+    font-weight: 700;
+    margin-bottom: 4px;
+    margin-top: 6px;
+}
+
+.response-label:first-child {
+    margin-top: 0;
+}
+
+/* === Webhook events ===================================================== */
+
+.webhook-event {
+    font-size: 0.78rem;
+    padding: 3px 8px;
+    border-left: 3px solid var(--insign-blue);
+    margin-bottom: 2px;
+    background: rgba(77, 166, 232, 0.08);
+    border-radius: 0 4px 4px 0;
+}
+
+.webhook-event .event-id {
+    font-weight: 600;
+    color: var(--insign-blue);
+}
+
+.webhook-event .event-time {
+    color: var(--insign-gray);
+    font-size: 0.7rem;
+}
+
+/* === Alerts ============================================================= */
+
+.alert-toast {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 2000;
+    min-width: 300px;
+    border-radius: var(--insign-radius-input);
+}
+
+/* === Thank-you page ===================================================== */
+
+.thankyou-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.thankyou-card {
+    max-width: 480px;
+    text-align: center;
+    background: var(--insign-card-bg);
+    border: none;
+    border-radius: var(--insign-radius-card);
+    box-shadow: var(--insign-shadow-lg);
+}
+
+.thankyou-icon {
+    font-size: 4rem;
+    color: var(--insign-success);
+}

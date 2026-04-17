@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 12 413 105" width="1239" height="315">
+  <defs>
+    <linearGradient id="xlBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4A148C"/>
+      <stop offset="100%" stop-color="#311B92"/>
+    </linearGradient>
+    <linearGradient id="xlPeak" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#AB47BC"/>
+    </linearGradient>
+    <linearGradient id="xlLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#CE93D8" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="xlGlow" cx="0.5" cy="0.4" r="0.5">
+      <stop offset="0%" stop-color="#CE93D8" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="xlGl" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.81 0 0 0 0 0.58 0 0 0 0 0.85 0 0 0 0.5 0" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Icon block -->
+  <rect x="0" y="15" width="100" height="100" rx="18" fill="url(#xlBg)"/>
+  <circle cx="50" cy="60" r="40" fill="url(#xlGlow)"/>
+  <g filter="url(#xlGl)">
+    <path d="M50 24 L82 92 L18 92 Z" fill="url(#xlPeak)" opacity="0.18"/>
+    <path d="M50 28 L79 90 L21 90 Z" fill="none" stroke="url(#xlPeak)" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M50 28 L58 42 L54 39 L50 43 L46 39 L42 42 Z" fill="#CE93D8" opacity="0.4"/>
+    <path d="M68 50 L88 92 L54 92 Z" fill="url(#xlPeak)" opacity="0.1"/>
+    <path d="M68 54 L85 90 L56 90" fill="none" stroke="#CE93D8" stroke-width="1" opacity="0.4" stroke-linejoin="round"/>
+    <line x1="14" y1="92" x2="86" y2="92" stroke="#CE93D8" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <rect x="0" y="100" width="100" height="15" fill="url(#xlPeak)" opacity="0.2" clip-path="inset(0 0 0 0 round 0 0 18 18)"/>
+  <!-- Company name with glow -->
+  <text x="120" y="52" font-family="'Segoe UI',system-ui,sans-serif" font-size="48" font-weight="700" fill="#CE93D8" opacity="0.25" filter="url(#xlGl)">Apex</text>
+  <text x="120" y="52" font-family="'Segoe UI',system-ui,sans-serif" font-size="48" font-weight="700" fill="#4A148C">Apex</text>
+  <!-- Subtitle -->
+  <text x="120" y="78" font-family="'Segoe UI',system-ui,sans-serif" font-size="22" font-weight="300" fill="#4A148C" letter-spacing="5" opacity="0.65">ASSURANCE</text>
+  <line x1="120" y1="90" x2="370" y2="90" stroke="url(#xlLine)" stroke-width="1.5"/>
+  <text x="120" y="108" font-family="'Segoe UI',system-ui,sans-serif" font-size="12" font-weight="400" fill="#4A148C" opacity="0.5">Commercial · Property · Casualty · Specialty</text>
+</svg>

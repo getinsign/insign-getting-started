@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595 130">
+  <defs>
+    <radialGradient id="sol-sun" cx="0" cy="0" r="1">
+      <stop offset="0%" stop-color="#E65100" stop-opacity="0.4"/>
+      <stop offset="40%" stop-color="#E65100" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#E65100" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sol-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A1A2E"/>
+      <stop offset="100%" stop-color="#1A1A2E"/>
+    </linearGradient>
+    <linearGradient id="sol-ray" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E65100" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#E65100" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="595" height="130" fill="url(#sol-bg)"/>
+  <!-- Sun radial glow from top-left corner -->
+  <circle cx="0" cy="0" r="200" fill="url(#sol-sun)"/>
+  <!-- Sun rays emanating from corner -->
+  <g opacity="0.08" fill="#E65100">
+    <polygon points="0,0 180,30 160,50"/>
+    <polygon points="0,0 200,60 170,80"/>
+    <polygon points="0,0 190,95 150,110"/>
+    <polygon points="0,0 140,120 100,130"/>
+    <polygon points="0,0 250,15 240,35"/>
+    <polygon points="0,0 70,130 40,130"/>
+  </g>
+  <!-- Energy wave lines -->
+  <g stroke="#1565C0" stroke-width="0.8" fill="none" opacity="0.15">
+    <path d="M300,120 Q350,100 400,110 Q450,120 500,105 Q550,90 595,100"/>
+    <path d="M350,115 Q400,95 450,105 Q500,115 550,100 Q575,93 595,95"/>
+  </g>
+  <!-- Orange top bar -->
+  <rect x="0" y="0" width="595" height="3" fill="#E65100"/>
+  <!-- Blue accent bottom -->
+  <rect x="0" y="127" width="595" height="3" fill="#1565C0" opacity="0.6"/>
+  <!-- Orange-to-blue transition bar -->
+  <rect x="0" y="125" width="300" height="2" fill="#E65100" opacity="0.3"/>
+  <!-- Company name -->
+  <text x="50" y="55" font-family="system-ui, sans-serif" font-size="32" font-weight="bold" fill="#FFFFFF" letter-spacing="5">SOLIS Technology</text>
+  <!-- Subtitle -->
+  <text x="52" y="80" font-family="system-ui, sans-serif" font-size="10.5" fill="#E65100" letter-spacing="2">Solar · Wind · Smart Grid · Energy Storage</text>
+  <!-- Small sun icon -->
+  <circle cx="30" cy="50" r="10" fill="#E65100" opacity="0.3"/>
+  <circle cx="30" cy="50" r="6" fill="#E65100" opacity="0.5"/>
+  <!-- Decorative dots bottom -->
+  <circle cx="52" cy="100" r="2" fill="#1565C0" opacity="0.3"/>
+  <circle cx="62" cy="100" r="2" fill="#E65100" opacity="0.3"/>
+  <circle cx="72" cy="100" r="2" fill="#1565C0" opacity="0.2"/>
+</svg>

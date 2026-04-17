@@ -1,0 +1,761 @@
+/* ==========================================================================
+   inSign API Explorer - Theme & Cosmetic Styles
+   Colors, typography, dark mode, shadows, and visual decoration.
+   Loaded alongside style.css which handles layout and structure.
+   ========================================================================== */
+
+:root {
+    --insign-blue: #014A8C;
+    --insign-blue-hover: #015BA6;
+    --insign-blue-dark: #013566;
+    --insign-orange: #7A5000;
+    --insign-orange-hover: #5C3C00;
+    --insign-dark: #3E3F42;
+    --insign-gray: #5E5E5E;
+    --insign-light: #F0F3F6;
+    --insign-border: #DDDDDD;
+    --insign-success: #28a745;
+    --insign-danger: #8B1A25;
+    --insign-radius-btn: 40px;
+    --insign-radius-card: 12px;
+    --insign-radius-input: 8px;
+    --insign-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --insign-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.12);
+    --insign-bg: #F0F3F6;
+    --insign-card-bg: #FFFFFF;
+    --insign-sidebar-bg: #FFFFFF;
+    --insign-text: #3E3F42;
+    --insign-text-muted: #5E5E5E;
+    --insign-input-bg: #FFFFFF;
+    --insign-input-border: #ced4da;
+    --insign-code-bg: rgba(0, 0, 0, 0.05);
+    --insign-header-bg: rgba(1, 101, 188, 0.04);
+}
+
+/* === Dark Mode ======================================================== */
+
+[data-theme="dark"] {
+    --insign-blue: #4DA6E8;
+    --insign-blue-hover: #5CB8F5;
+    --insign-blue-dark: #3A8FD0;
+    --insign-orange: #D4A030;
+    --insign-orange-hover: #E0B040;
+    --insign-danger: #E05565;
+    --insign-bg: #141618;
+    --insign-card-bg: #1c1f23;
+    --insign-sidebar-bg: #1c1f23;
+    --insign-text: #e8e8e8;
+    --insign-text-muted: #b0b0b0;
+    --insign-dark: #e8e8e8;
+    --insign-gray: #b0b0b0;
+    --insign-light: #141618;
+    --insign-border: #3a3f44;
+    --insign-input-bg: #1a1d21;
+    --insign-input-border: #444a50;
+    --insign-code-bg: rgba(255, 255, 255, 0.08);
+    --insign-header-bg: rgba(1, 101, 188, 0.12);
+    --insign-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --insign-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: var(--insign-input-bg);
+    border-color: var(--insign-input-border);
+    color: var(--insign-text);
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: #808080;
+}
+
+[data-theme="dark"] .text-muted {
+    color: var(--insign-text-muted) !important;
+}
+
+[data-theme="dark"] .form-label {
+    color: var(--insign-text);
+}
+
+[data-theme="dark"] .form-check-input {
+    background-color: var(--insign-input-bg);
+    border-color: var(--insign-input-border);
+}
+
+[data-theme="dark"] .form-check-input:checked {
+    background-color: var(--insign-blue);
+    border-color: var(--insign-blue);
+}
+
+[data-theme="dark"] .badge.bg-secondary {
+    background-color: #4a5058 !important;
+}
+
+[data-theme="dark"] .badge.bg-info {
+    background-color: #1a6985 !important;
+}
+
+[data-theme="dark"] .alert-insign {
+    border-color: var(--insign-border);
+}
+
+[data-theme="dark"] .btn-insign-outline {
+    color: var(--insign-text);
+    border-color: var(--insign-border);
+}
+
+[data-theme="dark"] .btn-insign-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .toast {
+    background-color: var(--insign-card-bg);
+    color: var(--insign-text);
+    border-color: var(--insign-border);
+}
+
+[data-theme="dark"] .toast-header {
+    background-color: #22262a;
+    color: var(--insign-text);
+    border-bottom-color: var(--insign-border);
+}
+
+[data-theme="dark"] .toast-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+[data-theme="dark"] .toast-body {
+    color: var(--insign-text);
+}
+
+[data-theme="dark"] .modal-content {
+    background-color: var(--insign-card-bg);
+    color: var(--insign-text);
+    border-color: var(--insign-border);
+}
+
+[data-theme="dark"] .modal-header {
+    background-color: #22262a;
+    color: var(--insign-text);
+    border-bottom-color: var(--insign-border);
+}
+
+[data-theme="dark"] .modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+[data-theme="dark"] .modal-footer {
+    border-top-color: var(--insign-border);
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background-color: var(--insign-card-bg);
+    border-color: var(--insign-border);
+    color: var(--insign-text);
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--insign-text);
+}
+
+[data-theme="dark"] .dropdown-item:hover,
+[data-theme="dark"] .dropdown-item:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--insign-text);
+}
+
+[data-theme="dark"] .dropdown-divider {
+    border-color: var(--insign-border);
+}
+
+/* === Base ============================================================== */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--insign-text);
+    background: var(--insign-bg);
+    font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    color: var(--insign-dark);
+}
+
+a {
+    color: var(--insign-blue);
+}
+a:hover {
+    color: var(--insign-blue-hover);
+}
+
+code {
+    font-size: 0.875em;
+    background: var(--insign-code-bg);
+}
+
+/* === Navbar ============================================================ */
+
+.navbar-insign {
+    background: var(--insign-card-bg);
+    box-shadow: var(--insign-shadow);
+}
+
+.navbar-insign .navbar-brand {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--insign-dark);
+}
+
+.navbar-insign .badge-version {
+    background: var(--insign-light);
+    color: var(--insign-gray);
+    font-size: 0.7rem;
+    font-weight: 400;
+}
+
+/* === Sidebar =========================================================== */
+
+.sidebar {
+    background: var(--insign-card-bg);
+    border-radius: var(--insign-radius-card);
+    box-shadow: var(--insign-shadow);
+}
+
+.sidebar h6 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--insign-gray);
+}
+
+.sidebar .form-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.sidebar .form-control {
+    font-size: 0.85rem;
+    border-radius: var(--insign-radius-input);
+    border: 1px solid var(--insign-border);
+}
+
+.sidebar .form-control:focus {
+    border-color: var(--insign-blue);
+    box-shadow: 0 0 0 2px rgba(1, 101, 188, 0.15);
+}
+
+/* === Cards ============================================================= */
+
+.card-insign {
+    background: var(--insign-card-bg);
+    border: none;
+    border-radius: var(--insign-radius-card);
+    box-shadow: var(--insign-shadow);
+}
+.card-insign > .card-header {
+    border-radius: var(--insign-radius-card) var(--insign-radius-card) 0 0;
+}
+
+.card-insign .card-header {
+    background: var(--insign-card-bg);
+    border-bottom: 1px solid var(--insign-border);
+}
+
+.card-insign .card-header h5 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.card-insign .card-header .badge-method {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-method-post {
+    background: rgba(1, 101, 188, 0.1);
+    color: var(--insign-blue);
+}
+
+.badge-method-get {
+    background: rgba(40, 167, 69, 0.1);
+    color: var(--insign-success);
+}
+
+.badge-method-put {
+    background: rgba(255, 193, 7, 0.1);
+    color: #d4a017;
+}
+
+.badge-method-delete {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--insign-danger);
+}
+
+.card-insign .card-header .endpoint-path {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--insign-gray);
+}
+
+/* === Step Indicator ===================================================== */
+
+.step-indicator .step {
+    background: transparent;
+    border: 1px solid transparent;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--insign-gray);
+    border-radius: 0;
+}
+
+.step-indicator .step[data-step="1"] {
+    border-radius: var(--insign-radius-btn) 0 0 var(--insign-radius-btn);
+}
+
+/* The last visible item in the group gets the end radius */
+.step-indicator .step:last-child {
+    border-radius: 0 var(--insign-radius-btn) var(--insign-radius-btn) 0;
+}
+/* If both action buttons are hidden, step 4 is visually last */
+.step-indicator .step[data-step="4"]:has(~ .d-none):not(:has(~ .step:not(.d-none))) {
+    border-radius: 0 var(--insign-radius-btn) var(--insign-radius-btn) 0;
+}
+/* If only the CTA is visible (session-mgr hidden), CTA gets end radius */
+.step-indicator #navbar-btn-open:not(.d-none):has(+ .d-none) {
+    border-radius: 0 var(--insign-radius-btn) var(--insign-radius-btn) 0;
+}
+
+.step-indicator .step.active {
+    background: #1a2a3a;
+    border-color: var(--insign-border);
+    color: #fff;
+}
+
+.step-indicator .step-number {
+    background: rgba(0, 0, 0, 0.1);
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+.step.active .step-number {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Action buttons merged into step group */
+.step-indicator .step-action {
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.step-indicator .step-action-cta {
+    background: #2a2010;
+    border-color: #2a2010;
+    color: #fff;
+}
+.step-indicator .step-action-cta:hover {
+    background: #352818;
+    border-color: #352818;
+}
+
+.step-indicator .step-action-outline {
+    background: transparent;
+    color: var(--insign-gray);
+}
+.step-indicator .step-action-outline:hover {
+    background: var(--insign-light);
+}
+[data-theme="dark"] .step-indicator .step-action-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* === Buttons ============================================================ */
+
+.btn-insign {
+    border-radius: var(--insign-radius-btn);
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: none;
+}
+
+.btn-insign-primary {
+    background: var(--insign-blue);
+    color: #fff;
+}
+.btn-insign-primary:hover {
+    background: var(--insign-blue-hover);
+    color: #fff;
+}
+
+.btn-insign-cta {
+    background: var(--insign-orange);
+    color: #fff;
+}
+.btn-insign-cta:hover {
+    background: var(--insign-orange-hover);
+    color: #fff;
+}
+
+.btn-insign-outline {
+    background: transparent;
+    border: 1px solid var(--insign-border);
+    color: var(--insign-dark);
+}
+.btn-insign-outline:hover {
+    background: var(--insign-light);
+}
+
+.btn-insign-sm {
+    font-size: 0.8rem;
+}
+
+/* === Sandbox button ======================================================= */
+.btn-sandbox {
+    border: 1px dashed var(--insign-success);
+    background: rgba(10, 135, 101, 0.04);
+    color: var(--insign-success);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+.btn-sandbox:hover {
+    background: rgba(10, 135, 101, 0.1);
+}
+.btn-sandbox code {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--insign-gray);
+    background: none;
+}
+[data-theme="dark"] .btn-sandbox {
+    background: rgba(10, 135, 101, 0.08);
+}
+[data-theme="dark"] .btn-sandbox:hover {
+    background: rgba(10, 135, 101, 0.16);
+}
+
+.auth-mode-selector {
+    border: 1px solid var(--insign-border);
+    background: var(--insign-bg);
+}
+.auth-mode-btn {
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: transparent;
+    color: var(--insign-muted);
+}
+.auth-mode-btn i {
+    font-size: 0.8rem;
+}
+.auth-mode-btn:hover {
+    background: var(--insign-light);
+    color: var(--insign-dark);
+}
+.auth-mode-btn[data-mode="basic"].active {
+    background: #2c3e7a;
+    color: #fff;
+}
+.auth-mode-btn[data-mode="oauth2"].active {
+    background: #1a6b4a;
+    color: #fff;
+}
+[data-theme="dark"] .auth-mode-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--insign-text);
+}
+[data-theme="dark"] .auth-mode-btn[data-mode="basic"].active {
+    background: #3a4f9a;
+}
+[data-theme="dark"] .auth-mode-btn[data-mode="oauth2"].active {
+    background: #1e7d56;
+}
+
+/* Extern option buttons */
+[id^="extern-opt-"] .btn {
+    font-size: 0.7rem;
+}
+
+/* Mixed state (users have different values) */
+.btn-group .btn.mixed {
+    opacity: 0.4;
+}
+
+/* === Editor Containers ================================================== */
+
+.editor-container {
+    border: 1px solid var(--insign-border);
+    border-radius: var(--insign-radius-input);
+}
+
+/* === Floating Action Buttons ============================================ */
+
+.btn-floating {
+    font-size: 0.82rem;
+    font-weight: 600;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+.btn-floating:hover {
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
+}
+.btn-floating-accent {
+    background: var(--insign-blue);
+    border-color: var(--insign-blue);
+    color: #fff;
+}
+
+.editor-label {
+    background: var(--insign-light);
+    border-bottom: 1px solid var(--insign-border);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--insign-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* === Headers Display ==================================================== */
+
+.headers-display {
+    background: var(--insign-light);
+    border: 1px solid var(--insign-border);
+    border-radius: var(--insign-radius-input);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--insign-gray);
+    line-height: 1.5;
+}
+
+.headers-display .header-name {
+    color: var(--insign-blue);
+    font-weight: 500;
+}
+
+.headers-display .header-value {
+    color: var(--insign-dark);
+}
+
+/* === Response Panel ===================================================== */
+
+.response-panel {
+    border-radius: var(--insign-radius-input);
+}
+
+.response-status {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.response-status.success {
+    background: rgba(40, 167, 69, 0.1);
+    color: var(--insign-success);
+}
+
+.response-status.error {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--insign-danger);
+}
+
+
+/* === Operation Tabs ===================================================== */
+
+.nav-operations {
+    border-bottom: 2px solid var(--insign-border);
+}
+
+.nav-operations .nav-link {
+    color: var(--insign-gray);
+    font-size: 0.82rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-operations .nav-link:hover {
+    color: var(--insign-blue);
+    background: rgba(1, 101, 188, 0.04);
+}
+
+.nav-operations .nav-link.active {
+    color: var(--insign-blue);
+    border-bottom-color: var(--insign-blue);
+    background: transparent;
+}
+
+/* Session/ForUser bar in navbar */
+.navbar-session-bar {
+    color: var(--insign-text-muted);
+}
+
+/* === Code Snippets ====================================================== */
+
+.code-tabs .nav-link {
+    font-size: 0.8rem;
+    border-radius: var(--insign-radius-btn);
+    color: var(--insign-gray);
+}
+
+.code-tabs .nav-link.active {
+    background: var(--insign-blue);
+    color: #fff;
+    border-color: var(--insign-blue);
+}
+
+.code-snippet-container {
+    background: #1e1e1e;
+    border-radius: 0 0 var(--insign-radius-input) var(--insign-radius-input);
+}
+
+/* === Webhook Viewer ===================================================== */
+
+.webhook-entry {
+    background: var(--insign-card-bg);
+    border: 1px solid var(--insign-border);
+    border-radius: var(--insign-radius-input);
+    font-size: 0.82rem;
+}
+
+.webhook-entry .webhook-time {
+    color: var(--insign-gray);
+    font-size: 0.75rem;
+}
+
+.webhook-entry .webhook-method {
+    font-weight: 600;
+    color: var(--insign-blue);
+}
+
+/* Webhook detail panels */
+.wh-pre {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.72rem;
+    border-radius: var(--insign-radius-input);
+    background: var(--insign-code-bg);
+    border: 1px solid var(--insign-border);
+}
+
+.wh-headers {
+    color: var(--insign-text-muted, #666);
+}
+
+.wh-header-name {
+    color: var(--insign-blue);
+    font-weight: 600;
+}
+
+.wh-section-toggle {
+    font-size: 0.72rem;
+}
+
+.wh-section-toggle .wh-chevron {
+    font-size: 0.65rem;
+}
+
+.webhook-url-display {
+    background: var(--insign-light);
+    border: 1px solid var(--insign-border);
+    border-radius: var(--insign-radius-input);
+}
+
+.webhook-url-display input {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--insign-dark);
+}
+
+/* === Document Selector (inline list inside collapsible section) ========== */
+
+.doc-header-thumb {
+    border: 1px solid var(--insign-border);
+    background: #f8f8f8;
+}
+[data-theme="dark"] .doc-header-thumb { background: #2a2d31; }
+
+.doc-header-doc-title {
+    color: var(--insign-text);
+}
+
+/* Group labels */
+.doc-dd-group-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--insign-gray);
+}
+.doc-dd-count {
+    background: var(--insign-light);
+    color: var(--insign-gray);
+    font-size: 0.62rem;
+    font-weight: 600;
+}
+
+/* Divider */
+.doc-dd-divider {
+    background: var(--insign-border);
+}
+
+/* Each item row */
+.doc-dd-item {
+    border-left: 3px solid transparent;
+}
+.doc-dd-item:hover {
+    background: rgba(1, 101, 188, 0.04);
+}
+.doc-dd-item-selected {
+    background: rgba(1, 101, 188, 0.07);
+    border-left-color: var(--insign-blue);
+}
+
+/* Thumbnail */
+.doc-dd-thumb {
+    border: 1px solid var(--insign-border);
+    background: #f8f8f8;
+}
+[data-theme="dark"] .doc-dd-thumb { background: #2a2d31; }
+.doc-dd-thumb-icon {
+    font-size: 2.2rem;
+    color: var(--insign-gray);
+}
+
+/* Info column */
+.doc-dd-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--insign-text);
+}
+.doc-dd-meta {
+    font-size: 0.7rem;
+    color: var(--insign-gray);
+}
+.doc-dd-sep {
+    background: var(--insign-gray);
+    opacity: 0.4;
+}
+.doc-dd-role {
+    font-size: 0.62rem;
+    font-weight: 500;
+    background: rgba(1, 101, 188, 0.08);
+    color: var(--insign-blue);
+}
+[data-theme="dark"] .doc-dd-role {
+    background: rgba(1, 101, 188, 0.2);
+}
+.doc-dd-role-extern {
+    background: rgba(156, 39, 176, 0.1);
+    color: #7B1FA2;
+    font-weight: 600;
+}
+[data-theme="dark"] .doc-dd-role-extern {
+    background: rgba(156, 39, 176, 0.25);
+    color: #CE93D8;
+}
+.doc-dd-role-email {
+    background: rgba(156, 39, 176, 0.06);
+    color: #6A1B9A;
+}
+[data-theme="dark"] .doc-dd-role-email {
+    background: rgba(156, 39, 176, 0.15);
+    color: #BA68C8;
+}
+

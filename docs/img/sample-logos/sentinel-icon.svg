@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="90" height="90">
+  <defs>
+    <linearGradient id="siBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A237E"/>
+      <stop offset="100%" stop-color="#0D1457"/>
+    </linearGradient>
+    <linearGradient id="siShield" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#FFD600"/>
+      <stop offset="100%" stop-color="#FFC107"/>
+    </linearGradient>
+    <linearGradient id="siAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFD600" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FFD600" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect width="30" height="30" rx="6" fill="url(#siBg)"/>
+  <!-- Shield outline -->
+  <path d="M15 4 L23 8 L23 16 C23 20.5 19.5 24 15 26 C10.5 24 7 20.5 7 16 L7 8 Z" fill="url(#siShield)" opacity="0.15"/>
+  <path d="M15 5.5 L22 9 L22 16 C22 19.8 19 23 15 25 C11 23 8 19.8 8 16 L8 9 Z" fill="none" stroke="url(#siShield)" stroke-width="1.2"/>
+  <!-- Inner shield fill -->
+  <path d="M15 7 L21 10 L21 16 C21 19.2 18.5 22 15 23.8 C11.5 22 9 19.2 9 16 L9 10 Z" fill="url(#siShield)" opacity="0.25"/>
+  <!-- Checkmark -->
+  <path d="M11.5 15 L13.8 17.5 L18.5 12.5" fill="none" stroke="#FFD600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Accent bar at bottom -->
+  <rect x="0" y="26" width="30" height="4" rx="0" fill="url(#siAccent)"/>
+  <rect x="0" y="26" width="30" height="4" rx="0" ry="0" fill="url(#siAccent)" clip-path="inset(0 0 0 0 round 0 0 6 6)"/>
+</svg>

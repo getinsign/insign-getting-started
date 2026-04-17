@@ -1,0 +1,572 @@
+<!--
+  guide.html - inSign API Getting Started Guide
+
+  Interactive step-by-step guide that walks developers through the inSign
+  signing workflow: creating a session, uploading a document, opening the
+  signing UI, and retrieving the signed result. Each step has live code
+  editors (Monaco) pre-configured to work against the inSign sandbox.
+
+  Hosted via GitHub Pages from the docs/ directory.
+  JS modules: guide-state.js, guide-boot.js, guide-editors.js, guide-api.js,
+              guide-banners.js, guide-sidebar.js, guide-confetti.js, guide-effects.js
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>!function(){var d=!0;try{var s=localStorage.getItem('insign-dark-mode');if(s!==null)d=s==='true'}catch(e){}document.documentElement.setAttribute('data-theme',d?'dark':'light');if('scrollRestoration' in history)history.scrollRestoration='manual'}()</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inSign API - Getting Started</title>
+    <link rel="icon" href="favicon.png" sizes="32x32">
+    <link rel="icon" href="favicon-192.png" sizes="192x192">
+
+    <!-- Fonts (self-hosted via @fontsource) -->
+    <link href="vendor/fonts/roboto.css" rel="stylesheet">
+
+    <!-- Bootstrap 5 (self-hosted via npm) -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Reuse API Explorer theme -->
+    <link href="css/style-base.css" rel="stylesheet">
+    <link href="css/style-components.css" rel="stylesheet">
+    <link href="css/theme-base.css" rel="stylesheet">
+    <link href="css/theme-components.css" rel="stylesheet">
+    <link href="css/style-guide.css" rel="stylesheet">
+</head>
+<body>
+
+<template id="tpl-curl-popup">
+    <div class="curl-popup-backdrop" onclick="closeCurlPopup(event)">
+        <div class="curl-popup" onclick="event.stopPropagation()">
+            <div class="curl-popup-header">
+                <h6><i class="bi bi-terminal me-2"></i>cURL Command</h6>
+                <button class="curl-popup-close" onclick="closeCurlPopup()" title="Close">&times;</button>
+            </div>
+            <div class="curl-popup-body">
+                <div class="curl-platform-switch">
+                    <button class="curl-platform-btn active" data-platform="unix">Unix / macOS</button>
+                    <button class="curl-platform-btn" data-platform="ps">Windows PowerShell</button>
+                    <button class="curl-platform-btn" data-platform="cmd">Windows CMD</button>
+                </div>
+                <pre><code class="curl-command-code"></code></pre>
+            </div>
+            <div class="curl-popup-footer">
+                <span class="curl-copy-feedback">Copied!</span>
+                <button class="btn btn-insign btn-insign-primary btn-insign-sm" onclick="copyCurlCommand()"><i class="bi bi-clipboard me-1"></i>Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="tpl-explorer-hint">
+    <div class="explorer-hint" id="explorer-hint">
+        <div class="explorer-hint-card">
+            <button class="explorer-hint-dismiss" onclick="dismissExplorerHint()" title="Dismiss">&times;</button>
+            <div class="explorer-hint-icon"><i class="bi bi-rocket-takeoff"></i></div>
+            <h6>Ready for the full experience?</h6>
+            <p>The <strong>inSign API Explorer</strong> gives you a complete interactive playground with powerful tools:</p>
+            <ul class="explorer-hint-features">
+                <li><i class="bi bi-check-circle-fill"></i>Schema-aware JSON editor with autocomplete</li>
+                <li><i class="bi bi-check-circle-fill"></i>Code snippets in 13 languages</li>
+                <li><i class="bi bi-check-circle-fill"></i>Real-time webhook viewer</li>
+                <li><i class="bi bi-check-circle-fill"></i>Full request/response tracing</li>
+                <li><i class="bi bi-check-circle-fill"></i>Totally free - no installation, no registration</li>
+            </ul>
+            <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-cta" style="width:100%;text-align:center"><i class="bi bi-play-circle me-1"></i>Open API Explorer</a>
+        </div>
+    </div>
+</template>
+
+<!-- Session success banner (Step 1) -->
+<template id="tpl-session-success-banner">
+    <div class="step-success-banner banner-session">
+        <h3><i class="bi bi-check-circle-fill me-2"></i>Great! You created your first session!</h3>
+        <p><span class="crown-target" style="visibility:hidden">&#x1F451;</span> You are now the <strong>session owner</strong>. On the left panel you can now see the
+        <strong>live status</strong> of your session at a glance.</p>
+        <p>You can also <strong>invite signees</strong> - external participants who each receive their own
+        signing link. They can sign from any device, no account needed. You can invite them now via the API,
+        or do it later through the inSign UI.</p>
+        <div class="session-details">
+            <dl class="session-detail-grid" data-slot="details-grid"></dl>
+            <div data-slot="doc-cards"></div>
+        </div>
+        <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
+            <button class="btn btn-insign btn-insign-cta" onclick="openAsOwner(this)">
+                <i class="bi bi-box-arrow-up-right me-1"></i>Open Session Now as Owner
+            </button>
+            <button class="btn btn-insign btn-insign-primary" data-action="reveal-step2">
+                <i class="bi bi-person-fill me-1"></i>Open as Signing Participant <i class="bi bi-arrow-right ms-1"></i>
+            </button>
+            <button class="cheat-btn" data-action="cheat-signed" title="Skip: fake a signature">skip signing</button>
+            <button class="cheat-btn" data-action="test-crown" title="Test crown animation">test crown</button>
+        </div>
+        <div data-slot="confetti-toggle"></div>
+    </div>
+</template>
+
+<!-- Session detail row (dt/dd pair) -->
+<template id="tpl-session-detail-row">
+    <dt data-slot="label"></dt>
+    <dd data-slot="value"></dd>
+</template>
+
+<!-- Document card in success banner -->
+<template id="tpl-doc-card">
+    <div class="session-doc-card">
+        <h6><i class="bi bi-file-earmark-pdf"></i><span data-slot="doc-name"></span></h6>
+        <div style="font-size:0.72rem;color:var(--insign-text-muted);margin-bottom:4px" data-slot="doc-id-row">
+            <strong>ID:</strong> <code style="font-size:0.72rem" data-slot="doc-id"></code>
+        </div>
+        <div class="sig-fields-slot">
+            <div class="sig-fields-loading"><span class="btn-spinner"></span>Loading signature fields...</div>
+        </div>
+    </div>
+</template>
+
+<!-- Signature field item in banner -->
+<template id="tpl-sig-field-item">
+    <li class="sig-field-item">
+        <span class="sig-field-icon"><i class="bi bi-pen-fill"></i></span>
+        <span class="sig-field-role" data-slot="role"></span>
+        <span data-slot="name" style="color:var(--insign-text-muted)"></span>
+        <span class="sig-field-tag" data-slot="type"></span>
+        <span class="sig-field-tag" data-slot="required" style="background:rgba(40,167,69,0.1);color:var(--insign-success)">required</span>
+    </li>
+</template>
+
+<!-- Signer links banner wrapper (Step 2) -->
+<template id="tpl-signer-links-banner">
+    <div class="signer-links-banner">
+        <h3><i class="bi bi-link-45deg me-2"></i>Signing links are ready!</h3>
+        <p>Each signer below has a unique link. Click to open inSign and try signing the document yourself.</p>
+        <div data-slot="signer-cards"></div>
+    </div>
+</template>
+
+<!-- Individual signer link card -->
+<template id="tpl-signer-link-card">
+    <div class="signer-link-card">
+        <div class="signer-icon"><i class="bi bi-person-fill"></i></div>
+        <div class="signer-info">
+            <div class="signer-name">
+                <span data-slot="name"></span>
+                <span class="signer-role" data-slot="role"></span>
+            </div>
+        </div>
+        <a href="#" target="_blank" class="btn btn-insign btn-insign-primary btn-insign-sm" data-slot="link">
+            <i class="bi bi-box-arrow-up-right me-1"></i>Open in inSign
+        </a>
+    </div>
+</template>
+
+<!-- Signing celebration banner -->
+<template id="tpl-signing-celebration">
+    <div class="step-success-banner banner-signed banner-jumping">
+        <span class="impact-star star-l">&#x1F4A5;</span>
+        <span class="impact-star star-r">&#x1F4A5;</span>
+        <h3>
+            <span class="banner-icon"><i class="bi bi-pen-fill"></i></span>
+            You just signed your first document!
+        </h3>
+        <p style="font-size:0.95rem;color:var(--insign-text);margin-top:0.5rem" data-slot="sig-count"></p>
+        <p>You can check the session status or download the signed PDF using the steps below.</p>
+        <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
+            <button class="btn btn-insign btn-insign-primary" data-action="check-status">
+                <i class="bi bi-clipboard-check me-1"></i>Check Status
+            </button>
+        </div>
+        <div data-slot="confetti-toggle"></div>
+    </div>
+</template>
+
+<!-- Sidebar signature field item -->
+<template id="tpl-sidebar-sig-item">
+    <div class="sc-sig-item">
+        <i class="bi" data-slot="icon"></i>
+        <div class="sc-sig-info">
+            <span class="sc-sig-role" data-slot="role"></span>
+            <span class="sc-sig-name" data-slot="name"></span>
+        </div>
+        <span data-slot="status"></span>
+    </div>
+</template>
+
+<!-- Confetti toggle checkbox -->
+<template id="tpl-confetti-toggle">
+    <label class="confetti-toggle" title="Toggle confetti">
+        <input type="checkbox" onchange="toggleConfetti(this)">
+        <span class="toggle-track"></span>
+        <i class="bi bi-stars"></i>
+    </label>
+</template>
+
+<!-- Sandbox warning banner -->
+<template id="tpl-sandbox-warning">
+    <div class="sandbox-warning">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div class="sandbox-warning-text">
+            <strong>Sandbox unreachable</strong> - The inSign sandbox at <code data-slot="url"></code>
+            could not be reached from your network. It may be temporarily down or blocked by a firewall.
+            API calls in the steps below will likely fail.
+        </div>
+        <button class="sandbox-warning-dismiss" onclick="this.parentElement.remove()" title="Dismiss">&times;</button>
+    </div>
+</template>
+
+<!-- Confetti overlay -->
+<canvas id="confetti-canvas"></canvas>
+
+
+<!-- Fake magnetic cursor -->
+<div id="fake-cursor">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87c.45 0 .67-.54.35-.85L5.85 2.36a.5.5 0 0 0-.35.85z" fill="#222" stroke="#fff" stroke-width="1.2"/></svg>
+</div>
+
+<!-- ====================================================================
+     NAVBAR (matches API Explorer)
+     ==================================================================== -->
+<nav class="navbar navbar-insign">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="./">
+            <div class="navbar-brand-stack">
+                <img src="img/inSign_logo.svg" alt="inSign">
+                <span class="navbar-brand-sub">Getting Started</span>
+            </div>
+        </a>
+
+        <!-- Page navigation -->
+        <div class="nav-links d-none d-md-flex align-items-center" style="gap:0.25rem">
+            <a href="./" class="btn btn-insign btn-insign-sm btn-insign-outline" style="padding:2px 10px;font-size:0.75rem;line-height:24px"><i class="bi bi-house me-1"></i>Home</a>
+            <a href="guide.html" class="btn btn-insign btn-insign-sm btn-insign-primary" style="padding:2px 10px;font-size:0.75rem;line-height:24px"><i class="bi bi-rocket-takeoff me-1"></i>Guide</a>
+            <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-outline" style="padding:2px 10px;font-size:0.75rem;line-height:24px"><i class="bi bi-play-circle me-1"></i>Explorer</a>
+        </div>
+
+        <span class="sandbox-version-badge" id="sandbox-version-badge"></span>
+
+        <!-- More menu -->
+        <div class="dropdown">
+            <button class="btn btn-insign btn-insign-sm btn-insign-outline dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding:2px 8px;height:28px">
+                <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item d-md-none" href="./"><i class="bi bi-house me-2"></i>Home</a></li>
+                <li><a class="dropdown-item d-md-none" href="explorer.html"><i class="bi bi-play-circle me-2"></i>API Explorer</a></li>
+                <li class="d-md-none"><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="explorer.html"><i class="bi bi-book me-2"></i>Full API Reference</a></li>
+                <li><a class="dropdown-item" href="https://www.getinsign.com/" target="_blank"><i class="bi bi-globe me-2"></i>getinsign.com</a></li>
+                <li><a class="dropdown-item data-github-link" href="#" target="_blank"><i class="bi bi-github me-2"></i>GitHub</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item" onclick="toggleDarkMode()" id="btn-dark-mode"><i class="bi bi-moon me-2"></i>Toggle dark mode</button></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="sandbox-warning-slot"></div>
+
+<!-- ====================================================================
+     MAIN CONTENT
+     ==================================================================== -->
+<div class="container-fluid py-3">
+
+    <input type="hidden" id="chk-cors-proxy">
+
+    <!-- Hero -->
+    <div class="readme-hero">
+        <h1 class="scroll-reveal reveal-down">inSign API - Getting Started</h1>
+        <p class="lead scroll-reveal reveal-up stagger-1"><strong>Integrate electronic signatures into your application in minutes.</strong></p>
+        <p class="sub scroll-reveal reveal-up stagger-2">This guide is for developers and anyone interested in exploring the inSign API.<br>
+            Try it out right here - completely free, no registration needed.</p>
+        <p class="sub scroll-reveal reveal-up stagger-3">Not looking for technical details? Visit <a href="https://www.getinsign.com/" style="color:var(--insign-blue)">www.getinsign.com</a> for product information.</p>
+        <div class="hero-links d-flex justify-content-center gap-2 flex-wrap scroll-reveal reveal-scale stagger-4">
+            <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-cta"><i class="bi bi-play-circle me-1"></i>Full API Explorer</a>
+            <a href="https://www.getinsign.com/" class="btn btn-insign btn-insign-sm btn-insign-outline"><i class="bi bi-globe me-1"></i>getinsign.com</a>
+        </div>
+        <div class="trust-badges scroll-reveal reveal-up stagger-5">
+            <span class="trust-badge"><i class="bi bi-flag"></i> EU</span>
+            <span class="trust-badge"><i class="bi bi-shield-check"></i> eIDAS</span>
+            <span class="trust-badge"><i class="bi bi-award"></i> ISO 27001</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         STEP TAB CONTENT
+         ============================================================ -->
+    <!-- Session status sidebar (fixed overlay, hidden until session created) -->
+    <div class="session-sidebar" id="session-sidebar">
+        <div class="sc-card">
+            <div class="sc-mobile-collapse" onclick="toggleMobileSidebar()"></div>
+            <div class="sc-header">
+                <div class="sc-header-icon sc-pending" id="sc-icon"><i class="bi bi-clock"></i></div>
+                <div class="sc-header-text">
+                    <h4>Status of your current session</h4>
+                    <div class="sc-sid" id="sc-sid">-</div>
+                </div>
+            </div>
+            <div class="sc-body" id="sc-body">
+                <div class="sc-info-row"><span class="sc-info-label">Loading...</span></div>
+            </div>
+            <button class="sc-refresh-btn" onclick="refreshSessionStatus()"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
+            <div class="sc-updated" id="sc-updated"></div>
+        </div>
+    </div>
+
+    <div id="step-content">
+
+        <!-- ========== STEP 1 ========== -->
+        <div id="step1" class="scroll-reveal reveal-scale" style="transition-duration:1.4s">
+            <div class="card-insign">
+                <div class="card-header">
+                    <span class="step-number">1</span>
+                    <h5 class="ms-0 mb-0" style="font-size:0.9rem">Create Session</h5>
+                    <span class="badge badge-method badge-method-post">POST</span>
+                    <span class="endpoint-path">/configure/session</span>
+                    <button class="cheat-btn" onclick="cheatCreateSession()" title="Skip: fake a session">skip</button>
+                    <button class="cheat-btn" onclick="cheatCreateSession()" title="Test crown animation">test crown</button>
+                </div>
+                <div class="card-body">
+                    <p class="step-desc mb-3">Upload a document and create a signing session. The response contains a <code>sessionid</code>.<br>
+                        You can provide your PDF in several ways: as a public <code>fileURL</code> (used below), as a Base64-encoded string via <code>fileB64</code>, or as a <code>multipart/form-data</code> upload. For details see the <a href="explorer.html">API Explorer</a>.</p>
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Request Body</label>
+                            <div class="monaco-box" id="editor-step1"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Response</label>
+                            <div class="monaco-box" id="response-step1"></div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-insign btn-insign-primary btn-cta-magnet" id="btn-send-step1" onclick="sendStep(1)"><i class="bi bi-send me-1"></i>Send to Sandbox</button>
+                            <button class="btn btn-insign btn-insign-outline btn-insign-sm ms-2" onclick="showCurlPopup(1)" title="Show cURL command"><i class="bi bi-terminal me-1"></i>cURL</button>
+                            <span class="ms-2" style="font-size:0.8rem;color:var(--insign-text-muted)" id="status-step1"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success banner placeholder (inserted by JS after step 1) -->
+        <div id="step1-success-slot"></div>
+
+        <!-- Signing celebration placeholder -->
+        <div id="signing-celebration-slot"></div>
+
+        <!-- ========== STEP 2 ========== -->
+        <div id="step2" style="display:none" class="scroll-reveal reveal-up">
+            <div class="card-insign">
+                <div class="card-header">
+                    <span class="step-number">2</span>
+                    <h5 class="ms-0 mb-0" style="font-size:0.9rem">Invite Others to Sign</h5>
+                    <span class="badge badge-method badge-method-post">POST</span>
+                    <span class="endpoint-path">/extern/beginmulti</span>
+                </div>
+                <div class="card-body">
+                    <p class="step-desc mb-3">Invite external participants to sign the document. Each signer is assigned a <strong>role</strong> matching the signature fields in the PDF.<br>
+                        You control how signers access the session:
+                        set <code>sendEmails: true</code> to have inSign send invitation emails automatically,
+                        or use <code>singleSignOnEnabled: true</code> to get back a direct URL you can embed in your own app or workflow.
+                        Signers can be added <code>inOrder</code> (sequential signing) or all at once (parallel).
+                        Each signer only sees the fields assigned to their role.</p>
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Request Body</label>
+                            <div class="monaco-box" id="editor-step2"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Response</label>
+                            <div class="monaco-box" id="response-step2"></div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-insign btn-insign-primary" onclick="sendStep(2)"><i class="bi bi-send me-1"></i>Send to Sandbox</button>
+                            <button class="btn btn-insign btn-insign-outline btn-insign-sm ms-2" onclick="showCurlPopup(2)" title="Show cURL command"><i class="bi bi-terminal me-1"></i>cURL</button>
+                            <button class="btn btn-insign btn-insign-cta" id="btn-open-insign" onclick="openInInsign()"><i class="bi bi-box-arrow-up-right me-1"></i>Open in inSign</button>
+                            <span class="ms-2" style="font-size:0.8rem;color:var(--insign-text-muted)" id="status-step2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signer links banner placeholder (inserted by JS after step 2) -->
+        <div id="step2-success-slot"></div>
+
+        <!-- ========== STEP 3 ========== -->
+        <div id="step3" style="display:none" class="scroll-reveal reveal-up stagger-1">
+            <div class="card-insign">
+                <div class="card-header">
+                    <span class="step-number">3</span>
+                    <h5 class="ms-0 mb-0" style="font-size:0.9rem">Check Status</h5>
+                    <span class="badge badge-method badge-method-post">POST</span>
+                    <span class="endpoint-path">/get/status</span>
+                </div>
+                <div class="card-body">
+                    <p class="step-desc mb-3">Poll the session status to see signing progress, document metadata, and signature field details.</p>
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Request Body</label>
+                            <div class="monaco-box" id="editor-step3"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Response</label>
+                            <div class="monaco-box" id="response-step3"></div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-insign btn-insign-primary" onclick="sendStep(3)"><i class="bi bi-send me-1"></i>Send to Sandbox</button>
+                            <button class="btn btn-insign btn-insign-outline btn-insign-sm ms-2" onclick="showCurlPopup(3)" title="Show cURL command"><i class="bi bi-terminal me-1"></i>cURL</button>
+                            <span class="ms-2" style="font-size:0.8rem;color:var(--insign-text-muted)" id="status-step3"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== STEP 4 ========== -->
+        <div id="step4" style="display:none" class="scroll-reveal reveal-up stagger-2">
+            <div class="card-insign">
+                <div class="card-header">
+                    <span class="step-number">4</span>
+                    <h5 class="ms-0 mb-0" style="font-size:0.9rem">Download Document</h5>
+                    <span class="badge badge-method badge-method-post">POST</span>
+                    <span class="endpoint-path">/get/document</span>
+                </div>
+                <div class="card-body">
+                    <p class="step-desc mb-3">Download the signed PDF. Parameters are passed as query string.</p>
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Query Parameters (as JSON)</label>
+                            <div class="monaco-box" id="editor-step4"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="editor-label-text">Response</label>
+                            <div class="monaco-box" id="response-step4"></div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-insign btn-insign-primary" onclick="sendStep(4)"><i class="bi bi-download me-1"></i>Download from Sandbox</button>
+                            <button class="btn btn-insign btn-insign-outline btn-insign-sm ms-2" onclick="showCurlPopup(4)" title="Show cURL command"><i class="bi bi-terminal me-1"></i>cURL</button>
+                            <span class="ms-2" style="font-size:0.8rem;color:var(--insign-text-muted)" id="status-step4"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tab-content -->
+
+    <!-- Full-page spacer so Additional Resources is below the fold -->
+    <div style="height:100vh" aria-hidden="true"></div>
+
+    <!-- ============================================================
+         ADDITIONAL RESOURCES
+         ============================================================ -->
+    <div class="resources-section mt-4 scroll-reveal reveal-scale">
+        <div class="card-insign">
+            <div class="card-header">
+                <i class="bi bi-journal-bookmark" style="font-size:1.1rem"></i>
+                <h5 class="ms-0 mb-0" style="font-size:0.9rem">Additional Resources</h5>
+            </div>
+            <div class="card-body">
+
+                <h5><i class="bi bi-play-circle me-1"></i>Full API Explorer</h5>
+                <p>Want to go deeper? The <a href="explorer.html"><strong>inSign API Explorer</strong></a> gives you a complete interactive playground.</p>
+                <div class="feature-showcase" id="feature-showcase">
+                    <ul class="feature-list">
+                        <li class="feature-item active" data-screenshot="screenshots/17-editor-autocomplete.png"><strong>JSON autocomplete and validation</strong> - schema-aware editor with inline suggestions, hover docs, and real-time error highlighting powered by the live OpenAPI spec</li>
+                        <li class="feature-item" data-screenshot="screenshots/12-code-snippets.png"><strong>Code generation</strong> - instantly generate ready-to-run code snippets in 13 variants across 11 languages (cURL, Java, Python, PHP, C#, Node.js, TypeScript, Ruby, Go, Rust, Kotlin) including 3 Java flavors</li>
+                        <li class="feature-item" data-screenshot="screenshots/10-operate-trace.png"><strong>API call tracing</strong> - full request/response trace log with timing, headers, and status codes for every call you make</li>
+                        <li class="feature-item" data-screenshot="screenshots/16-sidebar-webhooks.png"><strong>Webhook visualization</strong> - built-in webhook viewer that catches and displays real-time callback events as they arrive from the server</li>
+                        <li class="feature-item" data-screenshot="screenshots/08-document-selector.png"><strong>12 branded test contracts</strong> - professionally designed PDFs with unique company branding, logos, and color schemes - or drag-and-drop your own PDF</li>
+                        <li class="feature-item" data-screenshot="screenshots/06-feature-configurator.png"><strong>Feature selector</strong> - toggle inSign features like biometric signatures, timestamps, and document options directly from the UI</li>
+                        <li class="feature-item" data-screenshot="screenshots/07-branding-css.png"><strong>CSS customizer</strong> - live theme editor to preview how the inSign signing UI looks with your brand colors</li>
+                        <li class="feature-item" data-screenshot="screenshots/01-overview.png"><strong>Dark mode</strong> - full light/dark theme support across the entire explorer</li>
+                    </ul>
+                    <div class="feature-preview">
+                        <div class="feature-preview-inner" id="feature-preview-inner">
+                            <img class="fp-active" src="screenshots/17-editor-autocomplete.png" alt="Feature preview" loading="lazy">
+                            <img src="" alt="Feature preview" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-cta"><i class="bi bi-play-circle me-1"></i>Open API Explorer</a>
+                    <a class="data-github-link" href="#" data-github-path="/blob/main/docs/DOCUMENTATION.md" target="_blank" class="btn btn-insign btn-insign-sm btn-insign-outline ms-2"><i class="bi bi-journal-text me-1"></i>Explorer Documentation</a>
+                </p>
+
+                <h5 class="mt-3"><i class="bi bi-postcard me-1"></i>Postman Collection</h5>
+                <p>Import the pre-built collection for quick API testing:</p>
+                <ul>
+                    <li><a href="data/Getting%20started%20with%20inSign%20API%20Sandbox.postman_collection.json">Getting started with inSign API Sandbox</a> (collection)</li>
+                    <li><a href="data/inSign%20environment%20sandbox.postman_environment.json">inSign Sandbox Environment</a> (environment)</li>
+                </ul>
+
+                <h5 class="mt-3"><i class="bi bi-code-square me-1"></i>Java API Library</h5>
+                <p>For Java projects, the <code>insign-java-api</code> library provides a typed client with builders and configuration helpers.</p>
+                <pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.getinsign&lt;/groupId&gt;
+  &lt;artifactId&gt;insign-java-api&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+                <p class="mt-2">Add the GitHub Package Registry to your Maven <code>settings.xml</code> -
+                    see <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry">Working with the Apache Maven registry</a>.</p>
+
+                <h5 class="mt-3"><i class="bi bi-file-earmark-pdf me-1"></i>Test Documents</h5>
+                <p>12 branded test contracts are included in the API Explorer, each with unique company branding, logos, and color schemes.
+                    You can also drag and drop your own PDF directly into the Explorer.</p>
+
+                <h5 class="mt-3"><i class="bi bi-folder2-open me-1"></i>Project Structure</h5>
+                <pre><code>docs/                        Developer hub (GitHub Pages)
+  index.html                 Landing page &amp; overview
+  guide.html                 Getting Started guide (this page)
+  explorer.html              API Explorer - interactive playground
+  js/                        Application modules + code generator
+  codegen-templates/         Code snippet templates (13 variants, 11 languages)
+  data/                      Test PDFs, demo data, webhook/relay configs
+src/sign-widget-demo-application/  Embedded signature pad demo (Node.js)
+src/java/                    Spring Boot sample application</code></pre>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-bar scroll-reveal reveal-up">
+        <div style="display:flex;justify-content:center;gap:1.25rem;margin-bottom:0.5rem;font-size:0.85rem">
+            <a href="./" style="text-decoration:none"><i class="bi bi-house me-1"></i>Home</a>
+            <a href="explorer.html" style="text-decoration:none"><i class="bi bi-play-circle me-1"></i>API Explorer</a>
+            <a class="data-github-link" href="#" style="text-decoration:none" target="_blank"><i class="bi bi-github me-1"></i>GitHub</a>
+            <a href="https://www.linkedin.com/company/insign-gmbh/" style="text-decoration:none"><i class="bi bi-linkedin me-1"></i>LinkedIn</a>
+            <a href="https://www.getinsign.com/" style="text-decoration:none"><i class="bi bi-globe me-1"></i>getinsign.com</a>
+        </div>
+        <a href="https://www.getinsign.com/"><strong>inSign GmbH</strong></a> - Simple signature processes<br>
+        <div class="trust-badges" style="margin-top:0.5rem">
+            <span class="trust-badge"><i class="bi bi-flag"></i> EU</span>
+            <span class="trust-badge"><i class="bi bi-shield-check"></i> eIDAS</span>
+            <span class="trust-badge"><i class="bi bi-award"></i> ISO 27001</span>
+        </div>
+        <span style="font-size:0.72rem"><a href="https://www.getinsign.de/impressum/">Impressum</a> &middot; <a href="https://www.getinsign.de/datenschutz/">Datenschutz</a></span>
+    </div>
+
+</div>
+
+<!-- ==================================================================
+     SCRIPTS
+     ================================================================== -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/monaco-editor/min/vs/loader.js"></script>
+
+<!-- Local libraries (always loaded) -->
+<script src="js/openapi-schema-loader.js"></script>
+<script src="js/api-client.js"></script>
+
+<!-- Guide application modules -->
+<script src="js/guide-state.js"></script>
+<script src="js/guide-confetti.js"></script>
+<script src="js/guide-editors.js"></script>
+<script src="js/guide-banners.js"></script>
+<script src="js/guide-sidebar.js"></script>
+<script src="js/guide-api.js"></script>
+<script src="js/guide-effects.js"></script>
+<script src="js/guide-boot.js"></script>
+
+</body>
+</html>

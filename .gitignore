@@ -1,0 +1,45 @@
+# Documentation package (downloaded, not tracked)
+.docs/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Build
+target/
+*.class
+test/generated/
+test/run/
+
+# OS
+.DS_Store
+Thumbs.db
+.claude/
+
+# Dev-only notes
+DEV/
+next.md
+thoughts,txt
+node_modules/
+docs/insign-architecture.svg
+insign-github-getting-started.sln
+src/sign-widget-demo-application/test-results-demo/.last-run.json
+src/sign-widget-demo-application/test-results-demo/funnel-Sig-Funnel-—-Full-S-2ee27-l-→-Draw-signature-→-Finish/video.webm
+src/sign-widget-demo-application/test-results-new/.last-run.json
+src/sign-widget-demo-application/test-results-font/.last-run.json
+src/sign-widget-demo-application/test-results-full/.last-run.json
+src/sign-widget-demo-application/test-results-demo2/.last-run.json
+src/sign-widget-demo-application/test-results-demo2/funnel-Sig-Funnel-—-Full-S-2ee27-l-→-Draw-signature-→-Finish/video.webm
+src/sign-widget-demo-application/test-results-new2/.last-run.json
+src/sign-widget-demo-application/test-results-new2/funnel-Sig-Funnel-—-Full-S-2ee27-l-→-Draw-signature-→-Finish/error-context.md
+src/sign-widget-demo-application/test-results-new2/funnel-Sig-Funnel-—-Full-S-2ee27-l-→-Draw-signature-→-Finish/test-failed-1.png
+src/sign-widget-demo-application/test-results-new2/funnel-Sig-Funnel-—-Full-S-2ee27-l-→-Draw-signature-→-Finish/video.webm
+src/sign-widget-demo-application/test-results-v4/.last-run.json
+src/sign-widget-demo-application/test-results-v4/funnel-Sig-Funnel-—-Full-S-2ee27-l-→-Draw-signature-→-Finish/video.webm
+.gitignore
+src/sign-widget-demo-application/test-results-v3/.last-run.json
+src/sign-widget-demo-application/test-results-v3/funnel-Sig-Funnel-—-Full-S-2ee27-l-→-Draw-signature-→-Finish/video.webm

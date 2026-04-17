@@ -1,0 +1,10 @@
+{
+  "buildCommand": "cd src/sign-widget-demo-application && npm install && node -e \"require('./src/pdf-generator').ensureTemplate()\"",
+  "outputDirectory": "src/sign-widget-demo-application/docs",
+  "rewrites": [
+    { "source": "/api/session", "destination": "/api/session" },
+    { "source": "/api/session/:key/status", "destination": "/api/session/[key]/status" },
+    { "source": "/api/session/:key/document", "destination": "/api/session/[key]/document" },
+    { "source": "/api/session/:key/document/download", "destination": "/api/session/[key]/document" }
+  ]
+}

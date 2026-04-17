@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="90" height="90">
+  <defs>
+    <linearGradient id="xiBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4A148C"/>
+      <stop offset="100%" stop-color="#311B92"/>
+    </linearGradient>
+    <linearGradient id="xiPeak" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#AB47BC"/>
+    </linearGradient>
+    <linearGradient id="xiAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#CE93D8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#CE93D8" stop-opacity="0.15"/>
+    </linearGradient>
+    <filter id="xiGl" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.81 0 0 0 0 0.58 0 0 0 0 0.85 0 0 0 0.6 0" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="30" height="30" rx="6" fill="url(#xiBg)"/>
+  <g filter="url(#xiGl)">
+    <!-- Mountain peak (main) -->
+    <path d="M15 5 L25 22 L5 22 Z" fill="url(#xiPeak)" opacity="0.25"/>
+    <path d="M15 6.5 L24 21 L6 21 Z" fill="none" stroke="url(#xiPeak)" stroke-width="1.2" stroke-linejoin="round"/>
+    <!-- Snow cap detail -->
+    <path d="M15 6.5 L18.5 12.5 L16 11 L15 12.5 L14 11 L11.5 12.5 Z" fill="#CE93D8" opacity="0.4"/>
+    <!-- Secondary smaller peak -->
+    <path d="M21 12 L27 22 L17 22 Z" fill="url(#xiPeak)" opacity="0.12"/>
+    <path d="M21 13 L26 21 L18 21" fill="none" stroke="#CE93D8" stroke-width="0.7" opacity="0.5" stroke-linejoin="round"/>
+    <!-- Horizon line -->
+    <line x1="3" y1="22" x2="27" y2="22" stroke="#CE93D8" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <rect x="0" y="26" width="30" height="4" fill="url(#xiAccent)" clip-path="inset(0 0 0 0 round 0 0 6 6)"/>
+</svg>

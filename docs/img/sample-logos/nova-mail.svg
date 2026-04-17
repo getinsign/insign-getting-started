@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 12 447 76" width="1341" height="228">
+  <defs>
+    <linearGradient id="nmg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF5350"/>
+      <stop offset="100%" stop-color="#B71C1C"/>
+    </linearGradient>
+  </defs>
+  <rect x="14" y="14" width="72" height="72" rx="14" fill="url(#nmg)"/>
+  <path d="M50 20 L56 34 L72 34 L60 44 L64 58 L50 48 L36 58 L40 44 L28 34 L44 34 Z" fill="rgba(255,255,255,0.2)"/>
+  <path d="M50 28 L54 36 L63 36 L56 42 L58 50 L50 44 L42 50 L44 42 L37 36 L46 36 Z" fill="#fff"/>
+  <text x="102" y="42" font-family="'Segoe UI',system-ui,sans-serif" font-weight="700" font-size="30" fill="#C62828" letter-spacing="-0.5">NOVA</text>
+  <text x="198" y="42" font-family="'Segoe UI',system-ui,sans-serif" font-weight="300" font-size="30" fill="#EF5350">Finance</text>
+  <text x="102" y="64" font-family="'Segoe UI',system-ui,sans-serif" font-weight="400" font-size="14" fill="#EF9A9A">Trusted Financial Services &amp; Wealth Management</text>
+  <rect x="102" y="72" width="300" height="1.5" rx="0.75" fill="#FFCDD2"/>
+</svg>
