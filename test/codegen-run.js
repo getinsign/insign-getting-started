@@ -115,6 +115,43 @@ function purgeSession(output) {
   } catch { /* best effort */ }
 }
 
+/**
+ * Build a debuggable failure note from combined stdout+stderr.
+ * Priority:
+ *   1. Last "HTTP <code>" line that is NOT 200, plus the following body line(s).
+ *   2. First "FAILED:" / exception line from stderr.
+ *   3. Last 5 non-empty lines as a fallback.
+ */
+function extractErrorNote(stdout, stderr) {
+  const all = [(stdout || ''), (stderr || '')].filter(Boolean).join('\n');
+  const lines = all.split('\n').filter(Boolean);
+  const parts = [];
+
+  // Find the last non-200 HTTP status line
+  let httpIdx = -1;
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const m = lines[i].match(/HTTP\s+(\d{3})/);
+    if (m && m[1] !== '200') { httpIdx = i; break; }
+  }
+  if (httpIdx >= 0) {
+    parts.push(lines[httpIdx]);
+    // Include up to 3 following lines as the body (truncated if very long)
+    for (let j = httpIdx + 1; j < Math.min(httpIdx + 4, lines.length); j++) {
+      const body = lines[j].length > 400 ? lines[j].slice(0, 400) + '...' : lines[j];
+      parts.push(body);
+    }
+  }
+
+  // Add the first FAILED / exception line (tells us which step failed)
+  const failLine = lines.find(l => /FAILED:|Exception|Traceback|Error:/i.test(l));
+  if (failLine && !parts.includes(failLine)) parts.push(failLine);
+
+  if (parts.length === 0) {
+    return lines.slice(-5).join(' | ');
+  }
+  return parts.join(' | ');
+}
+
 /** Run a Docker command asynchronously, returns a Promise */
 function runAsync(label, cmd, timeout) {
   return new Promise((resolve) => {
@@ -126,7 +163,8 @@ function runAsync(label, cmd, timeout) {
       if (!err) {
         // Success
         if (!stdout.includes('HTTP 200')) {
-          resolve({ lang: label, status: 'FAIL', note: 'no HTTP 200 in output', elapsed, stdout, stderr });
+          const detail = extractErrorNote(stdout, stderr);
+          resolve({ lang: label, status: 'FAIL', note: 'no HTTP 200 in output — ' + detail, elapsed, stdout, stderr });
         } else if (!stdout.includes('sessionid')) {
           resolve({ lang: label, status: 'FAIL', note: 'no sessionid in output', elapsed, stdout, stderr });
         } else {
@@ -138,8 +176,12 @@ function runAsync(label, cmd, timeout) {
           resolve({ lang: label, status: 'WARN', note: 'session OK, non-zero exit', elapsed, stdout, stderr });
           purgeSession(combined);
         } else {
-          const lastLines = (stderr || stdout || '').split('\n').filter(Boolean).slice(-3).join(' | ');
-          resolve({ lang: label, status: 'FAIL', note: lastLines, elapsed, stdout, stderr });
+          // On failure: extract the HTTP status line and the response body that
+          // followed it. Templates print "HTTP <code>\n<body>\n..." to stdout,
+          // then write the "FAILED: ..." line to stderr via exit. Showing the
+          // body in the note makes 4xx/5xx errors debuggable at a glance.
+          const note = extractErrorNote(stdout, stderr);
+          resolve({ lang: label, status: 'FAIL', note, elapsed, stdout, stderr });
           purgeSession(combined);
         }
       }
