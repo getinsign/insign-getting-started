@@ -60,6 +60,11 @@ Both connect to the free sandbox out of the box. Clone, run, adapt.
 
 ## Quick Start: Embedded Signature Pad (Node.js)
 
+<p align="center">
+  <video src="https://raw.githubusercontent.com/getinsign/insign-getting-started/main/docs/video/funnel.webm"
+         width="720" autoplay muted loop playsinline controls></video>
+</p>
+
 ```bash
 cd src/sign-widget-demo-application
 ./run.sh              # installs deps, starts the server

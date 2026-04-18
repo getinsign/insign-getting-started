@@ -4,6 +4,13 @@ A complete, working demo application that shows how to integrate the **inSign ha
 
 The demo implements a **SEPA Direct Debit Mandate** signing flow: the user fills out a form, signs on a canvas, and downloads the signed PDF — all in the browser.
 
+<p align="center">
+  <video src="https://raw.githubusercontent.com/getinsign/insign-getting-started/main/docs/video/funnel.webm"
+         width="720" autoplay muted loop playsinline controls></video>
+</p>
+
+*Recorded by `npm run build:video` (Playwright spec with `DEMO_VIDEO=1`).*
+
 ---
 
 ## What This Demo Teaches
