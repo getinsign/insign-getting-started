@@ -33,9 +33,9 @@ function ensureTemplate() {
     size: 'A4',
     margins: { top: 30, bottom: 0, left: 45, right: 45 },
     info: {
-      Title: 'Maklermandat / Maklervertrag',
+      Title: 'Broker Mandate / Mandate Agreement',
       Author: 'Sig-Funnel Demo',
-      Subject: 'Versicherungs- und Finanzmaklervollmacht'
+      Subject: 'Insurance and financial broker power of attorney'
     }
   });
 
@@ -89,64 +89,64 @@ function ensureTemplate() {
   const bannerTop = 27;
   doc.rect(0, bannerTop, pageW, 48).fill('#1a237e');
   doc.fillColor('#ffffff').font('Helvetica-Bold').fontSize(15)
-    .text('Maklermandat', ml, bannerTop + 9, { width: cw, align: 'center' });
+    .text('Broker Mandate', ml, bannerTop + 9, { width: cw, align: 'center' });
   doc.fontSize(7.5).font('Helvetica').fillColor('rgba(255,255,255,0.8)')
-    .text('Vollmacht und Maklervertrag gem. \u00A7\u00A734d GewO', ml, bannerTop + 28, { width: cw, align: 'center' });
+    .text('Power of attorney and broker agreement', ml, bannerTop + 28, { width: cw, align: 'center' });
 
   let y = bannerTop + 54;
 
   // ===== BROKER INFO BOX =====
   doc.roundedRect(ml, y, cw, 36, 3).lineWidth(0.5).strokeColor('#90caf9').stroke();
   doc.fillColor('#1a237e').font('Helvetica-Bold').fontSize(6.5)
-    .text('MAKLER / VERMITTLER', ml + 8, y + 5);
+    .text('BROKER / INTERMEDIARY', ml + 8, y + 5);
   doc.fillColor('#333').font('Helvetica').fontSize(6.5);
-  doc.text('FinanzTeam Muster GmbH  |  IHK-Reg.: D-W0X3-ABCDE-12  |  Musterallee 10, 60311 Frankfurt am Main', ml + 8, y + 15, { width: cw - 16 });
-  doc.text('Tel.: +49 69 123456-0  |  E-Mail: info@finanzteam-muster.de  |  USt-IdNr.: DE123456789', ml + 8, y + 25, { width: cw - 16 });
+  doc.text('Sample Brokers Ltd.  |  Reg.: D-W0X3-ABCDE-12  |  10 Sample Avenue, 60311 Frankfurt', ml + 8, y + 15, { width: cw - 16 });
+  doc.text('Phone: +49 69 123456-0  |  Email: info@sample-brokers.com  |  VAT ID: DE123456789', ml + 8, y + 25, { width: cw - 16 });
   y += 42;
 
   // ===== SECTION 1: CLIENT PERSONAL DATA =====
-  y = sectionHeader('1. AUFTRAGGEBER / MANDANT', y);
+  y = sectionHeader('1. CLIENT / MANDATE HOLDER', y);
 
-  formField('title', 'Anrede', ml + 8, y, 55);
-  formField('firstName', 'Vorname', ml + 73, y, col2W - 10);
-  formField('lastName', 'Nachname', ml + 73 + col2W, y, col2W - 10);
+  formField('title', 'Title', ml + 8, y, 55);
+  formField('firstName', 'First name', ml + 73, y, col2W - 10);
+  formField('lastName', 'Last name', ml + 73 + col2W, y, col2W - 10);
   y += ROW_H;
 
-  formField('birthdate', 'Geburtsdatum', ml + 8, y, 90);
-  formField('birthplace', 'Geburtsort', ml + 108, y, col2W - 45);
-  formField('nationality', 'Staatsangeh\u00f6rigkeit', ml + 108 + col2W - 35, y, col2W - 10);
+  formField('birthdate', 'Date of birth', ml + 8, y, 90);
+  formField('birthplace', 'Birthplace', ml + 108, y, col2W - 45);
+  formField('nationality', 'Nationality', ml + 108 + col2W - 35, y, col2W - 10);
   y += ROW_H;
 
-  formField('street', 'Stra\u00dfe und Hausnummer', ml + 8, y, cw - 16);
+  formField('street', 'Street and number', ml + 8, y, cw - 16);
   y += ROW_H;
 
-  formField('zip', 'PLZ', ml + 8, y, 50);
-  formField('city', 'Ort', ml + 68, y, col2W - 5);
-  formField('country', 'Land', ml + 68 + col2W + 5, y, col2W - 15);
+  formField('zip', 'ZIP', ml + 8, y, 50);
+  formField('city', 'City', ml + 68, y, col2W - 5);
+  formField('country', 'Country', ml + 68 + col2W + 5, y, col2W - 15);
   y += ROW_H;
 
-  formField('phone', 'Telefon / Mobil', ml + 8, y, col2W);
-  formField('email', 'E-Mail-Adresse', ml + 18 + col2W, y, col2W);
+  formField('phone', 'Phone / Mobile', ml + 8, y, col2W);
+  formField('email', 'Email address', ml + 18 + col2W, y, col2W);
   y += ROW_H;
 
-  formField('idType', 'Ausweisart', ml + 8, y, col2W);
-  formField('idNumber', 'Ausweisnummer', ml + 18 + col2W, y, col2W);
+  formField('idType', 'ID type', ml + 8, y, col2W);
+  formField('idNumber', 'ID number', ml + 18 + col2W, y, col2W);
   y += ROW_H + 4;
 
   // ===== SECTION 2: SCOPE OF MANDATE =====
-  y = sectionHeader('2. UMFANG DER MAKLERVOLLMACHT', y);
+  y = sectionHeader('2. SCOPE OF BROKER AUTHORITY', y);
 
   doc.fillColor('#333').font('Helvetica').fontSize(6.5)
     .text(
-      'Der Auftraggeber erteilt dem Makler Vollmacht zur Beratung, Betreuung und Vertretung gegen\u00fcber Versicherern, Banken und Finanzdienstleistern in folgenden Bereichen:',
+      'The client grants the broker authority to advise, represent and manage their affairs with insurers, banks and financial service providers in the following areas:',
       ml + 8, y, { width: cw - 16, lineGap: 1 }
     );
   y += 22;
 
   const areas = [
-    '\u2611 Krankenversicherung (GKV/PKV)     \u2611 Lebens-/Rentenversicherung     \u2611 Sachversicherungen (Haftpflicht, Hausrat, Geb\u00e4ude)',
-    '\u2611 KFZ-Versicherung     \u2611 Berufsunf\u00e4higkeitsversicherung     \u2611 Unfallversicherung     \u2611 Rechtsschutzversicherung',
-    '\u2611 Gewerbeversicherungen     \u2611 Baufinanzierung / Immobilienkredite     \u2611 Geldanlage / Investment     \u2611 Sonstige'
+    '\u2611 Health insurance (public / private)     \u2611 Life / pension insurance     \u2611 Property insurance (liability, home, building)',
+    '\u2611 Motor insurance     \u2611 Occupational disability insurance     \u2611 Accident insurance     \u2611 Legal expenses insurance',
+    '\u2611 Commercial insurance     \u2611 Mortgage / real-estate financing     \u2611 Investment / wealth management     \u2611 Other'
   ];
   doc.font('Helvetica').fontSize(6).fillColor('#333');
   areas.forEach(line => {
@@ -156,68 +156,68 @@ function ensureTemplate() {
   y += 4;
 
   // ===== SECTION 3: AUTHORISATION =====
-  y = sectionHeader('3. VOLLMACHT UND BEFUGNISSE', y);
+  y = sectionHeader('3. AUTHORITY AND POWERS', y);
 
   doc.fillColor('#333').font('Helvetica').fontSize(6.5)
     .text(
-      'Der Auftraggeber bevollm\u00e4chtigt den Makler, in seinem Namen und auf seine Rechnung: ' +
-      'Versicherungsvertr\u00e4ge zu k\u00fcndigen, umzudecken, abzuschlie\u00dfen oder zu \u00e4ndern; ' +
-      'Ausk\u00fcnfte und Unterlagen bei Versicherern, Banken und Bausparkassen einzuholen; ' +
-      'Schadensmeldungen zu erstatten und Leistungsanspr\u00fcche geltend zu machen; ' +
-      'den Versicherungsschutz zu optimieren; Bestandsdaten zu \u00fcbertragen und zu verarbeiten.',
+      'The client authorises the broker to act in their name and on their behalf: ' +
+      'to cancel, switch, conclude or modify insurance contracts; ' +
+      'to request information and documents from insurers, banks and building societies; ' +
+      'to file claims and pursue benefit entitlements; ' +
+      'to optimise insurance cover; to transfer and process portfolio data.',
       ml + 8, y, { width: cw - 16, lineGap: 1 }
     );
   y += 42;
 
   // ===== SECTION 4: DATA PROTECTION =====
-  y = subHeader('4. DATENSCHUTZ (DSGVO Art. 6, 13, 14)', y);
+  y = subHeader('4. DATA PROTECTION (GDPR Art. 6, 13, 14)', y);
 
   doc.fillColor('#333').font('Helvetica').fontSize(6)
     .text(
-      'Der Auftraggeber willigt ein, dass der Makler personenbezogene Daten zum Zwecke der Vertragsvermittlung, ' +
-      '-verwaltung und -betreuung erhebt, verarbeitet und an Produktgeber \u00fcbermittelt. ' +
-      'Die Einwilligung ist jederzeit widerrufbar. Weitere Informationen gem. Art. 13/14 DSGVO wurden ausgeh\u00e4ndigt.',
+      'The client consents to the broker collecting, processing and transmitting personal data to product providers ' +
+      'for the purposes of contract placement, administration and support. ' +
+      'Consent may be withdrawn at any time. Further GDPR Art. 13/14 information has been provided.',
       ml + 8, y, { width: cw - 16, lineGap: 1 }
     );
   y += 30;
 
   // ===== SECTION 5: EXISTING CONTRACTS =====
-  y = subHeader('5. BESTEHENDE VERTR\u00c4GE (soweit bekannt)', y);
+  y = subHeader('5. EXISTING CONTRACTS (if known)', y);
 
-  formField('contract1', 'Vertrag 1 (Gesellschaft / Sparte / Vertragsnr.)', ml + 8, y, cw - 16);
+  formField('contract1', 'Contract 1 (company / type / contract no.)', ml + 8, y, cw - 16);
   y += 24;
-  formField('contract2', 'Vertrag 2', ml + 8, y, cw - 16);
+  formField('contract2', 'Contract 2', ml + 8, y, cw - 16);
   y += 24;
-  formField('contract3', 'Vertrag 3', ml + 8, y, cw - 16);
+  formField('contract3', 'Contract 3', ml + 8, y, cw - 16);
   y += 28;
 
   // ===== SECTION 6: SIGNATURES =====
-  y = sectionHeader('6. UNTERSCHRIFTEN', y);
+  y = sectionHeader('6. SIGNATURES', y);
 
   doc.fillColor('#333').font('Helvetica').fontSize(6)
     .text(
-      'Mit der Unterschrift best\u00e4tigt der Auftraggeber, die Maklervereinbarung gelesen und verstanden zu haben. Die Vollmacht gilt bis auf Widerruf.',
+      'By signing, the client confirms having read and understood the broker agreement. The mandate remains in effect until revoked.',
       ml + 8, y, { width: cw - 16, lineGap: 1 }
     );
   y += 18;
 
   // Date + Location field
-  formField('signDate', 'Ort, Datum', ml + 8, y, 170);
+  formField('signDate', 'Place, date', ml + 8, y, 170);
   y += ROW_H;
 
   // --- Client signature ---
   doc.fillColor('#666').font('Helvetica').fontSize(6)
-    .text('Unterschrift Auftraggeber / Mandant', ml + 8, y);
+    .text('Client / mandate-holder signature', ml + 8, y);
   y += 9;
 
-  const clientSigTag = '##SIG{role:"Kunde",displayname:"Unterschrift Auftraggeber",x:"0cm",y:"0cm",w:"7cm",h:"1.2cm"}';
+  const clientSigTag = '##SIG{role:"Client",displayname:"Client signature",x:"0cm",y:"0cm",w:"7cm",h:"1.2cm"}';
   doc.font('Helvetica').fontSize(2).fillColor('#ffffff')
     .text(clientSigTag, ml + 8, y);
   y += 38;
 
   // --- Broker signature (static vector) ---
   doc.fillColor('#666').font('Helvetica').fontSize(6)
-    .text('Unterschrift Makler / Vermittler', ml + 8, y);
+    .text('Broker / intermediary signature', ml + 8, y);
   y += 10;
 
   const sx = ml + 12;
@@ -248,7 +248,7 @@ function ensureTemplate() {
 
   y += 26;
   doc.fillColor('#888').font('Helvetica').fontSize(5.5)
-    .text('S. Fischer, Gesch\u00e4ftsf\u00fchrer \u2014 FinanzTeam Muster GmbH', ml + 8, y);
+    .text('S. Fischer, Managing Director \u2014 Sample Brokers Ltd.', ml + 8, y);
   y += 10;
 
   // ===== PAGE OVERFLOW GUARD =====
@@ -270,7 +270,7 @@ function ensureTemplate() {
   // --- Footer ---
   doc.rect(0, FOOTER_Y, pageW, FOOTER_H).fill('#f5f5f5');
   doc.fillColor('#999').font('Helvetica').fontSize(5)
-    .text('Maklermandat \u2014 Demo-Dokument zu Testzwecken  |  \u00a9 FinanzTeam Muster GmbH  |  Erstellt mit Sig-Funnel',
+    .text('Broker Mandate \u2014 demo document for testing purposes  |  \u00a9 Sample Brokers Ltd.  |  Generated with Sig-Funnel',
       ml, FOOTER_Y + 7, { width: cw, align: 'center' });
 
   doc.end();

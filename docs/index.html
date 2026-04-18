@@ -611,10 +611,9 @@
         <video autoplay muted loop playsinline controls crossorigin="anonymous"
                style="display:block;width:100%;max-width:720px;margin:0 auto 0.75rem;border-radius:8px;border:1px solid var(--insign-border)">
             <source src="video/funnel.webm" type="video/webm">
-            <track kind="subtitles" srclang="en" label="English" src="video/funnel.en.vtt" default>
-            <track kind="subtitles" srclang="de" label="Deutsch" src="video/funnel.de.vtt">
         </video>
         <p>A realistic broker-mandate signing flow. The user fills in personal data, the server generates a mandate PDF on the fly, creates an inSign session, and the signature pad is rendered inline - all without leaving the page.</p>
+        <p style="font-size:0.78rem;color:#b86f1a;background:rgba(247,179,35,0.08);border-left:3px solid #f7b323;padding:0.4rem 0.6rem;margin-bottom:0.75rem;border-radius:4px"><i class="bi bi-exclamation-triangle me-1"></i><strong>Sandbox — test data only.</strong> Connects to the public inSign sandbox; anyone can read documents stored there. Never enter real personal data.</p>
         <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
             <strong>Key concepts:</strong> Embedded mode, JWT authentication, <code>##SIG{...}</code> tags, cookieless browser-to-server communication, dynamic PDF generation with signature fields
         </div>

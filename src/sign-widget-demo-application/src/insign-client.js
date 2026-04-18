@@ -91,7 +91,7 @@ async function createSession(displayname, foruser, docId, preFilledFields, pdfBu
   // Build the document configuration object
   const docConfig = {
     id: docId,                    // Your chosen document ID — you'll need this later
-    displayname: 'Maklermandat.pdf',
+    displayname: 'BrokerMandate.pdf',
     scanSigTags: true,            // ← Scan for ##SIG{...} tags in the PDF
     allowFormEditing: true        // Allow the PDF form fields to be edited
   };

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maklermandat — Digitale Unterschrift</title>
+  <title>Broker Mandate — Digital Signature</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
@@ -1047,7 +1047,7 @@
     <!-- Top bar -->
     <nav class="brand-bar">
       <div class="brand-logo"><i class="bi bi-vector-pen"></i>Sig-Funnel</div>
-      <div class="brand-env">Maklermandat Demo</div>
+      <div class="brand-env"><i class="bi bi-exclamation-triangle me-1" style="color:#f7b323"></i>Public sandbox — test data only, never real signatures</div>
     </nav>
 
     <div class="funnel-scroll">
@@ -1055,19 +1055,19 @@
     <!-- Progress -->
     <div class="step-bar" id="progress">
       <div class="step-pill active" data-step="1">
-        <span class="s-num">1</span><span class="s-text">&Uuml;bersicht</span>
+        <span class="s-num">1</span><span class="s-text">Overview</span>
       </div>
       <div class="step-conn" data-after="1"></div>
       <div class="step-pill" data-step="2">
-        <span class="s-num">2</span><span class="s-text">Ihre Daten</span>
+        <span class="s-num">2</span><span class="s-text">Your Details</span>
       </div>
       <div class="step-conn" data-after="2"></div>
       <div class="step-pill" data-step="3">
-        <span class="s-num">3</span><span class="s-text">Unterschrift</span>
+        <span class="s-num">3</span><span class="s-text">Signature</span>
       </div>
       <div class="step-conn" data-after="3"></div>
       <div class="step-pill" data-step="4">
-        <span class="s-num">4</span><span class="s-text">Fertig</span>
+        <span class="s-num">4</span><span class="s-text">Done</span>
       </div>
     </div>
 
@@ -1076,19 +1076,19 @@
       <div class="card card-step">
         <div class="card-body text-center">
           <div class="welcome-icon"><i class="bi bi-person-badge"></i></div>
-          <div class="welcome-title">Maklermandat</div>
+          <div class="welcome-title">Broker Mandate</div>
           <p class="welcome-sub">
-            Erteilen Sie Ihrem Versicherungs- und Finanzmakler die Vollmacht,
-            Sie umfassend zu betreuen &mdash; digital, sicher und in wenigen Minuten.
+            Grant your insurance and financial broker the authority to fully represent you
+            &mdash; digitally, securely, in just a few minutes.
           </p>
           <div class="feature-row">
-            <div class="feature-item"><span class="f-icon green"><i class="bi bi-check-lg"></i></span>Rechtsg&uuml;ltige digitale Unterschrift</div>
-            <div class="feature-item"><span class="f-icon blue"><i class="bi bi-lock"></i></span>DSGVO-konforme Datenverarbeitung</div>
-            <div class="feature-item"><span class="f-icon amber"><i class="bi bi-file-earmark-pdf"></i></span>Sofortiger Download als signiertes PDF</div>
+            <div class="feature-item"><span class="f-icon green"><i class="bi bi-check-lg"></i></span>Legally binding digital signature</div>
+            <div class="feature-item"><span class="f-icon blue"><i class="bi bi-lock"></i></span>GDPR-compliant data processing</div>
+            <div class="feature-item"><span class="f-icon amber"><i class="bi bi-file-earmark-pdf"></i></span>Instant signed PDF download</div>
           </div>
           <div>
             <button class="btn btn-brand" id="btn-start" onclick="goTo(2)">
-              Jetzt starten <i class="bi bi-arrow-right ms-2"></i>
+              Get Started <i class="bi bi-arrow-right ms-2"></i>
             </button>
           </div>
         </div>
@@ -1099,121 +1099,121 @@
     <div class="container d-none" id="step-2-panel">
       <div class="card card-step" style="max-width:600px;">
         <div class="card-body">
-          <h4 style="font-size:1.1rem;font-weight:700;color:#1d1f2f;margin-bottom:.2rem;">Ihre Angaben</h4>
-          <p style="font-size:.8rem;color:#8b8fa3;margin-bottom:1.2rem;">Bitte f&uuml;llen Sie alle Pflichtfelder aus, um das Maklermandat zu erstellen.</p>
+          <h4 style="font-size:1.1rem;font-weight:700;color:#1d1f2f;margin-bottom:.2rem;">Your Details</h4>
+          <p style="font-size:.8rem;color:#8b8fa3;margin-bottom:1.2rem;">Please fill in all required fields to create the broker mandate.</p>
           <form id="user-form" class="funnel-form" novalidate>
             <div class="row g-2">
               <div class="col-3">
-                <label class="form-label">Anrede</label>
+                <label class="form-label">Title</label>
                 <select class="form-control form-select" id="title" required>
-                  <option value="">W&auml;hlen</option>
-                  <option value="Herr">Herr</option>
-                  <option value="Frau">Frau</option>
-                  <option value="Divers">Divers</option>
+                  <option value="">Select</option>
+                  <option value="Mr">Mr</option>
+                  <option value="Ms">Ms</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
               <div class="col">
-                <label class="form-label">Vorname</label>
-                <input type="text" class="form-control" id="firstName" required placeholder="Max">
+                <label class="form-label">First name</label>
+                <input type="text" class="form-control" id="firstName" required placeholder="John">
               </div>
               <div class="col">
-                <label class="form-label">Nachname</label>
-                <input type="text" class="form-control" id="lastName" required placeholder="Mustermann">
+                <label class="form-label">Last name</label>
+                <input type="text" class="form-control" id="lastName" required placeholder="Doe">
               </div>
             </div>
             <div class="row g-2 mt-1">
               <div class="col-md-4">
-                <label class="form-label">Geburtsdatum</label>
+                <label class="form-label">Date of birth</label>
                 <input type="date" class="form-control" id="birthdate" required>
               </div>
               <div class="col-md-4">
-                <label class="form-label">Geburtsort</label>
-                <input type="text" class="form-control" id="birthplace" placeholder="Frankfurt">
+                <label class="form-label">Birthplace</label>
+                <input type="text" class="form-control" id="birthplace" placeholder="London">
               </div>
               <div class="col-md-4">
-                <label class="form-label">Staatsangeh.</label>
-                <input type="text" class="form-control" id="nationality" placeholder="deutsch">
+                <label class="form-label">Nationality</label>
+                <input type="text" class="form-control" id="nationality" placeholder="British">
               </div>
             </div>
             <div class="row g-2 mt-1">
               <div class="col">
-                <label class="form-label">Stra&szlig;e &amp; Nr.</label>
-                <input type="text" class="form-control" id="street" required placeholder="Kaiserstra&szlig;e 27">
+                <label class="form-label">Street &amp; No.</label>
+                <input type="text" class="form-control" id="street" required placeholder="27 Baker Street">
               </div>
             </div>
             <div class="row g-2 mt-1">
               <div class="col-3">
-                <label class="form-label">PLZ</label>
-                <input type="text" class="form-control" id="zip" required placeholder="60311" maxlength="10">
+                <label class="form-label">ZIP</label>
+                <input type="text" class="form-control" id="zip" required placeholder="NW1 6XE" maxlength="10">
               </div>
               <div class="col">
-                <label class="form-label">Ort</label>
-                <input type="text" class="form-control" id="city" required placeholder="Frankfurt am Main">
+                <label class="form-label">City</label>
+                <input type="text" class="form-control" id="city" required placeholder="London">
               </div>
               <div class="col-md-3">
-                <label class="form-label">Land</label>
-                <input type="text" class="form-control" id="country" placeholder="Deutschland">
+                <label class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" placeholder="United Kingdom">
               </div>
             </div>
             <div class="row g-2 mt-1">
               <div class="col-md-5">
-                <label class="form-label">Telefon / Mobil</label>
-                <input type="tel" class="form-control" id="phone" placeholder="+49 170 9876543">
+                <label class="form-label">Phone / Mobile</label>
+                <input type="tel" class="form-control" id="phone" placeholder="+44 7700 900123">
               </div>
               <div class="col">
-                <label class="form-label">E-Mail</label>
-                <input type="email" class="form-control" id="email" placeholder="max@example.de">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="john@example.com">
               </div>
             </div>
             <div class="row g-2 mt-1">
               <div class="col-md-5">
-                <label class="form-label">Ausweisart</label>
+                <label class="form-label">ID type</label>
                 <select class="form-control form-select" id="idType">
-                  <option value="Personalausweis">Personalausweis</option>
-                  <option value="Reisepass">Reisepass</option>
+                  <option value="National ID">National ID</option>
+                  <option value="Passport">Passport</option>
                 </select>
               </div>
               <div class="col">
-                <label class="form-label">Ausweisnummer</label>
+                <label class="form-label">ID number</label>
                 <input type="text" class="form-control" id="idNumber" placeholder="L01X00T47">
               </div>
             </div>
 
-            <div style="font-size:.68rem;font-weight:600;color:#8b8fa3;margin:1rem 0 .4rem;letter-spacing:.3px;">BESTEHENDE VERTR&Auml;GE <span style="font-weight:400;">(optional)</span></div>
+            <div style="font-size:.68rem;font-weight:600;color:#8b8fa3;margin:1rem 0 .4rem;letter-spacing:.3px;">EXISTING CONTRACTS <span style="font-weight:400;">(optional)</span></div>
             <div class="row g-2">
               <div class="col-12">
-                <input type="text" class="form-control" id="contract1" placeholder="z.B. Allianz / Haftpflicht / VS-123456789">
+                <input type="text" class="form-control" id="contract1" placeholder="e.g. Aviva / Liability / CT-123456789">
               </div>
               <div class="col-12">
-                <input type="text" class="form-control" id="contract2" placeholder="z.B. HUK-Coburg / KFZ / KH-987654321">
+                <input type="text" class="form-control" id="contract2" placeholder="e.g. Allianz / Motor / MT-987654321">
               </div>
               <div class="col-12">
-                <input type="text" class="form-control" id="contract3" placeholder="z.B. Debeka / PKV / 1234567">
+                <input type="text" class="form-control" id="contract3" placeholder="e.g. Bupa / Health / 1234567">
               </div>
             </div>
 
-            <div style="font-size:.68rem;font-weight:600;color:#8b8fa3;margin:1rem 0 .4rem;letter-spacing:.3px;">SIGNATUR-OPTIONEN</div>
+            <div style="font-size:.68rem;font-weight:600;color:#8b8fa3;margin:1rem 0 .4rem;letter-spacing:.3px;">SIGNATURE OPTIONS</div>
             <div class="row g-2">
               <div class="col-6">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="opt-realname">
-                  <label class="form-check-label" for="opt-realname" style="font-size:.8rem;">Name eingeben</label>
+                  <label class="form-check-label" for="opt-realname" style="font-size:.8rem;">Enter name</label>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="opt-realname-skip">
-                  <label class="form-check-label" for="opt-realname-skip" style="font-size:.8rem;">&Uuml;berspringbar</label>
+                  <label class="form-check-label" for="opt-realname-skip" style="font-size:.8rem;">Skippable</label>
                 </div>
               </div>
             </div>
 
             <div class="d-flex justify-content-between mt-4">
               <button type="button" class="btn btn-ghost" onclick="goTo(1)">
-                <i class="bi bi-arrow-left me-1"></i> Zur&uuml;ck
+                <i class="bi bi-arrow-left me-1"></i> Back
               </button>
               <button type="submit" class="btn btn-brand" id="btn-submit">
-                Mandat erstellen <i class="bi bi-arrow-right ms-1"></i>
+                Create mandate <i class="bi bi-arrow-right ms-1"></i>
               </button>
             </div>
           </form>
@@ -1225,33 +1225,33 @@
     <div class="container d-none" id="step-3-panel">
       <div class="card card-step" style="max-width:600px;">
         <div class="card-body">
-          <h4 style="font-size:1.1rem;font-weight:700;color:#1d1f2f;margin-bottom:.2rem;">Maklermandat unterschreiben</h4>
+          <h4 style="font-size:1.1rem;font-weight:700;color:#1d1f2f;margin-bottom:.2rem;">Sign the mandate</h4>
           <p style="font-size:.8rem;color:#8b8fa3;margin-bottom:1rem;">
-            Zeichnen Sie Ihre Unterschrift direkt oder senden Sie den Link an Ihr Smartphone.
+            Draw your signature here or send a link to your phone.
           </p>
 
           <!-- Mode toggle: Sign here vs Send to Phone -->
           <div class="sig-mode-toggle" id="sig-mode-toggle">
             <button class="btn active" data-mode="embedded" onclick="switchSignMode('embedded')">
-              <i class="bi bi-pencil me-1"></i> Hier unterschreiben
+              <i class="bi bi-pencil me-1"></i> Sign here
             </button>
             <button class="btn" data-mode="remote" onclick="switchSignMode('remote')">
-              <i class="bi bi-phone me-1"></i> An Smartphone senden
+              <i class="bi bi-phone me-1"></i> Send to phone
             </button>
           </div>
 
           <div id="sig-loading" class="text-center py-4">
             <div class="spinner-border spinner-border-sm" style="color:var(--brand);" role="status"></div>
-            <p class="mt-2" style="font-size:.82rem;color:#8b8fa3;">Unterschriftenfeld wird geladen...</p>
+            <p class="mt-2" style="font-size:.82rem;color:#8b8fa3;">Loading signature pad...</p>
           </div>
 
           <!-- ---- EMBEDDED MODE: signature pads ---- -->
           <div id="embedded-mode">
             <!-- Real name input (shown if realNameInputRequired) -->
             <div id="realname-panel" class="realinput-panel d-none">
-              <label><i class="bi bi-person me-1"></i> Vollst&auml;ndiger Name <span id="realname-optional" class="d-none" style="font-weight:normal;color:#8b8fa3">(optional)</span></label>
+              <label><i class="bi bi-person me-1"></i> Full name <span id="realname-optional" class="d-none" style="font-weight:normal;color:#8b8fa3">(optional)</span></label>
               <div class="input-row">
-                <input type="text" class="form-control" id="realNameInput" placeholder="Bitte Ihren vollst&auml;ndigen Namen eingeben">
+                <input type="text" class="form-control" id="realNameInput" placeholder="Please enter your full name">
                 <button class="btn btn-sm btn-brand" id="realname-ok" onclick="submitRealName()">OK</button>
               </div>
             </div>
@@ -1281,27 +1281,27 @@
           <div id="remote-mode" class="d-none">
             <!-- Phone panel (input + QR) -->
             <div id="phone-panel" class="phone-panel">
-              <div class="panel-title"><i class="bi bi-phone me-1"></i> An Smartphone senden</div>
+              <div class="panel-title"><i class="bi bi-phone me-1"></i> Send to phone</div>
               <div class="input-row">
-                <input type="tel" class="form-control" id="sms-phone" placeholder="+49 170 1234567">
+                <input type="tel" class="form-control" id="sms-phone" placeholder="+44 7700 900123">
                 <button class="btn btn-sm btn-brand" id="btn-send-sms" onclick="sendSmsLink()">
-                  <i class="bi bi-send me-1"></i> SMS senden
+                  <i class="bi bi-send me-1"></i> Send SMS
                 </button>
               </div>
-              <div class="or-divider">- oder QR-Code scannen -</div>
+              <div class="or-divider">- or scan QR code -</div>
               <div class="qr-area">
                 <canvas id="qr-canvas"></canvas>
-                <div class="qr-label">QR-Code mit Smartphone scannen</div>
+                <div class="qr-label">Scan QR code with your phone</div>
               </div>
             </div>
 
             <!-- Remote status overlay (shown after SMS sent / phone connected) -->
             <div id="remote-status" class="remote-status-overlay d-none">
               <div class="status-spinner" id="remote-spinner"></div>
-              <div class="status-text" id="remote-status-text">SMS wird gesendet...</div>
-              <div class="status-sub" id="remote-status-sub">Bitte &ouml;ffnen Sie den Link auf Ihrem Smartphone.</div>
+              <div class="status-text" id="remote-status-text">Sending SMS...</div>
+              <div class="status-sub" id="remote-status-sub">Please open the link on your phone.</div>
               <button class="btn btn-sm btn-outline-secondary mt-3 d-none" id="btn-cancel-remote" onclick="cancelRemoteSigning()">
-                <i class="bi bi-x-circle me-1"></i> Abbrechen
+                <i class="bi bi-x-circle me-1"></i> Cancel
               </button>
             </div>
           </div>
@@ -1310,10 +1310,10 @@
 
           <div class="d-flex justify-content-between mt-3">
             <button class="btn btn-ghost" onclick="goTo(2)">
-              <i class="bi bi-arrow-left me-1"></i> Zur&uuml;ck
+              <i class="bi bi-arrow-left me-1"></i> Back
             </button>
             <button class="btn btn-brand" id="btn-finish" onclick="finishSigning()">
-              Abschlie&szlig;en &amp; Download <i class="bi bi-arrow-right ms-1"></i>
+              Finish &amp; Download <i class="bi bi-arrow-right ms-1"></i>
             </button>
           </div>
         </div>
@@ -1325,17 +1325,17 @@
       <div class="card card-step">
         <div class="card-body text-center">
           <div class="done-badge"><i class="bi bi-check-lg"></i></div>
-          <div class="done-title">Maklermandat erfolgreich unterschrieben</div>
-          <p style="font-size:.84rem;color:#8b8fa3;margin-bottom:1.2rem;">Ihr Maklermandat wurde digital signiert und steht zum Download bereit.</p>
+          <div class="done-title">Broker mandate signed successfully</div>
+          <p style="font-size:.84rem;color:#8b8fa3;margin-bottom:1.2rem;">Your broker mandate has been digitally signed and is ready to download.</p>
           <div class="mb-3">
             <iframe id="pdf-preview" class="pdf-frame" title="Signed PDF Preview"></iframe>
           </div>
           <div class="d-flex justify-content-center gap-2">
-            <a id="btn-download" class="btn btn-accent" download="Maklermandat-signed.pdf">
-              <i class="bi bi-download me-1"></i> PDF herunterladen
+            <a id="btn-download" class="btn btn-accent" download="BrokerMandate-signed.pdf">
+              <i class="bi bi-download me-1"></i> Download PDF
             </a>
             <button class="btn btn-ghost" onclick="location.reload()">
-              <i class="bi bi-arrow-repeat me-1"></i> Neues Mandat
+              <i class="bi bi-arrow-repeat me-1"></i> New mandate
             </button>
           </div>
         </div>
@@ -1623,23 +1623,23 @@ docker run -p 3000:3000 sig-funnel</code></pre>
 
   // Prefill form with test data (remove this in production!)
   $(function () {
-    $('#title').val('Herr');
-    $('#firstName').val('Max');
-    $('#lastName').val('Mustermann');
+    $('#title').val('Mr');
+    $('#firstName').val('John');
+    $('#lastName').val('Doe');
     $('#birthdate').val('1985-03-14');
-    $('#birthplace').val('Frankfurt am Main');
-    $('#nationality').val('deutsch');
-    $('#street').val('Kaiserstra\u00dfe 27');
-    $('#zip').val('60311');
-    $('#city').val('Frankfurt am Main');
-    $('#country').val('Deutschland');
-    $('#phone').val('+49 170 9876543');
-    $('#email').val('max.mustermann@example.de');
-    $('#idType').val('Personalausweis');
+    $('#birthplace').val('London');
+    $('#nationality').val('British');
+    $('#street').val('27 Baker Street');
+    $('#zip').val('NW1 6XE');
+    $('#city').val('London');
+    $('#country').val('United Kingdom');
+    $('#phone').val('+44 7700 900123');
+    $('#email').val('john.doe@example.com');
+    $('#idType').val('National ID');
     $('#idNumber').val('L01X00T47');
-    $('#contract1').val('Allianz / Privathaftpflicht / VS-3847561');
-    $('#contract2').val('HUK-Coburg / KFZ-Versicherung / KH-9912034');
-    $('#contract3').val('Debeka / Private Krankenversicherung / 7781923');
+    $('#contract1').val('Aviva / Liability / CT-3847561');
+    $('#contract2').val('Allianz / Motor / MT-9912034');
+    $('#contract3').val('Bupa / Private Health / 7781923');
   });
 
   // ---------- Step Navigation ----------
@@ -1738,7 +1738,7 @@ docker run -p 3000:3000 sig-funnel</code></pre>
     } catch (err) {
       alert('Error: ' + (err.responseJSON?.error || 'Something went wrong.'));
     } finally {
-      btn.prop('disabled', false).html('Mandat erstellen <i class="bi bi-arrow-right ms-1"></i>');
+      btn.prop('disabled', false).html('Create mandate <i class="bi bi-arrow-right ms-1"></i>');
     }
   });
 
@@ -1917,20 +1917,20 @@ docker run -p 3000:3000 sig-funnel</code></pre>
   //
   function sendSmsLink() {
     var phone = $('#sms-phone').val().trim();
-    if (!phone) { showToast('Bitte geben Sie eine Handynummer ein.'); return; }
+    if (!phone) { showToast('Please enter a phone number.'); return; }
 
     var $btn = $('#btn-send-sms');
     $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span>');
 
-    showRemoteStatus('SMS wird gesendet...', 'Bitte warten...');
+    showRemoteStatus('Sending SMS...', 'Please wait...');
 
     INSIGNAPP.embedded.initSignSMS(phone,
       // onSent — SMS delivered, waiting for phone to pair
       function () {
         console.log('SMS sent successfully');
-        showRemoteStatus('SMS gesendet!', 'Bitte \u00f6ffnen Sie den Link auf Ihrem Smartphone.');
+        showRemoteStatus('SMS sent!', 'Please open the link on your phone.');
         $('#btn-cancel-remote').removeClass('d-none');
-        $btn.prop('disabled', false).html('<i class="bi bi-send me-1"></i> SMS senden');
+        $btn.prop('disabled', false).html('<i class="bi bi-send me-1"></i> Send SMS');
       },
       // onPaired — phone connected, now trigger the actual remote signature
       function () {
@@ -1944,9 +1944,9 @@ docker run -p 3000:3000 sig-funnel</code></pre>
       },
       // onError — SMS sending failed
       function () {
-        showToast('SMS konnte nicht gesendet werden. Bitte Nummer pr\u00fcfen.');
+        showToast('Could not send SMS. Please check the number.');
         hideRemoteStatus();
-        $btn.prop('disabled', false).html('<i class="bi bi-send me-1"></i> SMS senden');
+        $btn.prop('disabled', false).html('<i class="bi bi-send me-1"></i> Send SMS');
       }
     );
   }
@@ -1965,13 +1965,13 @@ docker run -p 3000:3000 sig-funnel</code></pre>
 
   function startRemoteSign() {
     if (sigFieldsData.length === 0) {
-      showToast('Keine Signaturfelder gefunden.');
+      showToast('No signature fields found.');
       return;
     }
 
     showRemoteStatus(
-      '<i class="bi bi-phone-vibrate" style="font-size:1.5rem;"></i> Smartphone verbunden!',
-      'Bitte unterschreiben Sie jetzt auf Ihrem Smartphone.'
+      '<i class="bi bi-phone-vibrate" style="font-size:1.5rem;"></i> Phone connected!',
+      'Please sign on your phone now.'
     );
     $('#remote-spinner').hide();
     $('#btn-cancel-remote').removeClass('d-none');
@@ -1987,8 +1987,8 @@ docker run -p 3000:3000 sig-funnel</code></pre>
       var $wrap = sf.$wrap;
 
       showRemoteStatus(
-        'Unterschrift ' + (i + 1) + ' von ' + sigFieldsData.length,
-        'Bitte auf dem Smartphone unterschreiben...'
+        'Signature ' + (i + 1) + ' of ' + sigFieldsData.length,
+        'Please sign on your phone...'
       );
       $('#remote-spinner').show();
 
@@ -2000,23 +2000,23 @@ docker run -p 3000:3000 sig-funnel</code></pre>
         function () {
           INSIGNAPP.embedded.setSignatureImageForField($wrap);
           $wrap.find('.sigPad').replaceWith(
-            '<div class="text-center py-2"><i class="bi bi-check-circle text-success" style="font-size:2rem;"></i><br><small class="text-muted">Auf Smartphone unterschrieben</small></div>'
+            '<div class="text-center py-2"><i class="bi bi-check-circle text-success" style="font-size:2rem;"></i><br><small class="text-muted">Signed on phone</small></div>'
           );
           signFieldRemote(i + 1);
         },
         // onCancel — user cancelled on phone
         function () {
-          showToast('Signatur auf Smartphone abgebrochen.');
+          showToast('Signature cancelled on phone.');
           hideRemoteStatus();
         },
         // onError
         function () {
-          showToast('Fehler bei der Smartphone-Signatur.');
+          showToast('Error with phone signature.');
           hideRemoteStatus();
         },
         // onNotPaired
         function () {
-          showToast('Kein Smartphone verbunden. Bitte erneut senden.');
+          showToast('No phone connected. Please resend.');
           hideRemoteStatus();
         }
       );
@@ -2027,8 +2027,8 @@ docker run -p 3000:3000 sig-funnel</code></pre>
     // Show success, then proceed
     $('#remote-spinner').hide();
     $('#remote-status-text').html(
-      '<i class="bi bi-check-circle text-success" style="font-size:2rem;"></i><br>Alle Unterschriften erfolgreich!');
-    $('#remote-status-sub').text('Dokument wird fertiggestellt...');
+      '<i class="bi bi-check-circle text-success" style="font-size:2rem;"></i><br>All signatures complete!');
+    $('#remote-status-sub').text('Finalising document...');
     $('#btn-cancel-remote').addClass('d-none');
 
     // Unpair and proceed to Step 4
@@ -2106,14 +2106,14 @@ docker run -p 3000:3000 sig-funnel</code></pre>
       $('#realname-panel').removeClass('d-none');
       if (userRequestedNameSkippable) {
         $('#realname-optional').removeClass('d-none');
-        $('#realNameInput').attr('placeholder', 'Name eingeben oder leer lassen');
+        $('#realNameInput').attr('placeholder', 'Enter name or leave blank');
       }
     }
   }
 
   function submitRealName() {
     var name = $('#realNameInput').val().trim();
-    if (!name) { showToast('Bitte geben Sie Ihren Namen ein.'); return; }
+    if (!name) { showToast('Please enter your name.'); return; }
     $('#sig-container .sig-field-wrap').each(function () {
       $(this).data('realname', name);
     });
@@ -2194,7 +2194,7 @@ docker run -p 3000:3000 sig-funnel</code></pre>
     });
 
     if (!allReady) {
-      showToast('Bitte zeichnen Sie zuerst Ihre Unterschrift.');
+      showToast('Please draw your signature first.');
       return;
     }
 
@@ -2202,7 +2202,7 @@ docker run -p 3000:3000 sig-funnel</code></pre>
     if (userRequestedNameInput) {
       var name = $('#realNameInput').val().trim();
       if (!name && !userRequestedNameSkippable) {
-        showToast('Bitte geben Sie Ihren Namen ein.');
+        showToast('Please enter your name.');
         $('#realNameInput').focus();
         return;
       }
@@ -2211,7 +2211,7 @@ docker run -p 3000:3000 sig-funnel</code></pre>
 
     // Send all signatures sequentially (wait for each /store/document to return before sending the next)
     const btn = $('#btn-finish');
-    btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Wird gesendet\u2026');
+    btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Sending\u2026');
 
     const wraps = pads.filter(function () {
       return $(this).find('canvas.pad').length > 0;
