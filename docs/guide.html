@@ -16,7 +16,32 @@
     <meta charset="UTF-8">
     <script>!function(){var d=!0;try{var s=localStorage.getItem('insign-dark-mode');if(s!==null)d=s==='true'}catch(e){}document.documentElement.setAttribute('data-theme',d?'dark':'light');if('scrollRestoration' in history)history.scrollRestoration='manual'}()</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inSign API - Getting Started</title>
+    <title>Getting Started — inSign Electronic Signature API (eIDAS)</title>
+    <meta name="description" content="Step-by-step interactive guide to the inSign electronic signature API: create a session, upload a PDF, sign it, and download the result. Live API calls against the free EU-hosted, eIDAS-compliant sandbox.">
+    <meta name="keywords" content="electronic signature API tutorial, eIDAS API, inSign getting started, sign PDF API, QES, eSignature REST API">
+    <meta name="author" content="inSign GmbH">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://getinsign.github.io/insign-getting-started/guide.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="inSign Developer Hub">
+    <meta property="og:title" content="Getting Started — inSign Electronic Signature API (eIDAS)">
+    <meta property="og:description" content="Interactive 4-step walkthrough of the inSign signing workflow. Live API calls against the free sandbox — EU-hosted, eIDAS-compliant.">
+    <meta property="og:url" content="https://getinsign.github.io/insign-getting-started/guide.html">
+    <meta property="og:image" content="https://getinsign.github.io/insign-getting-started/img/og-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="inSign Electronic Signature API — eIDAS, QES, EU-hosted">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Getting Started — inSign Electronic Signature API (eIDAS)">
+    <meta name="twitter:description" content="Interactive 4-step walkthrough of the inSign signing workflow against the free sandbox.">
+    <meta name="twitter:image" content="https://getinsign.github.io/insign-getting-started/img/og-card.png">
+
     <link rel="icon" href="favicon.png" sizes="32x32">
     <link rel="icon" href="favicon-192.png" sizes="192x192">
 
@@ -470,23 +495,44 @@
 
                 <h5><i class="bi bi-play-circle me-1"></i>Full API Explorer</h5>
                 <p>Want to go deeper? The <a href="explorer.html"><strong>inSign API Explorer</strong></a> gives you a complete interactive playground.</p>
-                <div class="feature-showcase" id="feature-showcase">
-                    <ul class="feature-list">
-                        <li class="feature-item active" data-screenshot="screenshots/17-editor-autocomplete.png"><strong>JSON autocomplete and validation</strong> - schema-aware editor with inline suggestions, hover docs, and real-time error highlighting powered by the live OpenAPI spec</li>
-                        <li class="feature-item" data-screenshot="screenshots/12-code-snippets.png"><strong>Code generation</strong> - instantly generate ready-to-run code snippets in 13 variants across 11 languages (cURL, Java, Python, PHP, C#, Node.js, TypeScript, Ruby, Go, Rust, Kotlin) including 3 Java flavors</li>
-                        <li class="feature-item" data-screenshot="screenshots/10-operate-trace.png"><strong>API call tracing</strong> - full request/response trace log with timing, headers, and status codes for every call you make</li>
-                        <li class="feature-item" data-screenshot="screenshots/16-sidebar-webhooks.png"><strong>Webhook visualization</strong> - built-in webhook viewer that catches and displays real-time callback events as they arrive from the server</li>
-                        <li class="feature-item" data-screenshot="screenshots/08-document-selector.png"><strong>12 branded test contracts</strong> - professionally designed PDFs with unique company branding, logos, and color schemes - or drag-and-drop your own PDF</li>
-                        <li class="feature-item" data-screenshot="screenshots/06-feature-configurator.png"><strong>Feature selector</strong> - toggle inSign features like biometric signatures, timestamps, and document options directly from the UI</li>
-                        <li class="feature-item" data-screenshot="screenshots/07-branding-css.png"><strong>CSS customizer</strong> - live theme editor to preview how the inSign signing UI looks with your brand colors</li>
-                        <li class="feature-item" data-screenshot="screenshots/01-overview.png"><strong>Dark mode</strong> - full light/dark theme support across the entire explorer</li>
-                    </ul>
-                    <div class="feature-preview">
-                        <div class="feature-preview-inner" id="feature-preview-inner">
-                            <img class="fp-active" src="screenshots/17-editor-autocomplete.png" alt="Feature preview" loading="lazy">
-                            <img src="" alt="Feature preview" loading="lazy">
-                        </div>
-                    </div>
+                <div class="feature-grid">
+                    <figure class="feature-card" data-full="screenshots/17-editor-autocomplete.png">
+                        <img src="screenshots/17-editor-autocomplete.png" width="1440" style="max-width:1440px" alt="JSON autocomplete and validation" loading="lazy">
+                        <figcaption><strong>JSON autocomplete and validation</strong> - schema-aware editor with inline suggestions, hover docs, and real-time error highlighting powered by the live OpenAPI spec</figcaption>
+                    </figure>
+                    <figure class="feature-card" data-full="screenshots/12-code-snippets.png">
+                        <img src="screenshots/12-code-snippets.png" width="1440" style="max-width:1440px" alt="Code generation" loading="lazy">
+                        <figcaption><strong>Code generation</strong> - instantly generate ready-to-run code snippets in 13 variants across 11 languages (cURL, Java, Python, PHP, C#, Node.js, TypeScript, Ruby, Go, Rust, Kotlin) including 3 Java flavors</figcaption>
+                    </figure>
+                    <figure class="feature-card" data-full="screenshots/10-operate-trace.png">
+                        <img src="screenshots/10-operate-trace.png" width="1440" style="max-width:1440px" alt="API call tracing" loading="lazy">
+                        <figcaption><strong>API call tracing</strong> - full request/response trace log with timing, headers, and status codes for every call you make</figcaption>
+                    </figure>
+                    <figure class="feature-card" data-full="screenshots/16-sidebar-webhooks.png">
+                        <img src="screenshots/16-sidebar-webhooks.png" width="302" style="max-width:302px" alt="Webhook visualization" loading="lazy">
+                        <figcaption><strong>Webhook visualization</strong> - built-in webhook viewer that catches and displays real-time callback events as they arrive from the server</figcaption>
+                    </figure>
+                    <figure class="feature-card" data-full="screenshots/08-document-selector.png">
+                        <img src="screenshots/08-document-selector.png" width="918" style="max-width:918px" alt="12 branded test contracts" loading="lazy">
+                        <figcaption><strong>12 branded test contracts</strong> - professionally designed PDFs with unique company branding, logos, and color schemes - or drag-and-drop your own PDF</figcaption>
+                    </figure>
+                    <figure class="feature-card" data-full="screenshots/06-feature-configurator.png">
+                        <img src="screenshots/06-feature-configurator.png" width="918" style="max-width:918px" alt="Feature selector" loading="lazy">
+                        <figcaption><strong>Feature selector</strong> - toggle inSign features like biometric signatures, timestamps, and document options directly from the UI</figcaption>
+                    </figure>
+                    <figure class="feature-card" data-full="screenshots/07-branding-css.png">
+                        <img src="screenshots/07-branding-css.png" width="918" style="max-width:918px" alt="CSS customizer" loading="lazy">
+                        <figcaption><strong>CSS customizer</strong> - live theme editor to preview how the inSign signing UI looks with your brand colors</figcaption>
+                    </figure>
+                    <figure class="feature-card" data-full="screenshots/01-overview.png">
+                        <img src="screenshots/01-overview.png" width="1440" style="max-width:1440px" alt="Dark mode" loading="lazy">
+                        <figcaption><strong>Dark mode</strong> - full light/dark theme support across the entire explorer</figcaption>
+                    </figure>
+                </div>
+
+                <div class="feature-lightbox" id="feature-lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot zoom">
+                    <button type="button" class="feature-lightbox-close" aria-label="Close">&times;</button>
+                    <img id="feature-lightbox-img" src="" alt="">
                 </div>
                 <p>
                     <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-cta"><i class="bi bi-play-circle me-1"></i>Open API Explorer</a>
