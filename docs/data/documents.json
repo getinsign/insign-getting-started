@@ -13,7 +13,7 @@
         "brand": "acme",
         "brandName": "ACME Corporation",
         "logo": "img/sample-logos/acme-icon.svg",
-        "fileSize": 79924
+        "fileSize": 97421
     },
     "greenleaf": {
         "label": "GreenLeaf - Carbon Offset",
@@ -29,7 +29,7 @@
         "brand": "greenleaf",
         "brandName": "GreenLeaf Sustainability",
         "logo": "img/sample-logos/greenleaf-icon.svg",
-        "fileSize": 103802
+        "fileSize": 103466
     },
     "nova": {
         "label": "NOVA - Portfolio Management",
@@ -45,7 +45,7 @@
         "brand": "nova",
         "brandName": "NOVA Finance",
         "logo": "img/sample-logos/nova-icon.svg",
-        "fileSize": 92687
+        "fileSize": 92350
     },
     "blueprint": {
         "label": "BluePrint - Architecture",
@@ -61,7 +61,7 @@
         "brand": "blueprint",
         "brandName": "BluePrint Design Studio",
         "logo": "img/sample-logos/blueprint-icon.svg",
-        "fileSize": 72434
+        "fileSize": 90298
     },
     "solis": {
         "label": "SOLIS - Solar Installation",
@@ -77,7 +77,7 @@
         "brand": "solis",
         "brandName": "SOLIS Technology",
         "logo": "img/sample-logos/solis-icon.svg",
-        "fileSize": 77091
+        "fileSize": 94831
     },
     "sentinel": {
         "label": "Sentinel - Property Insurance",
@@ -99,7 +99,7 @@
         "brand": "sentinel",
         "brandName": "Sentinel Insurance",
         "logo": "img/sample-logos/sentinel-icon.svg",
-        "fileSize": 98660
+        "fileSize": 98431
     },
     "aegis": {
         "label": "Aegis - Group Life Insurance",
@@ -115,7 +115,7 @@
         "brand": "aegis",
         "brandName": "Aegis Life",
         "logo": "img/sample-logos/aegis-icon.svg",
-        "fileSize": 84349
+        "fileSize": 101876
     },
     "harbor": {
         "label": "Harbor - Reinsurance Treaty",
@@ -131,7 +131,7 @@
         "brand": "harbor",
         "brandName": "Harbor Re",
         "logo": "img/sample-logos/harbor-icon.svg",
-        "fileSize": 79431
+        "fileSize": 96879
     },
     "apex": {
         "label": "Apex - Prof. Liability",
@@ -153,7 +153,7 @@
         "brand": "apex",
         "brandName": "Apex Assurance",
         "logo": "img/sample-logos/apex-icon.svg",
-        "fileSize": 75051
+        "fileSize": 92409
     },
     "prism": {
         "label": "Prism - Creative Retainer",
@@ -169,7 +169,7 @@
         "brand": "prism",
         "brandName": "Prism Digital",
         "logo": "img/sample-logos/prism-icon.svg",
-        "fileSize": 72695
+        "fileSize": 90101
     },
     "mosaic": {
         "label": "Mosaic - Research Agreement",
@@ -185,7 +185,7 @@
         "brand": "mosaic",
         "brandName": "Mosaic Labs",
         "logo": "img/sample-logos/mosaic-icon.svg",
-        "fileSize": 75881
+        "fileSize": 93176
     },
     "nexus": {
         "label": "Nexus - Term Sheet",
@@ -201,7 +201,7 @@
         "brand": "nexus",
         "brandName": "Nexus Group",
         "logo": "img/sample-logos/nexus-icon.svg",
-        "fileSize": 117514
+        "fileSize": 134875
     },
     "custom": {
         "label": "Your Own File",

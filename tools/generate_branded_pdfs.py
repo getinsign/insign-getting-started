@@ -52,6 +52,26 @@ DATA_FILE = os.path.join(PROJECT_ROOT, "docs", "data", "branded-contracts.json")
 HEADER_DIR = os.path.join(PROJECT_ROOT, "docs", "img", "doc-headers")
 LOGO_DIR = os.path.join(PROJECT_ROOT, "docs", "img", "sample-logos")
 OUTPUT_DIR = os.path.join(PROJECT_ROOT, "docs", "data")
+DOCUMENTS_JSON = os.path.join(PROJECT_ROOT, "docs", "data", "documents.json")
+
+
+def update_documents_fileSize(brand_key, size):
+    """Patch fileSize for brand_key in documents.json without reflowing the file
+    (preserves existing formatting and CRLF line endings)."""
+    import re as _re
+    if not os.path.exists(DOCUMENTS_JSON):
+        return
+    with open(DOCUMENTS_JSON, "rb") as f:
+        raw = f.read()
+    text = raw.decode("utf-8")
+    pattern = _re.compile(
+        r'("' + _re.escape(brand_key) + r'"\s*:\s*\{[^{}]*?"fileSize"\s*:\s*)\d+',
+        _re.DOTALL,
+    )
+    new_text, n = pattern.subn(lambda m: m.group(1) + str(size), text, count=1)
+    if n == 1 and new_text != text:
+        with open(DOCUMENTS_JSON, "wb") as f:
+            f.write(new_text.encode("utf-8"))
 
 # ---------------------------------------------------------------------------
 # Page geometry
@@ -507,6 +527,7 @@ def generate_branded_pdf(brand_key, brand_data):
         f.write(final_pdf)
 
     size = os.path.getsize(output_path)
+    update_documents_fileSize(brand_key, size)
     print(f"  {output_path}  ({size:,} bytes)")
     return output_path
 
