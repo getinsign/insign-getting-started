@@ -38,7 +38,7 @@ Full interactive playground with a schema-aware JSON editor, autocomplete from t
 
 | Demo | What it shows | Stack |
 |------|--------------|-------|
-| **[Embedded Signature Pad](src/sign-widget-demo-application/)** | SEPA mandate signing with inline signature pad, JWT auth, dynamic PDF generation | Node.js, Express |
+| **[Embedded Signature Pad](src/sign-widget-demo-application/)** | Broker-mandate signing with inline signature pad, JWT auth, dynamic PDF generation | Node.js, Express |
 | **[Java Sample App](src/java/)** | Full backend: session management, document upload, webhooks, SSE events, pluggable API clients | Java, Spring Boot |
 
 Both connect to the free sandbox out of the box. Clone, run, adapt.
@@ -52,13 +52,18 @@ Both connect to the free sandbox out of the box. Clone, run, adapt.
 | [**Developer Hub**](https://getinsign.github.io/insign-getting-started/) | Landing page with guided paths | Everyone |
 | [**Getting Started Guide**](https://getinsign.github.io/insign-getting-started/guide.html) | 4-step interactive API walkthrough | New to inSign |
 | [**API Explorer**](https://getinsign.github.io/insign-getting-started/explorer.html) | Interactive playground, code generation, API reference | All developers |
-| [**Signature Pad Demo**](src/sign-widget-demo-application/) | Embedded signature pad in a SEPA mandate flow | Frontend / fullstack |
+| [**Signature Pad Demo**](src/sign-widget-demo-application/) | Embedded signature pad in a broker-mandate flow | Frontend / fullstack |
 | [**Java Sample App**](src/java/) | Spring Boot backend with pluggable API clients | Backend / Java |
 | **Postman Collection** | Pre-built requests for the sandbox ([collection](docs/data/Getting%20started%20with%20inSign%20API%20Sandbox.postman_collection.json), [environment](docs/data/inSign%20environment%20sandbox.postman_environment.json)) | Quick API testing |
 
 ---
 
 ## Quick Start: Embedded Signature Pad (Node.js)
+
+<p align="center">
+  <video src="https://raw.githubusercontent.com/getinsign/insign-getting-started/main/docs/video/funnel.webm"
+         width="720" autoplay muted loop playsinline controls></video>
+</p>
 
 ```bash
 cd src/sign-widget-demo-application

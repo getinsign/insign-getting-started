@@ -1,0 +1,169 @@
+{
+  "startedAt": "2026-04-18T17:14:26.071Z",
+  "markers": [
+    {
+      "id": "intro-hero",
+      "start": 0,
+      "end": 5.761
+    },
+    {
+      "id": "intro-feature-gdpr",
+      "start": 5.761,
+      "end": 9.944
+    },
+    {
+      "id": "intro-sandbox-warning",
+      "start": 9.944,
+      "end": 18.085
+    },
+    {
+      "id": "intro-sidebar-pitch",
+      "start": 18.085,
+      "end": 22.554
+    },
+    {
+      "id": "intro-sidebar-step1",
+      "start": 22.554,
+      "end": 30.107
+    },
+    {
+      "id": "intro-sidebar-cookieless",
+      "start": 30.107,
+      "end": 36.245
+    },
+    {
+      "id": "intro-cta-start",
+      "start": 36.245,
+      "end": 40.297
+    },
+    {
+      "id": "form-intro",
+      "start": 40.297,
+      "end": 43.46
+    },
+    {
+      "id": "form-scan",
+      "start": 43.46,
+      "end": 49.082
+    },
+    {
+      "id": "form-sidebar-step2",
+      "start": 49.082,
+      "end": 54.286
+    },
+    {
+      "id": "form-sidebar-prefilledfields",
+      "start": 54.286,
+      "end": 61.43
+    },
+    {
+      "id": "form-sidebar-jwt",
+      "start": 61.43,
+      "end": 67.563
+    },
+    {
+      "id": "form-submit",
+      "start": 67.563,
+      "end": 73.024
+    },
+    {
+      "id": "sign-loaded",
+      "start": 73.024,
+      "end": 77.075
+    },
+    {
+      "id": "sign-two-modes",
+      "start": 77.075,
+      "end": 82.128
+    },
+    {
+      "id": "sign-sidebar-step3",
+      "start": 82.128,
+      "end": 90.2
+    },
+    {
+      "id": "sign-sidebar-jwt-scoped",
+      "start": 90.2,
+      "end": 95.838
+    },
+    {
+      "id": "sign-draw-begin",
+      "start": 95.838,
+      "end": 101.022
+    },
+    {
+      "id": "sign-draw-execute",
+      "start": 101.022,
+      "end": 104.921
+    },
+    {
+      "id": "sign-draw-complete",
+      "start": 104.921,
+      "end": 108.503
+    },
+    {
+      "id": "sign-finish-intro",
+      "start": 108.503,
+      "end": 112.501
+    },
+    {
+      "id": "sign-finish-click",
+      "start": 112.501,
+      "end": 115.944
+    },
+    {
+      "id": "done-celebration",
+      "start": 115.944,
+      "end": 120.026
+    },
+    {
+      "id": "done-sidebar-step4",
+      "start": 120.026,
+      "end": 127.575
+    },
+    {
+      "id": "done-sidebar-biodata",
+      "start": 127.575,
+      "end": 133.723
+    },
+    {
+      "id": "done-pdf-click",
+      "start": 133.723,
+      "end": 138.395
+    },
+    {
+      "id": "done-pdf-prefilled",
+      "start": 138.395,
+      "end": 146.021
+    },
+    {
+      "id": "done-pdf-signature",
+      "start": 146.021,
+      "end": 156.165
+    },
+    {
+      "id": "done-eidas-close",
+      "start": 156.165,
+      "end": 162.243
+    },
+    {
+      "id": "done-download",
+      "start": 162.243,
+      "end": 167.751
+    },
+    {
+      "id": "done-summary",
+      "start": 167.751,
+      "end": 175.889
+    },
+    {
+      "id": "done-cta-close",
+      "start": 175.889,
+      "end": 183.807
+    }
+  ],
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  }
+}

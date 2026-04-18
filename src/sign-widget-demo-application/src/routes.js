@@ -55,7 +55,7 @@ async function createSession(req, res) {
 
     // Single API call: create session + upload PDF + prefill fields + get JWT
     const sessionResult = await insign.createSession(
-      `Maklermandat - ${firstName} ${lastName}`,
+      `Broker Mandate - ${firstName} ${lastName}`,
       sessionKey, docId, preFilledFields, pdfBuffer,
       { nameInputRequired, nameInputSkippable, locationInputRequired, locationInputSkippable }
     );
@@ -110,7 +110,7 @@ async function getDocument(req, res, disposition) {
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition',
-      `${disposition || 'inline'}; filename="Maklermandat-signed.pdf"`);
+      `${disposition || 'inline'}; filename="BrokerMandate-signed.pdf"`);
     res.send(pdfBuffer);
   } catch (err) {
     console.error('Error downloading document:', err.response?.data || err.message);

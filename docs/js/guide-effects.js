@@ -159,66 +159,6 @@
 })();
 
 /* ==========================================================================
-   FEATURE SHOWCASE - scroll-linked highlight + screenshot swap
-   ========================================================================== */
-
-(function () {
-    var items = document.querySelectorAll('.feature-item');
-    var container = document.getElementById('feature-preview-inner');
-    if (!items.length || !container) return;
-
-    var imgs = container.querySelectorAll('img');
-    var frontIdx = 0; // which of the 2 imgs is currently visible
-    var currentIdx = 0;
-    var swapping = false;
-
-    function activateItem(idx) {
-        if (idx === currentIdx && items[idx].classList.contains('active')) return;
-        currentIdx = idx;
-        for (var i = 0; i < items.length; i++) {
-            items[i].classList.toggle('active', i === idx);
-        }
-        // Crossfade to new screenshot
-        var newSrc = items[idx].getAttribute('data-screenshot');
-        var front = imgs[frontIdx];
-        if (!newSrc || swapping || front.src.indexOf(newSrc) !== -1) return;
-
-        swapping = true;
-        var backIdx = 1 - frontIdx;
-        var back = imgs[backIdx];
-
-        // Preload new image in the hidden layer
-        back.src = newSrc;
-        back.onload = function () {
-            // Crossfade: bring back to front
-            back.classList.add('fp-active');
-            front.classList.remove('fp-active');
-            frontIdx = backIdx;
-            swapping = false;
-        };
-        // Fallback if onload doesn't fire (cached)
-        if (back.complete) {
-            back.classList.add('fp-active');
-            front.classList.remove('fp-active');
-            frontIdx = backIdx;
-            swapping = false;
-        }
-    }
-
-    // Click to select
-    for (var i = 0; i < items.length; i++) {
-        (function (idx) {
-            items[idx].addEventListener('click', function () { activateItem(idx); });
-        })(i);
-    }
-
-    // Click screenshot -> open explorer
-    container.addEventListener('click', function () {
-        window.open('explorer.html', '_blank');
-    });
-})();
-
-/* ==========================================================================
    SCROLL REVEAL - Intersection Observer
    ========================================================================== */
 

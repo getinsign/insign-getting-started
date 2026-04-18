@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /signed.html
+Disallow: /partials/
+
+Sitemap: https://getinsign.github.io/insign-getting-started/sitemap.xml

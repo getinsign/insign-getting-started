@@ -60,6 +60,10 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   const ctx = await browser.newContext({
     viewport: { width: 1440, height: 900 },
+    // 2x for retina-sharp captures. Consumers must set the displayed width
+    // to pixel_width / 2 (the logical CSS width) so all shots render at the
+    // same visual zoom regardless of whether the source was a narrow element
+    // or a full viewport.
     deviceScaleFactor: 2,
   });
   const page = await ctx.newPage();
@@ -92,7 +96,7 @@ async function main() {
   // Load app - force dark mode
   // =========================================================================
   console.log('\nLoading app...');
-  await page.goto(BASE);
+  await page.goto(BASE + 'explorer.html');
   await page.waitForTimeout(2500);
   await page.evaluate(() => {
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -143,14 +147,23 @@ async function main() {
   await page.waitForTimeout(1000);
   await fullShot('05-create-session');
 
-  // Feature configurator - open, expand all groups, tall capture
+  // Feature configurator - open, expand all groups, crop to 2-3 pages of content
   await page.click('[data-bs-target="#feature-configurator"]');
   await page.waitForTimeout(800);
   await page.evaluate(() => {
     if (window.app && window.app.expandAllGroups) window.app.expandAllGroups();
   });
   await page.waitForTimeout(600);
-  await shot('06-feature-configurator', '#feature-configurator', { height: 8000 });
+  // Cap the captured element height so the thumbnail isn't 16k tall.
+  await page.evaluate(() => {
+    const el = document.querySelector('#feature-configurator');
+    if (el) { el.style.maxHeight = '2100px'; el.style.overflow = 'hidden'; }
+  });
+  await shot('06-feature-configurator', '#feature-configurator', { height: 2300 });
+  await page.evaluate(() => {
+    const el = document.querySelector('#feature-configurator');
+    if (el) { el.style.maxHeight = ''; el.style.overflow = ''; }
+  });
 
   // Close features, open branding
   await page.click('[data-bs-target="#feature-configurator"]');

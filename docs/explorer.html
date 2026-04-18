@@ -21,7 +21,32 @@
     <!-- Hash-based step navigation: show correct step panel before CSS loads -->
     <script>!function(){var m=location.hash.match(/^#step(\d)/);if(m){var s=parseInt(m[1]);if(s>=1&&s<=4){var css='';for(var i=1;i<=4;i++){if(i===s){css+='#step-'+i+'-panel{display:block!important}';css+='.step-indicator .step[data-step="'+i+'"]{background:#1a2a3a!important;border-color:var(--insign-border)!important;color:#fff!important}';css+='.step[data-step="'+i+'"] .step-number{background:rgba(255,255,255,0.15)!important}'}else{css+='#step-'+i+'-panel{display:none!important}'}}var el=document.createElement('style');el.id='early-step-css';el.textContent=css;document.head.appendChild(el);window.__insign_init_step=s}}}()</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inSign API Explorer - Interactive Getting Started</title>
+    <title>API Explorer — inSign Electronic Signature API (eIDAS)</title>
+    <meta name="description" content="Interactive playground for the inSign eIDAS electronic signature REST API. Schema-aware JSON editor with autocomplete, code snippets in 13 languages, webhook viewer, and live request tracing against the free sandbox.">
+    <meta name="keywords" content="electronic signature API, eIDAS, QES, API explorer, REST API playground, webhook viewer, code snippets, inSign">
+    <meta name="author" content="inSign GmbH">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://getinsign.github.io/insign-getting-started/explorer.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="inSign Developer Hub">
+    <meta property="og:title" content="API Explorer — inSign Electronic Signature API (eIDAS)">
+    <meta property="og:description" content="Interactive playground with schema-aware editor, code snippets in 13 languages, webhook viewer, and live request tracing.">
+    <meta property="og:url" content="https://getinsign.github.io/insign-getting-started/explorer.html">
+    <meta property="og:image" content="https://getinsign.github.io/insign-getting-started/img/og-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="inSign Electronic Signature API — eIDAS, QES, EU-hosted">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="API Explorer — inSign Electronic Signature API (eIDAS)">
+    <meta name="twitter:description" content="Interactive playground for the inSign eIDAS electronic signature API with code generation in 13 languages.">
+    <meta name="twitter:image" content="https://getinsign.github.io/insign-getting-started/img/og-card.png">
+
     <link rel="icon" href="favicon.png" sizes="32x32">
     <link rel="icon" href="favicon-192.png" sizes="192x192">
 

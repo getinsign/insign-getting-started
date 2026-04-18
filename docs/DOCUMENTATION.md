@@ -2,7 +2,7 @@
 
 An interactive, browser-based sandbox for the inSign electronic signature API. No backend required - runs entirely in your browser, deployed via GitHub Pages.
 
-![inSign API Explorer - Overview](screenshots/01-overview.png)
+<img src="screenshots/01-overview.png" width="1440" alt="inSign API Explorer - Overview">
 
 ---
 
@@ -56,7 +56,7 @@ The API Explorer is a four-step guided workflow:
 
 Navigate between steps using the step indicator in the top navigation bar. Steps light up as they become active.
 
-![Full app overview](screenshots/01-overview.png)
+<img src="screenshots/01-overview.png" width="1440" alt="Full app overview">
 
 > The app supports both **dark mode** (default) and **light mode**, toggled via the moon/sun icon in the navbar.
 
@@ -68,7 +68,7 @@ Navigate between steps using the step indicator in the top navigation bar. Steps
 
 Configure the API server and credentials to connect to your inSign instance.
 
-![Connection Settings](screenshots/02-connection-settings.png)
+<img src="screenshots/02-connection-settings.png" width="960" alt="Connection Settings">
 
 | Field | Default | Description |
 |-------|---------|-------------|
@@ -90,7 +90,7 @@ Click **"Save connection in browser"** to store your current URL, username, and 
 
 ### Basic Auth
 
-![Basic Auth](screenshots/03-auth-basic.png)
+<img src="screenshots/03-auth-basic.png" width="960" alt="Basic Auth">
 
 The default authentication mode. Credentials are sent as an HTTP header with every request:
 
@@ -102,7 +102,7 @@ The header preview updates in real-time as you type your credentials. A green "A
 
 ### OAuth2 Authentication
 
-![OAuth2 Panel](screenshots/04-auth-oauth2.png)
+<img src="screenshots/04-auth-oauth2.png" width="960" alt="OAuth2 Panel">
 
 Switch to OAuth2 using the toggle at the top of the Authentication card. The OAuth2 panel implements the **Client Credentials Grant** flow (RFC 6749 Section 5):
 
@@ -129,7 +129,7 @@ grant_type=client_credentials&client_id=<username>&client_secret=<password>
 
 This step builds and sends a `POST /configure/session` request to create a new signing session.
 
-![Create Session](screenshots/05-create-session.png)
+<img src="screenshots/05-create-session.png" width="1440" alt="Create Session">
 
 The page includes:
 - A live **request header** preview showing your current auth method
@@ -143,7 +143,7 @@ The page includes:
 
 ### Session Feature Configurator
 
-![Feature Configurator](screenshots/06-feature-configurator.png)
+<img src="screenshots/06-feature-configurator.png" width="918" alt="Feature Configurator">
 
 A collapsible panel with visual toggles for every configurable session property. Features are organized into groups:
 
@@ -170,7 +170,7 @@ A collapsible panel with visual toggles for every configurable session property.
 
 ### Branding & CSS Customizer
 
-![Branding & CSS Customizer](screenshots/07-branding-css.png)
+<img src="screenshots/07-branding-css.png" width="918" alt="Branding & CSS Customizer">
 
 Customize the signing UI appearance by generating CSS variables that are injected via the `externalPropertiesURL` session property.
 
@@ -239,7 +239,7 @@ Click a logo set card to apply all three logos at once. Use the **Individual Log
 
 ### Document Selection & File Delivery
 
-![Document Selector](screenshots/08-document-selector.png)
+<img src="screenshots/08-document-selector.png" width="918" alt="Document Selector">
 
 Select from **12 branded sample contracts** (pre-generated PDFs with matching company branding) or upload your own PDF. Documents are displayed as cards in a grid with lazy-loaded PDF thumbnail previews.
 
@@ -261,7 +261,7 @@ You can also **drag and drop** your own PDF anywhere on the page to upload it.
 
 ### Request Body Editor
 
-![Request Body Editor](screenshots/09-request-editor.png)
+<img src="screenshots/09-request-editor.png" width="1440" alt="Request Body Editor">
 
 The JSON request body is editable in a **Monaco Editor** instance with:
 - Syntax highlighting and auto-indentation
@@ -271,13 +271,13 @@ The JSON request body is editable in a **Monaco Editor** instance with:
 
 #### Autocomplete
 
-![Editor Autocomplete](screenshots/17-editor-autocomplete.png)
+<img src="screenshots/17-editor-autocomplete.png" width="1440" alt="Editor Autocomplete">
 
 Press `Ctrl+Space` anywhere in the JSON editor to see available properties with their types and descriptions. The autocomplete list is generated from the server's OpenAPI specification and includes all session configuration properties.
 
 #### Hover Tooltips
 
-![Editor Hover Tooltip](screenshots/18-editor-hover-tooltip.png)
+<img src="screenshots/18-editor-hover-tooltip.png" width="1440" alt="Editor Hover Tooltip">
 
 Hover over any JSON key to see its full documentation inline - including the property type, allowed values, and a description from the API schema. These tooltips work in the request body editor, the trace sidebar, and the status polling panel.
 
@@ -287,7 +287,7 @@ Hover over any JSON key to see its full documentation inline - including the pro
 
 After creating a session, use Step 3 to execute API operations and inspect their results. The main panel shows operation tabs on the left, while the right sidebar provides three collapsible sections: **Webhooks**, **Status Polling**, and **API Trace**.
 
-![Operate & Trace](screenshots/10-operate-trace.png)
+<img src="screenshots/10-operate-trace.png" width="1440" alt="Operate & Trace">
 
 ### API Operations
 
@@ -325,7 +325,7 @@ Each operation tab shows:
 
 ### Sidebar: Webhooks
 
-![Webhooks Sidebar](screenshots/16-sidebar-webhooks.png)
+<img src="screenshots/16-sidebar-webhooks.png" width="302" alt="Webhooks Sidebar">
 
 The Webhooks section displays real-time callbacks received from the inSign server. Each incoming webhook is shown as a card with:
 - HTTP method badge and timestamp
@@ -339,7 +339,7 @@ Incoming requests are de-duplicated by ID to prevent double processing during re
 
 ### Sidebar: Status Polling
 
-![Status Polling](screenshots/19-sidebar-polling.png)
+<img src="screenshots/19-sidebar-polling.png" width="302" alt="Status Polling">
 
 The Status Polling section automatically polls a selected endpoint at a configurable interval and **highlights what changed** between consecutive responses using a color-coded diff view.
 
@@ -362,7 +362,7 @@ Each diff row shows the JSON path (e.g., `externUsers[0].status`) and the value 
 
 ### Sidebar: API Trace
 
-![API Trace](screenshots/20-sidebar-trace.png)
+<img src="screenshots/20-sidebar-trace.png" width="302" alt="API Trace">
 
 The API Trace section records every API call made during the session, providing a chronological log of all requests and responses:
 
@@ -383,7 +383,7 @@ JSON keys in the trace bodies display hover tooltips with property documentation
 
 ## Step 4 - Live Code Snippets
 
-![Code Snippets](screenshots/12-code-snippets.png)
+<img src="screenshots/12-code-snippets.png" width="1440" alt="Code Snippets">
 
 Every API call you make is automatically converted into ready-to-use code snippets in 8 programming languages. The snippets reflect your exact request - method, path, headers, authentication, and body.
 
@@ -429,7 +429,7 @@ The API Explorer includes a built-in **webhook viewer** that receives and displa
 
 Since this app runs in the browser and cannot receive HTTP requests directly, it uses **relay services** to bridge the gap.
 
-![Webhook Sidebar](screenshots/16-sidebar-webhooks.png)
+<img src="screenshots/16-sidebar-webhooks.png" width="302" alt="Webhook Sidebar">
 
 ### Supported Webhook Providers
 
@@ -486,7 +486,7 @@ A dual-purpose Cloudflare Worker (`data/cf-webhook-worker.js`) that serves as bo
 
 ## CORS & Proxy
 
-![CORS Proxy Info](screenshots/15-cors-proxy-info.png)
+<img src="screenshots/15-cors-proxy-info.png" width="1440" alt="CORS Proxy Info">
 
 ### The Problem
 

@@ -13,7 +13,76 @@
     <meta charset="UTF-8">
     <script>!function(){var d=!0;try{var s=localStorage.getItem('insign-dark-mode');if(s!==null)d=s==='true'}catch(e){}document.documentElement.setAttribute('data-theme',d?'dark':'light')}()</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inSign for Developers - Electronic Signatures API</title>
+    <title>Electronic Signature API (eIDAS, QES) — inSign Developer Hub</title>
+    <meta name="description" content="Integrate eIDAS-compliant electronic signatures (SES, AES, QES) into your app via REST API. EU-hosted, DSGVO/GDPR-ready. Free sandbox — no registration, no API key, no credit card.">
+    <meta name="keywords" content="electronic signature API, eIDAS, QES, qualified electronic signature, DSGVO, GDPR, digital signature EU, Germany, eSignature SDK, inSign, REST API">
+    <meta name="author" content="inSign GmbH">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://getinsign.github.io/insign-getting-started/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="inSign Developer Hub">
+    <meta property="og:title" content="Electronic Signature API (eIDAS, QES) — inSign Developer Hub">
+    <meta property="og:description" content="Integrate eIDAS-compliant electronic signatures into your application. EU-hosted REST API with a free sandbox — no registration, no API key, no credit card.">
+    <meta property="og:url" content="https://getinsign.github.io/insign-getting-started/">
+    <meta property="og:image" content="https://getinsign.github.io/insign-getting-started/img/og-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="inSign Electronic Signature API — eIDAS, QES, EU-hosted">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Electronic Signature API (eIDAS, QES) — inSign Developer Hub">
+    <meta name="twitter:description" content="Integrate eIDAS-compliant electronic signatures into your application. Free sandbox, zero setup.">
+    <meta name="twitter:image" content="https://getinsign.github.io/insign-getting-started/img/og-card.png">
+
+    <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.getinsign.com/#organization",
+          "name": "inSign GmbH",
+          "url": "https://www.getinsign.com/",
+          "logo": "https://getinsign.github.io/insign-getting-started/img/og-card.png",
+          "sameAs": [
+            "https://www.getinsign.de/",
+            "https://www.linkedin.com/company/insign-gmbh/",
+            "https://github.com/getinsign"
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "inSign Electronic Signature API",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "eIDAS-compliant electronic signature REST API supporting simple (SES), advanced (AES), and qualified (QES) signatures. EU-hosted, DSGVO/GDPR-ready.",
+          "url": "https://www.getinsign.com/",
+          "publisher": { "@id": "https://www.getinsign.com/#organization" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR",
+            "description": "Free developer sandbox"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "name": "inSign Developer Hub",
+          "url": "https://getinsign.github.io/insign-getting-started/",
+          "inLanguage": "en",
+          "publisher": { "@id": "https://www.getinsign.com/#organization" }
+        }
+      ]
+    }
+    </script>
+
     <link rel="icon" href="favicon.png" sizes="32x32">
     <link rel="icon" href="favicon-192.png" sizes="192x192">
 
@@ -28,6 +97,7 @@
     <link href="css/style-base.css" rel="stylesheet">
     <link href="css/theme-base.css" rel="stylesheet">
     <link href="css/theme-components.css" rel="stylesheet">
+    <link href="css/feature-grid.css" rel="stylesheet">
 
     <style>
         /* ===== Hub-specific styles ===== */
@@ -314,9 +384,9 @@
 
     <!-- Hero -->
     <div class="hub-hero">
-        <h1>inSign for Developers</h1>
-        <p class="lead"><strong>Add electronic signatures to your application.</strong></p>
-        <p class="sub">EU-hosted. eIDAS-compliant. Free sandbox with zero setup - no registration, no API key, no credit card.</p>
+        <h1>inSign Electronic Signature API for Developers</h1>
+        <p class="lead"><strong>Add eIDAS-compliant electronic signatures (SES, AES, QES) to your application.</strong></p>
+        <p class="sub">EU-hosted. DSGVO / GDPR-ready. Free sandbox with zero setup - no registration, no API key, no credit card.</p>
     </div>
 
 
@@ -424,7 +494,7 @@
             </tr>
             <tr>
                 <td><a href="#demo-sigfunnel"><strong>Signature Pad Demo</strong></a></td>
-                <td>SEPA mandate signing flow with embedded signature pad. Clone and run - connects to the sandbox out of the box</td>
+                <td>Broker-mandate signing flow with embedded signature pad. Clone and run - connects to the sandbox out of the box</td>
                 <td><span class="tag">Node.js</span> <span class="tag">Express</span></td>
             </tr>
             <tr>
@@ -442,6 +512,89 @@
 
 
     <!-- ============================================================
+         EXPLORER FEATURE SHOWCASE (click any thumb to zoom)
+         ============================================================ -->
+    <h2 class="section-title" id="explorer-features"><i class="bi bi-play-circle me-2"></i>What the API Explorer gives you</h2>
+    <p style="font-size:0.85rem;color:var(--insign-text-muted);margin-bottom:1rem">
+        The <a href="explorer.html"><strong>inSign API Explorer</strong></a> is a complete interactive playground.
+        Click any thumbnail below to see it full-size.
+    </p>
+
+    <div class="feature-grid">
+        <figure class="feature-card" data-full="screenshots/17-editor-autocomplete.png">
+            <div class="thumb-frame">
+                <img src="screenshots/17-editor-autocomplete.png" width="144" alt="JSON autocomplete and validation" loading="lazy">
+            </div>
+            <figcaption><strong>JSON autocomplete and validation</strong> - schema-aware editor with inline suggestions, hover docs, and real-time error highlighting powered by the live OpenAPI spec</figcaption>
+        </figure>
+        <figure class="feature-card" data-full="screenshots/12-code-snippets.png">
+            <div class="thumb-frame">
+                <img src="screenshots/12-code-snippets.png" width="144" alt="Code generation" loading="lazy">
+            </div>
+            <figcaption><strong>Code generation</strong> - instantly generate ready-to-run code snippets in 13 variants across 11 languages (cURL, Java, Python, PHP, C#, Node.js, TypeScript, Ruby, Go, Rust, Kotlin) including 3 Java flavors</figcaption>
+        </figure>
+        <figure class="feature-card" data-full="screenshots/10-operate-trace.png">
+            <div class="thumb-frame">
+                <img src="screenshots/10-operate-trace.png" width="144" alt="API call tracing" loading="lazy">
+            </div>
+            <figcaption><strong>API call tracing</strong> - full request/response trace log with timing, headers, and status codes for every call you make</figcaption>
+        </figure>
+        <figure class="feature-card" data-full="screenshots/16-sidebar-webhooks.png">
+            <div class="thumb-frame">
+                <img src="screenshots/16-sidebar-webhooks.png" width="30" alt="Webhook visualization" loading="lazy">
+            </div>
+            <figcaption><strong>Webhook visualization</strong> - built-in webhook viewer that catches and displays real-time callback events as they arrive from the server</figcaption>
+        </figure>
+        <figure class="feature-card" data-full="screenshots/08-document-selector.png">
+            <div class="thumb-frame">
+                <img src="screenshots/08-document-selector.png" width="92" alt="12 branded test contracts" loading="lazy">
+            </div>
+            <figcaption><strong>12 branded test contracts</strong> - professionally designed PDFs with unique company branding, logos, and color schemes - or drag-and-drop your own PDF</figcaption>
+        </figure>
+        <figure class="feature-card" data-full="screenshots/06-feature-configurator.png">
+            <div class="thumb-frame">
+                <img src="screenshots/06-feature-configurator.png" width="92" alt="Feature selector" loading="lazy">
+            </div>
+            <figcaption><strong>Feature selector</strong> - toggle inSign features like biometric signatures, timestamps, and document options directly from the UI</figcaption>
+        </figure>
+        <figure class="feature-card" data-full="screenshots/07-branding-css.png">
+            <div class="thumb-frame">
+                <img src="screenshots/07-branding-css.png" width="92" alt="CSS customizer" loading="lazy">
+            </div>
+            <figcaption><strong>CSS customizer</strong> - live theme editor to preview how the inSign signing UI looks with your brand colors</figcaption>
+        </figure>
+        <figure class="feature-card" data-full="screenshots/01-overview.png">
+            <div class="thumb-frame">
+                <img src="screenshots/01-overview.png" width="144" alt="Dark mode" loading="lazy">
+            </div>
+            <figcaption><strong>Dark mode</strong> - full light/dark theme support across the entire explorer</figcaption>
+        </figure>
+    </div>
+
+    <p style="margin:1rem 0">
+        <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-cta"><i class="bi bi-play-circle me-1"></i>Open API Explorer</a>
+        <a class="data-github-link" href="#" data-github-path="/blob/main/docs/DOCUMENTATION.md" target="_blank" class="btn btn-insign btn-insign-sm btn-insign-outline ms-2"><i class="bi bi-journal-text me-1"></i>Explorer Documentation</a>
+    </p>
+
+
+    <!-- ============================================================
+         JAVA API LIBRARY
+         ============================================================ -->
+    <h2 class="section-title"><i class="bi bi-code-square me-2"></i>Java API Library</h2>
+    <p style="font-size:0.85rem;color:var(--insign-text-muted)">
+        For Java projects, the <code>insign-java-api</code> library provides a typed client with builders and configuration helpers.
+    </p>
+    <pre style="background:var(--insign-code-bg);border:1px solid var(--insign-border);border-radius:8px;padding:0.75rem;font-size:0.78rem;font-family:'Roboto Mono',monospace;color:var(--insign-text)"><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.getinsign&lt;/groupId&gt;
+  &lt;artifactId&gt;insign-java-api&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+    <p style="font-size:0.82rem;color:var(--insign-text-muted);margin-top:0.5rem">
+        Add the GitHub Package Registry to your Maven <code>settings.xml</code> -
+        see <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry">Working with the Apache Maven registry</a>.
+    </p>
+
+
+    <!-- ============================================================
          DEMO APPS
          ============================================================ -->
     <h2 class="section-title" id="demos"><i class="bi bi-code-square me-2"></i>Demo Applications</h2>
@@ -455,7 +608,12 @@
                 <span style="font-size:0.72rem;color:var(--insign-gray)">Node.js / Express</span>
             </div>
         </div>
-        <p>A realistic SEPA Direct Debit Mandate signing flow. The user fills in personal data, the server generates a mandate PDF on the fly, creates an inSign session, and the signature pad is rendered inline - all without leaving the page.</p>
+        <video autoplay muted loop playsinline controls crossorigin="anonymous"
+               style="display:block;width:100%;max-width:720px;margin:0 auto 0.75rem;border-radius:8px;border:1px solid var(--insign-border)">
+            <source src="video/funnel.webm" type="video/webm">
+        </video>
+        <p>A realistic broker-mandate signing flow. The user fills in personal data, the server generates a mandate PDF on the fly, creates an inSign session, and the signature pad is rendered inline - all without leaving the page.</p>
+        <p style="font-size:0.78rem;color:#b86f1a;background:rgba(247,179,35,0.08);border-left:3px solid #f7b323;padding:0.4rem 0.6rem;margin-bottom:0.75rem;border-radius:4px"><i class="bi bi-exclamation-triangle me-1"></i><strong>Sandbox — test data only.</strong> Connects to the public inSign sandbox; anyone can read documents stored there. Never enter real personal data.</p>
         <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
             <strong>Key concepts:</strong> Embedded mode, JWT authentication, <code>##SIG{...}</code> tags, cookieless browser-to-server communication, dynamic PDF generation with signature fields
         </div>
@@ -512,11 +670,19 @@ mvn spring-boot:run -Pinsign-client    # Option B: Java API client
 
 </div>
 
+<!-- Lightbox overlay at body-level so position:fixed is relative to the
+     viewport, not to any transform-animated ancestor. -->
+<div class="feature-lightbox" id="feature-lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot zoom">
+    <button type="button" class="feature-lightbox-close" aria-label="Close">&times;</button>
+    <img id="feature-lightbox-img" src="" alt="">
+</div>
+
 <!-- ==================================================================
      SCRIPTS
      ================================================================== -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/feature-grid.js"></script>
 <script>
 'use strict';
 function toggleDarkMode() {

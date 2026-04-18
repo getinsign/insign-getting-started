@@ -2,7 +2,16 @@
 
 A complete, working demo application that shows how to integrate the **inSign handwritten digital signature pad** into a web application. Built as a learning tool for third-party developers who want to add legally binding digital signatures to their own apps.
 
-The demo implements a **SEPA Direct Debit Mandate** signing flow: the user fills out a form, signs on a canvas, and downloads the signed PDF — all in the browser.
+The demo implements a **broker-mandate** signing flow: the user fills out a form, signs on a canvas, and downloads the signed PDF — all in the browser.
+
+> ⚠️ **Sandbox — test data only.** This demo connects to the public inSign sandbox (`sandbox.test.getinsign.show`). Documents and signatures stored there are visible to anyone. Do not enter real personal data or real signatures.
+
+<p align="center">
+  <video src="https://raw.githubusercontent.com/getinsign/insign-getting-started/main/docs/video/funnel.webm"
+         width="720" autoplay muted loop playsinline controls></video>
+</p>
+
+*Recorded by `npm run build:video` — captions burned into the video. For German, see [funnel.de.webm](https://raw.githubusercontent.com/getinsign/insign-getting-started/main/docs/video/funnel.de.webm).*
 
 ---
 

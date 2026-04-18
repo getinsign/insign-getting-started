@@ -1,7 +1,7 @@
 {
   "name": "sig-funnel",
   "version": "1.0.0",
-  "description": "SEPA Mandate Signature Funnel with inSign Integration",
+  "description": "Broker Mandate Signature Funnel with inSign Integration",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
