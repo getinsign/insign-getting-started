@@ -479,97 +479,18 @@
 
     </div><!-- /tab-content -->
 
-    <!-- Full-page spacer so Additional Resources is below the fold -->
-    <div style="height:100vh" aria-hidden="true"></div>
-
     <!-- ============================================================
-         ADDITIONAL RESOURCES
+         NEXT STEPS
          ============================================================ -->
-    <div class="resources-section mt-4 scroll-reveal reveal-scale">
-        <div class="card-insign">
-            <div class="card-header">
-                <i class="bi bi-journal-bookmark" style="font-size:1.1rem"></i>
-                <h5 class="ms-0 mb-0" style="font-size:0.9rem">Additional Resources</h5>
-            </div>
-            <div class="card-body">
-
-                <h5><i class="bi bi-play-circle me-1"></i>Full API Explorer</h5>
-                <p>Want to go deeper? The <a href="explorer.html"><strong>inSign API Explorer</strong></a> gives you a complete interactive playground.</p>
-                <div class="feature-grid">
-                    <figure class="feature-card" data-full="screenshots/17-editor-autocomplete.png">
-                        <img src="screenshots/17-editor-autocomplete.png" width="1440" style="max-width:1440px" alt="JSON autocomplete and validation" loading="lazy">
-                        <figcaption><strong>JSON autocomplete and validation</strong> - schema-aware editor with inline suggestions, hover docs, and real-time error highlighting powered by the live OpenAPI spec</figcaption>
-                    </figure>
-                    <figure class="feature-card" data-full="screenshots/12-code-snippets.png">
-                        <img src="screenshots/12-code-snippets.png" width="1440" style="max-width:1440px" alt="Code generation" loading="lazy">
-                        <figcaption><strong>Code generation</strong> - instantly generate ready-to-run code snippets in 13 variants across 11 languages (cURL, Java, Python, PHP, C#, Node.js, TypeScript, Ruby, Go, Rust, Kotlin) including 3 Java flavors</figcaption>
-                    </figure>
-                    <figure class="feature-card" data-full="screenshots/10-operate-trace.png">
-                        <img src="screenshots/10-operate-trace.png" width="1440" style="max-width:1440px" alt="API call tracing" loading="lazy">
-                        <figcaption><strong>API call tracing</strong> - full request/response trace log with timing, headers, and status codes for every call you make</figcaption>
-                    </figure>
-                    <figure class="feature-card" data-full="screenshots/16-sidebar-webhooks.png">
-                        <img src="screenshots/16-sidebar-webhooks.png" width="302" style="max-width:302px" alt="Webhook visualization" loading="lazy">
-                        <figcaption><strong>Webhook visualization</strong> - built-in webhook viewer that catches and displays real-time callback events as they arrive from the server</figcaption>
-                    </figure>
-                    <figure class="feature-card" data-full="screenshots/08-document-selector.png">
-                        <img src="screenshots/08-document-selector.png" width="918" style="max-width:918px" alt="12 branded test contracts" loading="lazy">
-                        <figcaption><strong>12 branded test contracts</strong> - professionally designed PDFs with unique company branding, logos, and color schemes - or drag-and-drop your own PDF</figcaption>
-                    </figure>
-                    <figure class="feature-card" data-full="screenshots/06-feature-configurator.png">
-                        <img src="screenshots/06-feature-configurator.png" width="918" style="max-width:918px" alt="Feature selector" loading="lazy">
-                        <figcaption><strong>Feature selector</strong> - toggle inSign features like biometric signatures, timestamps, and document options directly from the UI</figcaption>
-                    </figure>
-                    <figure class="feature-card" data-full="screenshots/07-branding-css.png">
-                        <img src="screenshots/07-branding-css.png" width="918" style="max-width:918px" alt="CSS customizer" loading="lazy">
-                        <figcaption><strong>CSS customizer</strong> - live theme editor to preview how the inSign signing UI looks with your brand colors</figcaption>
-                    </figure>
-                    <figure class="feature-card" data-full="screenshots/01-overview.png">
-                        <img src="screenshots/01-overview.png" width="1440" style="max-width:1440px" alt="Dark mode" loading="lazy">
-                        <figcaption><strong>Dark mode</strong> - full light/dark theme support across the entire explorer</figcaption>
-                    </figure>
-                </div>
-
-                <div class="feature-lightbox" id="feature-lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot zoom">
-                    <button type="button" class="feature-lightbox-close" aria-label="Close">&times;</button>
-                    <img id="feature-lightbox-img" src="" alt="">
-                </div>
-                <p>
+    <div class="resources-section mt-4 scroll-reveal reveal-up">
+        <div class="card-insign" style="text-align:center">
+            <div class="card-body" style="padding:1.5rem">
+                <h5 class="mb-2"><i class="bi bi-check-circle-fill me-1"></i>That's the core flow</h5>
+                <p class="mb-3" style="color:var(--insign-text-muted)">Head back to the Developer Hub for demos, Postman collections, and the Java library - or jump into the full API Explorer.</p>
+                <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
+                    <a href="./" class="btn btn-insign btn-insign-sm btn-insign-outline"><i class="bi bi-house me-1"></i>Developer Hub</a>
                     <a href="explorer.html" class="btn btn-insign btn-insign-sm btn-insign-cta"><i class="bi bi-play-circle me-1"></i>Open API Explorer</a>
-                    <a class="data-github-link" href="#" data-github-path="/blob/main/docs/DOCUMENTATION.md" target="_blank" class="btn btn-insign btn-insign-sm btn-insign-outline ms-2"><i class="bi bi-journal-text me-1"></i>Explorer Documentation</a>
-                </p>
-
-                <h5 class="mt-3"><i class="bi bi-postcard me-1"></i>Postman Collection</h5>
-                <p>Import the pre-built collection for quick API testing:</p>
-                <ul>
-                    <li><a href="data/Getting%20started%20with%20inSign%20API%20Sandbox.postman_collection.json">Getting started with inSign API Sandbox</a> (collection)</li>
-                    <li><a href="data/inSign%20environment%20sandbox.postman_environment.json">inSign Sandbox Environment</a> (environment)</li>
-                </ul>
-
-                <h5 class="mt-3"><i class="bi bi-code-square me-1"></i>Java API Library</h5>
-                <p>For Java projects, the <code>insign-java-api</code> library provides a typed client with builders and configuration helpers.</p>
-                <pre><code>&lt;dependency&gt;
-  &lt;groupId&gt;com.getinsign&lt;/groupId&gt;
-  &lt;artifactId&gt;insign-java-api&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
-                <p class="mt-2">Add the GitHub Package Registry to your Maven <code>settings.xml</code> -
-                    see <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry">Working with the Apache Maven registry</a>.</p>
-
-                <h5 class="mt-3"><i class="bi bi-file-earmark-pdf me-1"></i>Test Documents</h5>
-                <p>12 branded test contracts are included in the API Explorer, each with unique company branding, logos, and color schemes.
-                    You can also drag and drop your own PDF directly into the Explorer.</p>
-
-                <h5 class="mt-3"><i class="bi bi-folder2-open me-1"></i>Project Structure</h5>
-                <pre><code>docs/                        Developer hub (GitHub Pages)
-  index.html                 Landing page &amp; overview
-  guide.html                 Getting Started guide (this page)
-  explorer.html              API Explorer - interactive playground
-  js/                        Application modules + code generator
-  codegen-templates/         Code snippet templates (13 variants, 11 languages)
-  data/                      Test PDFs, demo data, webhook/relay configs
-src/sign-widget-demo-application/  Embedded signature pad demo (Node.js)
-src/java/                    Spring Boot sample application</code></pre>
-
+                </div>
             </div>
         </div>
     </div>
