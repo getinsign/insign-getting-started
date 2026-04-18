@@ -11,6 +11,7 @@
 
 # Build
 target/
+.target/
 *.class
 test/generated/
 test/run/

@@ -1,0 +1,426 @@
+{
+  "version": 2,
+  "description": "Storyboard for docs/video/funnel.webm — the single source of truth for narration, on-screen highlights, mouse movements, and keyboard input. The Playwright spec in src/sign-widget-demo-application/tests/getting-started.spec.js interprets this file declaratively and drives the browser accordingly. Wall-clock timings for each step are captured during recording and written to docs/video/funnel-timings.json; subtitles and Qwen3-TTS narration are produced by joining the two files.",
+  "languages": ["en", "de"],
+  "target_duration_seconds": 180,
+  "viewport": { "width": 1920, "height": 1080 },
+  "defaults": {
+    "highlight_ms": 2200,
+    "type_delay_ms": 70,
+    "mouse_move_steps": 18
+  },
+  "steps": [
+    {
+      "id": "intro-hero",
+      "narration": {
+        "en": "inSign embedded signature pad demo. A broker-mandate signing flow.",
+        "de": "inSign-Demo für das eingebettete Unterschriftenfeld. Ein Maklermandat-Flow."
+      },
+      "actions": [
+        { "type": "goto", "url": "/" },
+        { "type": "install-demo-overlays" },
+        { "type": "wait", "ms": 600 },
+        { "type": "mouse-to", "selector": ".welcome-title" },
+        { "type": "highlight", "selector": ".welcome-title", "ms": 3000 },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "intro-feature-gdpr",
+      "narration": {
+        "en": "GDPR compliant, EU-hosted, encrypted in transit and at rest.",
+        "de": "DSGVO-konform, EU-gehostet, verschlüsselt bei Übertragung und Speicherung."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".feature-row .feature-item:nth-child(2)" },
+        { "type": "highlight", "selector": ".feature-row .feature-item:nth-child(2)", "ms": 2500 },
+        { "type": "wait", "ms": 2500 }
+      ]
+    },
+    {
+      "id": "intro-sandbox-warning",
+      "narration": {
+        "en": "Important: this demo runs against the public inSign sandbox. Anyone can read documents and signatures there. Use it for testing only — never with real data.",
+        "de": "Wichtig: diese Demo läuft gegen die öffentliche inSign-Sandbox. Jeder kann dort Dokumente und Unterschriften mitlesen. Nur zu Testzwecken — keine echten Daten."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".brand-env" },
+        { "type": "highlight", "selector": ".brand-env", "ms": 4000 },
+        { "type": "wait", "ms": 6500 }
+      ]
+    },
+    {
+      "id": "intro-sidebar-pitch",
+      "narration": {
+        "en": "On the left: the Developer Guide — API calls, JavaScript, pitfalls.",
+        "de": "Links: der Developer Guide — API-Aufrufe, JavaScript, Stolperfallen."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".dev-sidebar .sidebar-header" },
+        { "type": "highlight", "selector": ".dev-sidebar .sidebar-header", "ms": 2500 },
+        { "type": "wait", "ms": 2800 }
+      ]
+    },
+    {
+      "id": "intro-sidebar-step1",
+      "narration": {
+        "en": "Step one: three components — browser, backend, inSign — over a cookieless JWT flow.",
+        "de": "Schritt 1: drei Komponenten — Browser, Backend, inSign — über einen cookielosen JWT-Flow."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".sidebar-tab[data-doc=\"1\"]" },
+        { "type": "click", "selector": ".sidebar-tab[data-doc=\"1\"]" },
+        { "type": "wait", "ms": 900 },
+        { "type": "sidebar-scroll-to-text", "text": "Three Components" },
+        { "type": "highlight-sidebar-containing", "text": "Three Components", "ms": 4000 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "intro-sidebar-cookieless",
+      "narration": {
+        "en": "No cookies, no SameSite, no CORS proxy. Every browser call carries the INSIGN_JWT bearer header.",
+        "de": "Keine Cookies, kein SameSite, kein CORS-Proxy. Jeder Browser-Aufruf trägt den INSIGN_JWT-Bearer-Header."
+      },
+      "actions": [
+        { "type": "sidebar-scroll-to-text", "text": "Cookieless" },
+        { "type": "highlight-sidebar-containing", "text": "Cookieless", "ms": 4500 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "intro-cta-start",
+      "narration": {
+        "en": "Get Started.",
+        "de": "Jetzt starten."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": "#btn-start" },
+        { "type": "highlight", "selector": "#btn-start", "ms": 2000 },
+        { "type": "wait", "ms": 1400 },
+        { "type": "click", "selector": "#btn-start" },
+        { "type": "wait-for-visible", "selector": "#step-2-panel" },
+        { "type": "wait", "ms": 900 }
+      ]
+    },
+    {
+      "id": "form-intro",
+      "narration": {
+        "en": "Step two — the signer's data, pre-filled.",
+        "de": "Schritt 2 — die Daten des Unterzeichners, vorbelegt."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".card.card-step" },
+        { "type": "highlight", "selector": ".card.card-step", "ms": 2200 },
+        { "type": "wait", "ms": 2000 }
+      ]
+    },
+    {
+      "id": "form-scan",
+      "narration": {
+        "en": "Name, address, contact, ID — each value lands in a matching PDF field.",
+        "de": "Name, Adresse, Kontakt, Ausweis — jeder Wert landet in einem passenden PDF-Feld."
+      },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#idNumber" },
+        { "type": "mouse-to", "selector": "#idNumber" },
+        { "type": "wait", "ms": 1800 },
+        { "type": "scroll-into-view", "selector": "#firstName" },
+        { "type": "wait", "ms": 1400 }
+      ]
+    },
+    {
+      "id": "form-sidebar-step2",
+      "narration": {
+        "en": "Developer Guide, step two — the POST the backend sends on submit.",
+        "de": "Developer Guide, Schritt 2 — der POST, den das Backend beim Absenden sendet."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".sidebar-tab[data-doc=\"2\"]" },
+        { "type": "click", "selector": ".sidebar-tab[data-doc=\"2\"]" },
+        { "type": "wait", "ms": 1000 },
+        { "type": "sidebar-scroll-to-text", "text": "configure/session" },
+        { "type": "wait", "ms": 2000 }
+      ]
+    },
+    {
+      "id": "form-sidebar-prefilledfields",
+      "narration": {
+        "en": "preFilledFields: mask values mapped to AcroForm fields by name. The PDF itself rides in the same request, base64-encoded.",
+        "de": "preFilledFields: Masken-Werte auf AcroForm-Felder gemappt. Das PDF reist base64 in derselben Anfrage mit."
+      },
+      "actions": [
+        { "type": "sidebar-scroll-to-text", "text": "preFilledFields" },
+        { "type": "highlight-sidebar-containing", "text": "preFilledFields", "ms": 5000 },
+        { "type": "wait", "ms": 5500 }
+      ]
+    },
+    {
+      "id": "form-sidebar-jwt",
+      "narration": {
+        "en": "createJWT:true — session-scoped token for the browser. Controller credentials stay server-side.",
+        "de": "createJWT:true — ein sessiongebundenes Token für den Browser. Controller-Zugangsdaten bleiben serverseitig."
+      },
+      "actions": [
+        { "type": "sidebar-scroll-to-text", "text": "createJWT" },
+        { "type": "highlight-sidebar-containing", "text": "createJWT", "ms": 4500 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "form-submit",
+      "narration": {
+        "en": "Create mandate — one POST, one response, JWT in hand.",
+        "de": "Create mandate — ein POST, eine Antwort, JWT zurück."
+      },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#btn-submit" },
+        { "type": "mouse-to", "selector": "#btn-submit" },
+        { "type": "highlight", "selector": "#btn-submit", "ms": 2400 },
+        { "type": "wait", "ms": 1800 },
+        { "type": "click", "selector": "#btn-submit" },
+        { "type": "wait-for-visible", "selector": "#step-3-panel", "timeout_ms": 30000 },
+        { "type": "wait", "ms": 600 }
+      ]
+    },
+    {
+      "id": "sign-loaded",
+      "narration": {
+        "en": "Signature pad loads inline — no redirect, no iframe, no popup.",
+        "de": "Das Unterschriftenfeld lädt inline — kein Redirect, kein Iframe, kein Popup."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": "#step-3-panel .card-body" },
+        { "type": "highlight", "selector": "#step-3-panel .card-body", "ms": 2400 },
+        { "type": "wait", "ms": 2400 }
+      ]
+    },
+    {
+      "id": "sign-two-modes",
+      "narration": {
+        "en": "Draw here, or send an SMS link to sign on a phone.",
+        "de": "Hier zeichnen, oder per SMS-Link auf dem Handy unterschreiben."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".sig-mode-toggle .btn[data-mode=\"remote\"]" },
+        { "type": "highlight", "selector": ".sig-mode-toggle .btn[data-mode=\"remote\"]", "ms": 2000 },
+        { "type": "wait", "ms": 1500 },
+        { "type": "mouse-to", "selector": ".sig-mode-toggle .btn[data-mode=\"embedded\"]" },
+        { "type": "highlight", "selector": ".sig-mode-toggle .btn[data-mode=\"embedded\"]", "ms": 2000 },
+        { "type": "wait", "ms": 1400 }
+      ]
+    },
+    {
+      "id": "sign-sidebar-step3",
+      "narration": {
+        "en": "Step three: two scripts from inSign, initEmbeddedData, JWT handed to the library.",
+        "de": "Schritt 3: zwei Skripte von inSign, initEmbeddedData, JWT an die Library."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".sidebar-tab[data-doc=\"3\"]" },
+        { "type": "click", "selector": ".sidebar-tab[data-doc=\"3\"]" },
+        { "type": "wait", "ms": 900 },
+        { "type": "sidebar-scroll-to-text", "text": "initEmbeddedData" },
+        { "type": "highlight-sidebar-containing", "text": "initEmbeddedData", "ms": 5000 },
+        { "type": "wait", "ms": 5000 }
+      ]
+    },
+    {
+      "id": "sign-sidebar-jwt-scoped",
+      "narration": {
+        "en": "The JWT signs this one mandate — nothing else.",
+        "de": "Das JWT signiert nur dieses eine Mandat."
+      },
+      "actions": [
+        { "type": "sidebar-scroll-to-text", "text": "session-scoped" },
+        { "type": "highlight-sidebar-containing", "text": "session-scoped", "ms": 4000 },
+        { "type": "wait", "ms": 4000 }
+      ]
+    },
+    {
+      "id": "sign-draw-begin",
+      "narration": {
+        "en": "inSign captures stroke position, speed, pressure, timestamps.",
+        "de": "inSign erfasst Strich-Position, Geschwindigkeit, Druck, Zeitstempel."
+      },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#sig-container" },
+        { "type": "mouse-to", "selector": "#sig-container" },
+        { "type": "highlight", "selector": "#sig-container", "ms": 3500 },
+        { "type": "wait", "ms": 3200 }
+      ]
+    },
+    {
+      "id": "sign-draw-execute",
+      "narration": {
+        "en": "Biometric signature data — qualifies as an eIDAS advanced electronic signature.",
+        "de": "Biometrische Signaturdaten — erfüllt die eIDAS-Anforderungen einer fortgeschrittenen elektronischen Signatur."
+      },
+      "actions": [
+        { "type": "signature-draw" }
+      ]
+    },
+    {
+      "id": "sign-draw-complete",
+      "narration": {
+        "en": "Cookieless, TLS-encrypted, INSIGN_JWT header — straight browser to inSign.",
+        "de": "Cookielos, TLS-verschlüsselt, INSIGN_JWT-Header — direkt Browser zu inSign."
+      },
+      "actions": [
+        { "type": "wait-for-enabled", "selector": "#btn-finish", "timeout_ms": 15000 },
+        { "type": "wait", "ms": 3000 }
+      ]
+    },
+    {
+      "id": "sign-finish-intro",
+      "narration": {
+        "en": "Finish lights up when every signature is complete.",
+        "de": "Finish leuchtet auf, sobald jede Unterschrift vollständig ist."
+      },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#btn-finish" },
+        { "type": "mouse-to", "selector": "#btn-finish" },
+        { "type": "highlight", "selector": "#btn-finish", "ms": 2400 },
+        { "type": "wait", "ms": 2000 }
+      ]
+    },
+    {
+      "id": "sign-finish-click",
+      "narration": {
+        "en": "inSign seals the document and adds a cryptographic timestamp.",
+        "de": "inSign versiegelt das Dokument und fügt einen kryptografischen Zeitstempel an."
+      },
+      "actions": [
+        { "type": "click", "selector": "#btn-finish" },
+        { "type": "wait-for-visible", "selector": "#step-4-panel", "timeout_ms": 15000 },
+        { "type": "wait", "ms": 900 }
+      ]
+    },
+    {
+      "id": "done-celebration",
+      "narration": {
+        "en": "Step four — signed and sealed.",
+        "de": "Schritt 4 — unterschrieben und versiegelt."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".done-badge" },
+        { "type": "highlight", "selector": ".done-badge", "ms": 2800 },
+        { "type": "wait", "ms": 2500 }
+      ]
+    },
+    {
+      "id": "done-sidebar-step4",
+      "narration": {
+        "en": "Step four: the backend call that retrieves the signed PDF, biometric data attached.",
+        "de": "Schritt 4: der Backend-Aufruf, der das signierte PDF zurückholt — inklusive biometrischer Daten."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".sidebar-tab[data-doc=\"4\"]" },
+        { "type": "click", "selector": ".sidebar-tab[data-doc=\"4\"]" },
+        { "type": "wait", "ms": 900 },
+        { "type": "sidebar-scroll-to-text", "text": "get/document" },
+        { "type": "highlight-sidebar-containing", "text": "get/document", "ms": 4500 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "done-sidebar-biodata",
+      "narration": {
+        "en": "includebiodata:true embeds pen-pressure, speed and timing inside the PDF — for forensic re-check.",
+        "de": "includebiodata:true bettet Stiftdruck, Geschwindigkeit und Zeit im PDF ein — für die forensische Nachprüfung."
+      },
+      "actions": [
+        { "type": "sidebar-scroll-to-text", "text": "includebiodata" },
+        { "type": "highlight-sidebar-containing", "text": "includebiodata", "ms": 4500 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "done-pdf-click",
+      "narration": {
+        "en": "The signed PDF, inline.",
+        "de": "Das unterschriebene PDF, inline."
+      },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#pdf-preview" },
+        { "type": "mouse-to", "selector": "#pdf-preview" },
+        { "type": "highlight", "selector": "#pdf-preview", "ms": 3200 },
+        { "type": "click", "selector": "#pdf-preview" },
+        { "type": "wait", "ms": 2600 }
+      ]
+    },
+    {
+      "id": "done-pdf-prefilled",
+      "narration": {
+        "en": "Every mask value appears in the PDF — preFilledFields at work.",
+        "de": "Jeder Masken-Wert steht jetzt im PDF — preFilledFields in Aktion."
+      },
+      "actions": [
+        { "type": "highlight", "selector": "#pdf-preview", "ms": 5000 },
+        { "type": "wait", "ms": 6500 }
+      ]
+    },
+    {
+      "id": "done-pdf-signature",
+      "narration": {
+        "en": "Scrolling to the bottom of the page — the handwritten signature sits exactly where the ##SIG tag was, with inSign's timestamp.",
+        "de": "Wir scrollen ans Ende der Seite — die handschriftliche Unterschrift sitzt genau dort, wo der ##SIG-Tag saß, mit inSigns Zeitstempel."
+      },
+      "actions": [
+        { "type": "pdf-view", "selector": "#pdf-preview", "hash": "page=1&zoom=175,0,720&toolbar=0" },
+        { "type": "wait", "ms": 2500 },
+        { "type": "highlight", "selector": "#pdf-preview", "ms": 6000 },
+        { "type": "wait", "ms": 6500 }
+      ]
+    },
+    {
+      "id": "done-eidas-close",
+      "narration": {
+        "en": "eIDAS-compliant, GDPR-safe, EU-hosted. Advanced electronic signatures for everyday business contracts.",
+        "de": "eIDAS-konform, DSGVO-sicher, EU-gehostet. Fortgeschrittene elektronische Signaturen für alltägliche Geschäftsverträge."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".done-title" },
+        { "type": "highlight", "selector": ".done-title", "ms": 3500 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "done-download",
+      "narration": {
+        "en": "Download.",
+        "de": "Herunterladen."
+      },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#btn-download" },
+        { "type": "mouse-to", "selector": "#btn-download" },
+        { "type": "highlight", "selector": "#btn-download", "ms": 3000 },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "done-summary",
+      "narration": {
+        "en": "The whole flow: one configure/session, an embedded JavaScript sign, one get/document. Controller credentials never leave the server.",
+        "de": "Der gesamte Flow: ein configure/session, eine eingebettete JavaScript-Signatur, ein get/document. Controller-Zugangsdaten verlassen nie den Server."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".step-bar" },
+        { "type": "highlight", "selector": ".step-bar", "ms": 4000 },
+        { "type": "wait", "ms": 6500 }
+      ]
+    },
+    {
+      "id": "done-cta-close",
+      "narration": {
+        "en": "Clone the repo, run dot-slash run dot sh, try it yourself. Sandbox only — test data, never real signatures.",
+        "de": "Repo klonen, dot-slash run dot sh ausführen, selbst ausprobieren. Nur Sandbox — Testdaten, keine echten Unterschriften."
+      },
+      "actions": [
+        { "type": "mouse-to", "selector": ".brand-logo" },
+        { "type": "highlight", "selector": ".brand-logo", "ms": 3500 },
+        { "type": "wait", "ms": 6000 }
+      ]
+    }
+  ]
+}

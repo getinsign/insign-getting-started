@@ -1,22 +1,27 @@
 #!/usr/bin/env node
 /**
- * Funnel video generator for the SEPA mandate signing demo.
+ * Funnel video generator for the broker-mandate signing demo.
  *
- * Drives the existing Playwright spec in src/sign-widget-demo-application
- * with DEMO_VIDEO=1 (which widens the viewport to 1920x1080, enables video
- * recording, and inserts ~5 s demo pauses between user actions), then copies
- * the resulting .webm into docs/video/funnel.webm so it can be embedded.
+ * Drives the Playwright spec in src/sign-widget-demo-application with
+ * DEMO_VIDEO=1 and CAPTION_LANG=<lang>, then copies the resulting .webm into
+ * docs/video/ so it can be embedded. Captions are rendered in-page as styled
+ * floating popups and therefore burned into the recording.
+ *
+ * By default records both English and German and writes:
+ *   docs/video/funnel.webm      (English captions)
+ *   docs/video/funnel.de.webm   (German captions)
  *
  * Usage:
- *   node docs/screenshots/take-funnel-video.mjs
- *   npm run build:video
+ *   npm run build:video               # both languages
+ *   LANGS=en node .../take-funnel-video.mjs
+ *   LANGS=de node .../take-funnel-video.mjs
  *
  * Requires:
- *   - cd src/sign-widget-demo-application && npm install (one-time)
- *   - npx playwright install chromium (one-time, in that subproject)
+ *   - src/sign-widget-demo-application: npm install + `npx playwright install`
+ *   - A Google Chrome install on $PATH (headless Chrome renders the PDF viewer)
  *
- * The underlying test hits the real inSign sandbox; failures likely mean
- * the sandbox is unreachable, not that this wrapper is broken.
+ * The underlying test hits the real inSign sandbox; failures likely mean the
+ * sandbox is unreachable, not that this wrapper is broken.
  */
 
 import { spawn } from 'child_process';
@@ -29,16 +34,17 @@ const REPO = path.resolve(__dirname, '..', '..');
 const APP = path.join(REPO, 'src', 'sign-widget-demo-application');
 const RESULTS = path.join(APP, '.target', 'test-results');
 const OUT_DIR = path.join(REPO, 'docs', 'video');
-const OUT_FILE = path.join(OUT_DIR, 'funnel.webm');
 
-function runNpmTest() {
+const LANGS = (process.env.LANGS || 'en,de').split(',').map(s => s.trim()).filter(Boolean);
+
+function runNpmTest(extraEnv) {
   return new Promise((resolve, reject) => {
     const proc = spawn(
       'npm',
       ['test', '--', '-g', 'Full flow - Fill, Draw signature, Finish'],
       {
         cwd: APP,
-        env: { ...process.env, DEMO_VIDEO: '1' },
+        env: { ...process.env, DEMO_VIDEO: '1', ...extraEnv },
         stdio: 'inherit',
       }
     );
@@ -47,34 +53,53 @@ function runNpmTest() {
   });
 }
 
-function findVideo(dir) {
+function findArtifact(dir, endsWith) {
   if (!fs.existsSync(dir)) return null;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      const hit = findVideo(p);
+      const hit = findArtifact(p, endsWith);
       if (hit) return hit;
-    } else if (entry.name.endsWith('.webm')) {
+    } else if (entry.name.endsWith(endsWith)) {
       return p;
     }
   }
   return null;
 }
 
-async function main() {
-  console.log('> Cleaning previous test artifacts...');
+function outNames(lang) {
+  // English is the primary output (funnel.webm); other languages suffixed.
+  return lang === 'en'
+    ? { video: 'funnel.webm', timings: 'funnel-timings.json' }
+    : { video: `funnel.${lang}.webm`, timings: `funnel-timings.${lang}.json` };
+}
+
+async function recordOne(lang) {
+  const names = outNames(lang);
+  console.log(`\n> Recording ${lang.toUpperCase()} → ${names.video}`);
   fs.rmSync(RESULTS, { recursive: true, force: true });
+  await runNpmTest({ CAPTION_LANG: lang });
 
-  console.log('> Running funnel spec with DEMO_VIDEO=1 (this takes ~25-60 s)...');
-  await runNpmTest();
-
-  const video = findVideo(RESULTS);
+  const video = findArtifact(RESULTS, '.webm');
   if (!video) throw new Error(`No .webm found under ${RESULTS}`);
-
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.copyFileSync(video, OUT_FILE);
-  const { size } = fs.statSync(OUT_FILE);
-  console.log(`> Wrote ${path.relative(REPO, OUT_FILE)} (${(size / 1024 / 1024).toFixed(2)} MB)`);
+  const videoOut = path.join(OUT_DIR, names.video);
+  fs.copyFileSync(video, videoOut);
+  const { size } = fs.statSync(videoOut);
+  console.log(`  wrote ${path.relative(REPO, videoOut)} (${(size / 1024 / 1024).toFixed(2)} MB)`);
+
+  const timings = findArtifact(RESULTS, 'funnel-timings.json');
+  if (timings) {
+    const timingsOut = path.join(OUT_DIR, names.timings);
+    fs.copyFileSync(timings, timingsOut);
+    console.log(`  wrote ${path.relative(REPO, timingsOut)}`);
+  }
+}
+
+async function main() {
+  for (const lang of LANGS) {
+    await recordOne(lang);
+  }
 }
 
 main().catch(err => {
