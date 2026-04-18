@@ -13,6 +13,9 @@
   },
   "scripts": {
     "build:vendor": "node scripts/build-vendor.js",
+    "build:screenshots": "node docs/screenshots/take-screenshots.mjs",
+    "build:video": "node docs/screenshots/take-funnel-video.mjs",
+    "build:media": "npm run build:screenshots && npm run build:video",
     "test:getting-started": "node test/getting-started.test.js",
     "test:getting-started:headed": "node test/getting-started.test.js --headed",
     "test:api-explorer": "node test/api-explorer.test.js",
