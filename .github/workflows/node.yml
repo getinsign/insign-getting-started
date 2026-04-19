@@ -19,6 +19,9 @@ permissions:
   contents: write
   packages: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   sign-widget-demo:
     name: sign-widget-demo-application tests
