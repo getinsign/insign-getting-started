@@ -30,7 +30,7 @@ const VIEWPORT = { width: 1920, height: 1080 };
 
 function resolveChrome() {
   const env = process.env.CHROME_PATH;
-  const candidates = [env, '/home/t/bin/google-chrome', '/opt/google/chrome/chrome', '/usr/bin/google-chrome'].filter(Boolean);
+  const candidates = [env, '/opt/google/chrome/chrome', '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'].filter(Boolean);
   return candidates.find((p) => fs.existsSync(p)) || null;
 }
 
