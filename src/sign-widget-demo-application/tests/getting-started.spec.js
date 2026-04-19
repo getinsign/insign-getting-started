@@ -575,26 +575,62 @@ async function runStoryboard(page, markers) {
 
 test.describe('Getting Started - Full Broker Mandate Flow', () => {
 
-  // Capture browser console + page errors for every test; attach on failure
-  // so the CI artifact upload includes them alongside screenshot/video.
+  // Capture browser console + page errors for every test. Attach the full
+  // transcript on failure, and fail the test if any error-level console
+  // message or uncaught page error was observed (so a green test can't hide
+  // JS noise).
   test.beforeEach(async ({ page }) => {
     const logs = [];
+    const errors = [];
     page._consoleLogs = logs;
-    page.on('console', msg => logs.push(`[${msg.type()}] ${msg.text()}`));
-    page.on('pageerror', err => logs.push(`[pageerror] ${err.message}\n${err.stack || ''}`));
-    page.on('requestfailed', req => logs.push(`[requestfailed] ${req.method()} ${req.url()} - ${req.failure()?.errorText || ''}`));
+    page._consoleErrors = errors;
+    page.on('console', msg => {
+      const text = msg.text();
+      logs.push(`[${msg.type()}] ${text}`);
+      if (msg.type() !== 'error') return;
+      // Chromium surfaces network-layer failures as console errors
+      // ("Failed to load resource: net::ERR_*"). Those are tracked separately
+      // via requestfailed; we only want real JS errors here.
+      if (text.includes('favicon') || text.startsWith('Failed to load resource')) return;
+      errors.push(text);
+    });
+    page.on('pageerror', err => {
+      logs.push(`[pageerror] ${err.message}\n${err.stack || ''}`);
+      errors.push('UNCAUGHT: ' + err.message);
+    });
+    page.on('requestfailed', req => {
+      logs.push(`[requestfailed] ${req.method()} ${req.url()} - ${req.failure()?.errorText || ''}`);
+    });
   });
 
   test.afterEach(async ({ page }, testInfo) => {
-    if (testInfo.status === testInfo.expectedStatus) return;
     const logs = page._consoleLogs || [];
-    if (logs.length === 0) return;
-    const logPath = testInfo.outputPath('browser-console.log');
-    fs.writeFileSync(logPath, logs.join('\n'));
-    await testInfo.attach('browser-console.log', {
-      path: logPath,
-      contentType: 'text/plain',
-    });
+    const errors = page._consoleErrors || [];
+
+    // Attach the full console transcript whenever the test failed, for
+    // post-mortem debugging in CI artifacts.
+    if (testInfo.status !== testInfo.expectedStatus && logs.length > 0) {
+      const logPath = testInfo.outputPath('browser-console.log');
+      fs.writeFileSync(logPath, logs.join('\n'));
+      await testInfo.attach('browser-console.log', {
+        path: logPath,
+        contentType: 'text/plain',
+      });
+    }
+
+    // If the test itself passed but the browser console had errors, fail it.
+    if (testInfo.status === testInfo.expectedStatus && errors.length > 0) {
+      const logPath = testInfo.outputPath('browser-console.log');
+      fs.writeFileSync(logPath, logs.join('\n'));
+      await testInfo.attach('browser-console.log', {
+        path: logPath,
+        contentType: 'text/plain',
+      });
+      throw new Error(
+        `Browser console is not clean (${errors.length} error(s)):\n` +
+        errors.map(e => '  ' + e.substring(0, 300)).join('\n')
+      );
+    }
   });
 
   test('Step 1 - Welcome page renders correctly', async ({ page }) => {

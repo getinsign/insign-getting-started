@@ -171,10 +171,25 @@ function assert(condition, testName, details) {
                     viewport: { width: 1440, height: 900 },
                     ignoreHTTPSErrors: true,
                 });
+                const saveRestoreErrors = [];
+                const attachErrorListeners = p => {
+                    p.on('pageerror', e => {
+                        if (e.message.includes('lipboard')) return;
+                        saveRestoreErrors.push('UNCAUGHT: ' + e.message);
+                    });
+                    p.on('console', msg => {
+                        if (msg.type() === 'error') {
+                            const text = msg.text();
+                            // Chromium surfaces network-layer failures as console errors
+                            // ("Failed to load resource: net::ERR_*"). Those are tracked
+                            // separately via requestfailed; we only want real JS errors here.
+                            if (text.includes('favicon') || text.startsWith('Failed to load resource')) return;
+                            saveRestoreErrors.push(text);
+                        }
+                    });
+                };
                 const page1 = await ctx1.newPage();
-                page1.on('pageerror', e => {
-                    if (e.message.includes('lipboard')) return;
-                });
+                attachErrorListeners(page1);
 
                 await page1.goto(EXPLORER_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
                 await page1.waitForTimeout(3000); // let Monaco + app init
@@ -208,6 +223,7 @@ function assert(condition, testName, details) {
                 // Close and reopen - state should restore
                 await page1.close();
                 const page2 = await ctx1.newPage();
+                attachErrorListeners(page2);
                 await page2.goto(EXPLORER_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
                 await page2.waitForTimeout(3000);
 
@@ -230,6 +246,14 @@ function assert(condition, testName, details) {
                 });
                 await page2.close();
                 await ctx1.close();
+
+                assert(
+                    saveRestoreErrors.length === 0,
+                    '[Connection save/restore] browser console is clean',
+                    saveRestoreErrors.length > 0
+                        ? saveRestoreErrors.map(e => `  ${e.substring(0, 300)}`).join('\n')
+                        : undefined
+                );
             }
 
             // =============================================================
@@ -245,13 +269,16 @@ function assert(condition, testName, details) {
                     ignoreHTTPSErrors: true,
                 });
                 const page = await ctx.newPage();
+                const uiConsoleErrors = [];
                 page.on('pageerror', e => {
                     if (e.message.includes('lipboard')) return;
-                    console.log(`  [browser-error] ${e.message}`);
+                    uiConsoleErrors.push('UNCAUGHT: ' + e.message);
                 });
                 page.on('console', msg => {
                     if (msg.type() === 'error') {
-                        console.log(`  [browser-console] ${msg.text().substring(0, 300)}`);
+                        const text = msg.text();
+                        if (text.includes('favicon') || text.startsWith('Failed to load resource')) return;
+                        uiConsoleErrors.push(text);
                     }
                 });
                 page.on('response', res => {
@@ -512,6 +539,15 @@ function assert(condition, testName, details) {
                     assert(true, 'Free Request endpoint (skipped)');
                 }
 
+                // Fail the UI-sanity block if any console / page errors occurred
+                assert(
+                    uiConsoleErrors.length === 0,
+                    '[UI sanity] browser console is clean',
+                    uiConsoleErrors.length > 0
+                        ? uiConsoleErrors.map(e => `  ${e.substring(0, 300)}`).join('\n')
+                        : undefined
+                );
+
                 await page.close();
                 await ctx.close();
             }
@@ -535,7 +571,7 @@ function assert(condition, testName, details) {
                 page.on('console', msg => {
                     if (msg.type() === 'error') {
                         const text = msg.text();
-                        if (text.includes('favicon') || text.includes('ERR_CONNECTION')) return;
+                        if (text.includes('favicon') || text.startsWith('Failed to load resource')) return;
                         consoleErrors.push(text);
                     }
                 });
@@ -848,11 +884,14 @@ function assert(condition, testName, details) {
                     }
                 }
 
-                // Report console errors for this auth mode
-                if (consoleErrors.length > 0) {
-                    console.log(`\n[!] ${consoleErrors.length} console errors during ${authMode} tests:`);
-                    consoleErrors.forEach(e => console.log(`  ${e.substring(0, 200)}`));
-                }
+                // Fail the suite if any console errors or page errors occurred
+                assert(
+                    consoleErrors.length === 0,
+                    `[${authMode}] browser console is clean`,
+                    consoleErrors.length > 0
+                        ? consoleErrors.map(e => `  ${e.substring(0, 300)}`).join('\n')
+                        : undefined
+                );
 
                 await page.close();
                 await context.close();
