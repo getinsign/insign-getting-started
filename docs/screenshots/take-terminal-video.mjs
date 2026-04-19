@@ -52,12 +52,30 @@ async function recordTerminal(htmlName, outName, durationMs = 22_000) {
     recordVideo: { dir: tmp, size: VIEWPORT },
   });
   const page = await context.newPage();
+
+  // Fail the recording if the terminal HTML surfaces any uncaught JS or
+  // error-level console messages.
+  const browserErrors = [];
+  page.on('pageerror', e => browserErrors.push('UNCAUGHT: ' + e.message));
+  page.on('console', m => {
+    if (m.type() !== 'error') return;
+    const t = m.text();
+    if (t.includes('favicon') || t.includes('ERR_CONNECTION')) return;
+    browserErrors.push(t);
+  });
+
   console.log(`> Recording ${htmlName} → ${outName} (${(durationMs / 1000).toFixed(1)}s)`);
   await page.goto('file://' + html);
   await page.waitForTimeout(durationMs);
   await page.close();
   await context.close();
   await browser.close();
+
+  if (browserErrors.length > 0) {
+    console.error(`\n✗ Browser console is not clean (${browserErrors.length} error(s)):`);
+    browserErrors.forEach(e => console.error('  ' + e.substring(0, 400)));
+    throw new Error(`browser console errors during ${htmlName} recording`);
+  }
 
   const rec = fs.readdirSync(tmp).find((f) => f.endsWith('.webm'));
   if (!rec) throw new Error(`no .webm produced under ${tmp}`);

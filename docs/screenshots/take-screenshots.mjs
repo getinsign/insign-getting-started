@@ -25,9 +25,10 @@ const OUT = __dirname;
 // Minimal static file server for docs/
 // ---------------------------------------------------------------------------
 const MIME = {
-  '.html': 'text/html', '.js': 'application/javascript', '.css': 'text/css',
-  '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png',
-  '.pdf': 'application/pdf', '.woff2': 'font/woff2', '.woff': 'font/woff',
+  '.html': 'text/html', '.js': 'application/javascript', '.mjs': 'application/javascript',
+  '.css': 'text/css', '.json': 'application/json',
+  '.svg': 'image/svg+xml', '.png': 'image/png', '.pdf': 'application/pdf',
+  '.woff2': 'font/woff2', '.woff': 'font/woff',
   '.ttf': 'font/ttf', '.eot': 'application/vnd.ms-fontobject',
 };
 
@@ -67,6 +68,18 @@ async function main() {
     deviceScaleFactor: 2,
   });
   const page = await ctx.newPage();
+
+  // Fail the screenshot run if the browser surfaces any uncaught JS or
+  // error-level console messages — silent regressions would otherwise get
+  // baked into the shipped documentation screenshots.
+  const browserErrors = [];
+  page.on('pageerror', e => browserErrors.push('UNCAUGHT: ' + e.message));
+  page.on('console', m => {
+    if (m.type() !== 'error') return;
+    const t = m.text();
+    if (t.includes('favicon') || t.includes('ERR_CONNECTION')) return;
+    browserErrors.push(t);
+  });
 
   /** Screenshot a single element. Temporarily resizes viewport if `height` is given. */
   async function shot(name, selector, { height } = {}) {
@@ -637,6 +650,12 @@ async function main() {
   console.log(`\nAll screenshots saved to ${OUT}/`);
   const files = fs.readdirSync(OUT).filter(f => f.endsWith('.png')).sort();
   console.log(`  ${files.length} files: ${files.join(', ')}`);
+
+  if (browserErrors.length > 0) {
+    console.error(`\n✗ Browser console is not clean (${browserErrors.length} error(s)):`);
+    browserErrors.forEach(e => console.error('  ' + e.substring(0, 400)));
+    throw new Error('browser console errors during screenshot run');
+  }
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

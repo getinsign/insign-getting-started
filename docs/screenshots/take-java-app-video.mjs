@@ -69,6 +69,18 @@ async function main() {
   });
   const page = await context.newPage();
 
+  // Fail the recording if the Java app's browser UI surfaces any uncaught JS
+  // or error-level console messages — we don't want to ship a demo video
+  // over a broken app.
+  const browserErrors = [];
+  page.on('pageerror', e => browserErrors.push('UNCAUGHT: ' + e.message));
+  page.on('console', m => {
+    if (m.type() !== 'error') return;
+    const t = m.text();
+    if (t.includes('favicon') || t.includes('ERR_CONNECTION')) return;
+    browserErrors.push(t);
+  });
+
   console.log(`> Recording Java app walkthrough (${storyboard.steps.length} steps)...`);
   const markers = createMarkers();
   try {
@@ -77,6 +89,12 @@ async function main() {
     await page.close();
     await context.close();
     await browser.close();
+  }
+
+  if (browserErrors.length > 0) {
+    console.error(`\n✗ Browser console is not clean (${browserErrors.length} error(s)):`);
+    browserErrors.forEach(e => console.error('  ' + e.substring(0, 400)));
+    throw new Error('browser console errors during Java app recording');
   }
 
   const rec = fs.readdirSync(TMP).find((f) => f.endsWith('.webm'));
