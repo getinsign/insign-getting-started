@@ -68,10 +68,12 @@ function findArtifact(dir, endsWith) {
 }
 
 function outNames(lang) {
-  // English is the primary output (funnel.webm); other languages suffixed.
+  // Raw app walkthrough only. Final docs/video/funnel.{webm,de.webm} are
+  // produced by scripts/stitch-video.mjs joining terminal-sigfunnel.webm
+  // (pre-roll) with these app-only recordings.
   return lang === 'en'
-    ? { video: 'funnel.webm', timings: 'funnel-timings.json' }
-    : { video: `funnel.${lang}.webm`, timings: `funnel-timings.${lang}.json` };
+    ? { video: 'funnel-app.webm', timings: 'funnel-timings.json' }
+    : { video: `funnel-app.${lang}.webm`, timings: `funnel-timings.${lang}.json` };
 }
 
 async function recordOne(lang) {
