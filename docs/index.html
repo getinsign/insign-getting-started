@@ -599,6 +599,32 @@
          ============================================================ -->
     <h2 class="section-title" id="demos"><i class="bi bi-code-square me-2"></i>Demo Applications</h2>
 
+    <!-- Java App -->
+    <div class="path-card" id="demo-java" style="margin-bottom:1.25rem">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+            <div class="path-card-icon blue" style="margin-bottom:0"><i class="bi bi-cup-hot"></i></div>
+            <div>
+                <h3 style="margin-bottom:0">Java Spring Boot Sample</h3>
+                <span style="font-size:0.72rem;color:var(--insign-gray)">Java / Spring Boot / Maven</span>
+            </div>
+        </div>
+        <video autoplay muted loop playsinline controls
+               style="display:block;width:100%;max-width:720px;margin:0 auto 0.75rem;border-radius:8px;border:1px solid var(--insign-border);background:#0d111a">
+            <source src="video/java-quickstart.webm" type="video/webm">
+        </video>
+        <p>Full backend integration demonstrating session creation, document upload, external signing invitations, real-time status tracking, webhook handling, and document download. Features a pluggable API client architecture - swap implementations by changing one Maven dependency.</p>
+        <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
+            <strong>Key concepts:</strong> Pluggable API clients, convention-based JSON mapping, forward-compatible POJO model, SSE real-time events, webhook integration
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            <a href="https://github.com/getinsign/insign-getting-started/tree/main/src/java" target="_blank" class="btn btn-insign btn-insign-sm btn-insign-outline"><i class="bi bi-github me-1"></i>View on GitHub</a>
+        </div>
+        <pre style="margin-top:0.75rem;background:var(--insign-code-bg);border:1px solid var(--insign-border);border-radius:8px;padding:0.75rem;font-size:0.78rem;font-family:'Roboto Mono',monospace;color:var(--insign-text)"><code>cd src/java/app
+mvn spring-boot:run -Pspring-client    # Option A: Spring REST client
+mvn spring-boot:run -Pinsign-client    # Option B: Java API client
+# Open http://localhost:8090</code></pre>
+    </div>
+
     <!-- Sig-Funnel -->
     <div class="path-card" id="demo-sigfunnel" style="margin-bottom:1.25rem">
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
@@ -625,27 +651,6 @@
 # Open http://localhost:3000</code></pre>
     </div>
 
-    <!-- Java App -->
-    <div class="path-card" id="demo-java">
-        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
-            <div class="path-card-icon blue" style="margin-bottom:0"><i class="bi bi-cup-hot"></i></div>
-            <div>
-                <h3 style="margin-bottom:0">Java Spring Boot Sample</h3>
-                <span style="font-size:0.72rem;color:var(--insign-gray)">Java / Spring Boot / Maven</span>
-            </div>
-        </div>
-        <p>Full backend integration demonstrating session creation, document upload, external signing invitations, real-time status tracking, webhook handling, and document download. Features a pluggable API client architecture - swap implementations by changing one Maven dependency.</p>
-        <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
-            <strong>Key concepts:</strong> Pluggable API clients, convention-based JSON mapping, forward-compatible POJO model, SSE real-time events, webhook integration
-        </div>
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-            <a href="https://github.com/getinsign/insign-getting-started/tree/main/src/java" target="_blank" class="btn btn-insign btn-insign-sm btn-insign-outline"><i class="bi bi-github me-1"></i>View on GitHub</a>
-        </div>
-        <pre style="margin-top:0.75rem;background:var(--insign-code-bg);border:1px solid var(--insign-border);border-radius:8px;padding:0.75rem;font-size:0.78rem;font-family:'Roboto Mono',monospace;color:var(--insign-text)"><code>cd src/java/app
-mvn spring-boot:run -Pspring-client    # Option A: Spring REST client
-mvn spring-boot:run -Pinsign-client    # Option B: Java API client
-# Open http://localhost:8090</code></pre>
-    </div>
 
 
     <!-- ============================================================
