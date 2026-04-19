@@ -66,7 +66,8 @@ Both connect to the free sandbox out of the box. Clone, run, adapt.
 </p>
 
 ```bash
-cd src/sign-widget-demo-application
+git clone https://github.com/getinsign/insign-getting-started.git
+cd insign-getting-started/src/sign-widget-demo-application
 ./run.sh              # installs deps, starts the server
 # Open http://localhost:3000
 ```
@@ -76,8 +77,10 @@ The form is prefilled with test data - click through the entire signing flow imm
 ## Quick Start: Java Spring Boot
 
 ```bash
-cd src/java/app
-mvn spring-boot:run -Pspring-client    # or: -Pinsign-client
+git clone https://github.com/getinsign/insign-getting-started.git
+cd insign-getting-started/src/java/app
+mvn spring-boot:run -Pspring-client    # Option A: Spring REST client
+mvn spring-boot:run -Pinsign-client    # Option B: Java API client
 # Open http://localhost:8090
 ```
 

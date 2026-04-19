@@ -67,8 +67,8 @@ Choose your preferred way to run the demo:
 ### Option 1: Local (Node.js)
 
 ```bash
-git clone <repo-url>
-cd sig-funnel
+git clone https://github.com/getinsign/insign-getting-started.git
+cd insign-getting-started/src/sign-widget-demo-application
 npm install
 npm start         # or: npm run dev (auto-reload)
 ```
@@ -122,8 +122,8 @@ No code duplication — the Vercel functions are thin wrappers that call the sam
 ### Linux / macOS
 
 ```bash
-git clone <repo-url>
-cd sig-funnel
+git clone https://github.com/getinsign/insign-getting-started.git
+cd insign-getting-started/src/sign-widget-demo-application
 npm install
 npm start
 # Open http://localhost:3000
@@ -136,8 +136,8 @@ npm test
 ### Windows (PowerShell / CMD)
 
 ```powershell
-git clone <repo-url>
-cd sig-funnel
+git clone https://github.com/getinsign/insign-getting-started.git
+cd insign-getting-started/src/sign-widget-demo-application
 npm install
 npm start
 # Open http://localhost:3000
@@ -154,8 +154,8 @@ WSL2 works but Node.js file I/O on `/mnt/c/` (the Windows filesystem) is very sl
 ```bash
 # Clone to Linux filesystem (fast)
 cd ~
-git clone <repo-url>
-cd sig-funnel
+git clone https://github.com/getinsign/insign-getting-started.git
+cd insign-getting-started/src/sign-widget-demo-application
 npm install
 npm start
 

@@ -1,0 +1,307 @@
+<!--
+  terminal-sigfunnel.html - static animated terminal scene used to generate
+  the pre-roll of docs/video/funnel.webm (the sig-funnel recording).
+
+  Self-contained (no external assets so Playwright can load it via file://).
+  The JS at the bottom types each command character-by-character and reveals
+  output lines on a staggered timer. Auto-scrolls so the newest line stays
+  in view as the scene grows past the terminal height.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sig-Funnel quickstart — terminal</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d111a;
+    --term-bg: #0e1420;
+    --term-chrome: #1b2333;
+    --term-border: rgba(255,255,255,0.06);
+    --text: #d7dce3;
+    --text-dim: #8592a6;
+    --prompt: #6cc766;
+    --cmd: #e6ecf2;
+    --info: #77c3e0;
+    --ok: #58d68d;
+    --accent: #ffa657;
+    --warn: #f7b323;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: radial-gradient(ellipse at 30% 20%, #131a2a 0%, #08090f 70%);
+    font-family: 'SF Mono', 'JetBrains Mono', 'Cascadia Code', 'Roboto Mono', ui-monospace, monospace;
+    font-size: 20px;
+    line-height: 1.55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--text);
+  }
+  .terminal {
+    width: 1520px;
+    height: 880px;
+    background: var(--term-bg);
+    border-radius: 14px;
+    border: 1px solid var(--term-border);
+    box-shadow:
+      0 40px 100px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.03),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+    transition: opacity 600ms ease-out, transform 600ms ease-out;
+  }
+  .terminal.active { opacity: 1; transform: translateY(0) scale(1); }
+
+  .chrome {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 100%), var(--term-chrome);
+    border-bottom: 1px solid var(--term-border);
+    gap: 8px;
+  }
+  .dot { width: 13px; height: 13px; border-radius: 50%; }
+  .dot.red    { background: #ff5f57; }
+  .dot.yellow { background: #febc2e; }
+  .dot.green  { background: #28c840; }
+  .chrome-title {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: 0.3px;
+  }
+
+  .screen {
+    flex: 1;
+    padding: 22px 28px;
+    overflow-y: auto;
+    white-space: pre;
+    font-variant-ligatures: none;
+    scroll-behavior: smooth;
+  }
+  .screen::-webkit-scrollbar { width: 0; display: none; }
+  .line { min-height: 1.55em; }
+  .prompt { color: var(--prompt); font-weight: 600; }
+  .host   { color: var(--accent); }
+  .cmd    { color: var(--cmd); }
+  .dim    { color: var(--text-dim); }
+  .info   { color: var(--info); }
+  .ok     { color: var(--ok); font-weight: 600; }
+  .warn   { color: var(--warn); }
+  .cursor {
+    display: inline-block;
+    width: 0.55ch;
+    height: 1em;
+    background: var(--cmd);
+    vertical-align: -2px;
+    animation: blink 900ms steps(2, end) infinite;
+  }
+  @keyframes blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+
+  .url-link {
+    color: #79c0ff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: background 200ms ease;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+  .url-link.hover { background: rgba(121, 192, 255, 0.18); }
+  .url-link.click { background: rgba(121, 192, 255, 0.32); }
+
+  .mouse-cursor {
+    position: fixed;
+    width: 26px; height: 32px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transform-origin: 4px 4px;
+    transition: opacity 200ms ease-out;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  }
+  .mouse-cursor.active { opacity: 1; }
+  .mouse-cursor.click { transform: scale(0.85); }
+</style>
+</head>
+<body>
+
+<div class="terminal" id="term">
+  <div class="chrome">
+    <span class="dot red"></span>
+    <span class="dot yellow"></span>
+    <span class="dot green"></span>
+    <span class="chrome-title">zsh — insign-getting-started</span>
+  </div>
+  <div class="screen" id="screen"></div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const SCENE = [
+    { type: 'prompt' },
+    { type: 'cmd',  text: 'git clone https://github.com/getinsign/insign-getting-started.git', delay: 48 },
+    { type: 'out', lines: [
+        "Cloning into 'insign-getting-started'...",
+        'remote: Enumerating objects: 3847, done.',
+        'remote: Counting objects: 100% (3847/3847), done.',
+        'remote: Compressing objects: 100% (1854/1854), done.',
+        'remote: Total 3847 (delta 1983), reused 3847 (delta 1983), pack-reused 0',
+        'Receiving objects: 100% (3847/3847), 18.42 MiB | 12.04 MiB/s, done.',
+        'Resolving deltas: 100% (1983/1983), done.',
+        '',
+    ], lineDelay: 110, startDelay: 320 },
+
+    { type: 'prompt' },
+    { type: 'cmd',  text: 'cd insign-getting-started/src/sign-widget-demo-application', delay: 52 },
+    { type: 'out', lines: [''], lineDelay: 60, startDelay: 220 },
+
+    { type: 'prompt' },
+    { type: 'cmd',  text: './run.sh', delay: 70 },
+    { type: 'out', lines: [
+        { cls: 'dim',  text: '> Installing dependencies with npm ci ...' },
+        { cls: 'dim',  text: 'added 192 packages, and audited 193 packages in 6s' },
+        '',
+        { cls: 'info', text: '> sig-funnel@1.0.0 start' },
+        { cls: 'info', text: '> node src/server.js' },
+        '',
+        { cls: 'info', text: '[pdf-generator] Template created. Content ends at y=714pt, footer at y=819pt — 105pt remaining.' },
+        { cls: 'info', text: 'Sig-Funnel running on http://localhost:3000' },
+        { cls: 'info', text: 'inSign server: https://sandbox.test.getinsign.show' },
+        '',
+    ], lineDelay: 170, startDelay: 500 },
+
+    { type: 'out', lines: [
+        { cls: 'ok', text: '✓ Ready — open ', urlSuffix: 'http://localhost:3000' },
+        '',
+    ], lineDelay: 200, startDelay: 600 },
+  ];
+
+  const screen = document.getElementById('screen');
+  const term = document.getElementById('term');
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function appendLine() {
+    const d = document.createElement('div');
+    d.className = 'line';
+    screen.appendChild(d);
+    screen.scrollTop = screen.scrollHeight;
+    return d;
+  }
+
+  function makePrompt() {
+    const line = appendLine();
+    line.innerHTML =
+      '<span class="prompt">➜</span> ' +
+      '<span class="host">demo</span> ' +
+      '<span class="cursor"></span>';
+    return line;
+  }
+
+  async function typeCmd(line, text, perChar) {
+    const cursor = line.querySelector('.cursor');
+    const cmdSpan = document.createElement('span');
+    cmdSpan.className = 'cmd';
+    line.insertBefore(cmdSpan, cursor);
+    for (const ch of text) {
+      cmdSpan.textContent += ch;
+      await sleep(perChar);
+    }
+    await sleep(250);
+    cursor.remove();
+  }
+
+  function appendOutLine(entry) {
+    const d = appendLine();
+    if (typeof entry === 'string') {
+      d.textContent = entry;
+      return;
+    }
+    const span = document.createElement('span');
+    span.className = entry.cls || '';
+    span.textContent = entry.text;
+    d.appendChild(span);
+    if (entry.urlSuffix) {
+      const link = document.createElement('span');
+      link.className = 'url-link';
+      link.textContent = entry.urlSuffix;
+      d.appendChild(link);
+    }
+  }
+
+  const CURSOR_SVG = "data:image/svg+xml;utf8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28" width="26" height="32">' +
+    '<path d="M 1 1 L 1 22 L 6 17 L 9 26 L 13 25 L 10 16 L 17 16 Z" ' +
+    'fill="white" stroke="black" stroke-width="1" stroke-linejoin="round"/>' +
+    '</svg>'
+  );
+
+  async function clickReadyLink() {
+    const link = document.querySelector('.url-link');
+    if (!link) return;
+    const c = document.createElement('img');
+    c.src = CURSOR_SVG;
+    c.className = 'mouse-cursor';
+    document.body.appendChild(c);
+    c.style.left = (window.innerWidth * 0.78) + 'px';
+    c.style.top  = (window.innerHeight * 0.78) + 'px';
+    await sleep(120);
+    c.classList.add('active');
+    await sleep(160);
+    const r = link.getBoundingClientRect();
+    c.style.transition = 'left 700ms cubic-bezier(.25,.1,.25,1), top 700ms cubic-bezier(.25,.1,.25,1)';
+    c.style.left = (r.left + 8) + 'px';
+    c.style.top  = (r.top + r.height/2 - 4) + 'px';
+    await sleep(420);
+    link.classList.add('hover');
+    await sleep(380);
+    link.classList.add('click');
+    c.classList.add('click');
+    await sleep(160);
+    c.classList.remove('click');
+    await sleep(180);
+  }
+
+  async function run() {
+    await sleep(120);
+    term.classList.add('active');
+    await sleep(600);
+
+    let currentPrompt = null;
+    for (const step of SCENE) {
+      if (step.type === 'prompt') {
+        currentPrompt = makePrompt();
+        await sleep(240);
+      } else if (step.type === 'cmd') {
+        await typeCmd(currentPrompt, step.text, step.delay);
+      } else if (step.type === 'out') {
+        await sleep(step.startDelay || 150);
+        for (const line of step.lines) {
+          appendOutLine(line);
+          await sleep(step.lineDelay || 80);
+        }
+      }
+    }
+    // Brief settle, then animate a mouse click on the URL — the recorder
+    // crossfades into the browser scene immediately after.
+    await sleep(280);
+    await clickReadyLink();
+    await sleep(180);
+  }
+
+  run();
+})();
+</script>
+</body>
+</html>

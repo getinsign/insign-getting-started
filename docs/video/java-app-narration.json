@@ -1,0 +1,207 @@
+{
+  "version": 2,
+  "description": "Storyboard for the Java Spring Boot sample-app walkthrough. Same v2 schema as funnel-narration.json, driven by docs/screenshots/take-java-app-video.mjs.",
+  "languages": ["en"],
+  "target_duration_seconds": 120,
+  "viewport": { "width": 1920, "height": 1080 },
+  "defaults": {
+    "highlight_ms": 2200,
+    "type_delay_ms": 70,
+    "mouse_move_steps": 18
+  },
+  "steps": [
+    {
+      "id": "intro-app",
+      "narration": { "en": "The Java Spring Boot sample — full backend integration with the inSign API." },
+      "actions": [
+        { "type": "goto", "url": "http://localhost:8090/" },
+        { "type": "install-demo-overlays" },
+        { "type": "wait", "ms": 600 },
+        { "type": "mouse-to", "selector": ".navbar-brand" },
+        { "type": "highlight", "selector": ".navbar-brand", "ms": 3200 },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "intro-create-button",
+      "narration": { "en": "One button spins up a complete signing session: PDF generated server-side, uploaded, session configured, JWT returned." },
+      "actions": [
+        { "type": "mouse-to", "selector": "#btn-create" },
+        { "type": "highlight", "selector": "#btn-create", "ms": 3000 },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "create-click",
+      "narration": { "en": "Creating the session..." },
+      "actions": [
+        { "type": "click", "selector": "#btn-create" },
+        { "type": "wait-for-visible", "selector": "#session-actions", "timeout_ms": 20000 },
+        { "type": "wait", "ms": 1200 }
+      ]
+    },
+    {
+      "id": "status-bar",
+      "narration": { "en": "The status bar populates immediately: session ID, user ID, TAN, completion flag, and a live poll indicator." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": ".status-bar" },
+        { "type": "mouse-to", "selector": ".status-bar" },
+        { "type": "highlight", "selector": ".status-bar", "ms": 4000 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "session-info",
+      "narration": { "en": "Session info: status, check status, metadata — each fires a backend call and shows the raw JSON response on the right." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#btn-create" },
+        { "type": "mouse-to", "selector": "button[onclick*='/api/session/status']" },
+        { "type": "highlight", "selector": "button[onclick*='/api/session/status']", "ms": 2200 },
+        { "type": "click", "selector": "button[onclick*='/api/session/status']" },
+        { "type": "wait", "ms": 1400 },
+        { "type": "mouse-to", "selector": "button[onclick*='/api/session/checkstatus']" },
+        { "type": "highlight", "selector": "button[onclick*='/api/session/checkstatus']", "ms": 2000 },
+        { "type": "click", "selector": "button[onclick*='/api/session/checkstatus']" },
+        { "type": "wait", "ms": 1400 },
+        { "type": "mouse-to", "selector": "button[onclick*='/api/session/metadata']" },
+        { "type": "highlight", "selector": "button[onclick*='/api/session/metadata']", "ms": 2000 },
+        { "type": "click", "selector": "button[onclick*='/api/session/metadata']" },
+        { "type": "wait", "ms": 2500 }
+      ]
+    },
+    {
+      "id": "responses-panel",
+      "narration": { "en": "Every API call lands as a card here — full request/response visibility for debugging your integration." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#response-list" },
+        { "type": "mouse-to", "selector": "#response-list" },
+        { "type": "highlight", "selector": "#response-list", "ms": 4500 },
+        { "type": "wait", "ms": 4500 }
+      ]
+    },
+    {
+      "id": "owner-link",
+      "narration": { "en": "Owner Link generates the URL the session owner opens to sign. You ship this link by email, SMS, or any channel you like." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#btn-create" },
+        { "type": "mouse-to", "selector": "button[onclick*='getOwnerLink']" },
+        { "type": "highlight", "selector": "button[onclick*='getOwnerLink']", "ms": 3000 },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "extern-intro",
+      "narration": { "en": "Or invite external signers directly — fill in their emails and pick a delivery channel." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#email1" },
+        { "type": "mouse-to", "selector": "#email1" },
+        { "type": "highlight", "selector": "#email1", "ms": 2200 },
+        { "type": "fill", "selector": "#email1", "value": "alice@example.com" },
+        { "type": "wait", "ms": 500 },
+        { "type": "mouse-to", "selector": "#email2" },
+        { "type": "fill", "selector": "#email2", "value": "bob@example.com" },
+        { "type": "wait", "ms": 1400 }
+      ]
+    },
+    {
+      "id": "extern-delivery",
+      "narration": { "en": "Delivery channel: plain link, email, or SMS — SMS reveals phone-number fields for each signer." },
+      "actions": [
+        { "type": "mouse-to", "selector": "#delivery" },
+        { "type": "highlight", "selector": "#delivery", "ms": 2000 },
+        { "type": "select", "selector": "#delivery", "value": "email" },
+        { "type": "wait", "ms": 1200 },
+        { "type": "select", "selector": "#delivery", "value": "sms" },
+        { "type": "wait-for-visible", "selector": "#phone-fields", "timeout_ms": 3000 },
+        { "type": "wait", "ms": 1200 },
+        { "type": "mouse-to", "selector": "#phone1" },
+        { "type": "fill", "selector": "#phone1", "value": "+491701234567" },
+        { "type": "wait", "ms": 500 },
+        { "type": "fill", "selector": "#phone2", "value": "+491701234568" },
+        { "type": "wait", "ms": 1400 }
+      ]
+    },
+    {
+      "id": "extern-invite",
+      "narration": { "en": "Send invitations — the backend calls inSign's extern-config endpoint and each signer gets a unique TAN." },
+      "actions": [
+        { "type": "mouse-to", "selector": "button[onclick*='inviteExtern']" },
+        { "type": "highlight", "selector": "button[onclick*='inviteExtern']", "ms": 2400 },
+        { "type": "click", "selector": "button[onclick*='inviteExtern']" },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "extern-users",
+      "narration": { "en": "List the extern users — the response shows each signer's TAN and state. The reminder endpoint re-sends the invitation; revoke cancels them." },
+      "actions": [
+        { "type": "mouse-to", "selector": "button[onclick*='/api/extern/users']" },
+        { "type": "highlight", "selector": "button[onclick*='/api/extern/users']", "ms": 2000 },
+        { "type": "click", "selector": "button[onclick*='/api/extern/users']" },
+        { "type": "wait", "ms": 2000 },
+        { "type": "mouse-to", "selector": "button[onclick*='reminder']" },
+        { "type": "highlight", "selector": "button[onclick*='reminder']", "ms": 2400 },
+        { "type": "wait", "ms": 2500 }
+      ]
+    },
+    {
+      "id": "audit-json",
+      "narration": { "en": "Audit JSON pulls the full event log — who signed, when, from which device, every status change. Perfect for compliance." },
+      "actions": [
+        { "type": "mouse-to", "selector": "button[onclick*='/api/audit/json']" },
+        { "type": "highlight", "selector": "button[onclick*='/api/audit/json']", "ms": 2400 },
+        { "type": "click", "selector": "button[onclick*='/api/audit/json']" },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "documents",
+      "narration": { "en": "Download ZIP bundles the signed PDF and the audit PDF in one archive — ready to hand off to the customer." },
+      "actions": [
+        { "type": "mouse-to", "selector": "button[onclick*='/api/documents/download']" },
+        { "type": "highlight", "selector": "button[onclick*='/api/documents/download']", "ms": 3000 },
+        { "type": "wait", "ms": 3500 }
+      ]
+    },
+    {
+      "id": "sse-polling",
+      "narration": { "en": "The status bar updates in real time. Behind the scenes: Server-Sent Events push changes the moment inSign fires a webhook — or a 5-second poll if webhooks aren't configured." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": ".status-bar" },
+        { "type": "mouse-to", "selector": "#sb-poll-indicator" },
+        { "type": "highlight", "selector": ".status-bar", "ms": 5000 },
+        { "type": "wait", "ms": 7500 }
+      ]
+    },
+    {
+      "id": "session-queries",
+      "narration": { "en": "My Sessions lists every session your controller account owns; Query Session fetches an arbitrary one by ID." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": "#btn-create" },
+        { "type": "mouse-to", "selector": "button[onclick*='/api/sessions/user']" },
+        { "type": "highlight", "selector": "button[onclick*='/api/sessions/user']", "ms": 2400 },
+        { "type": "click", "selector": "button[onclick*='/api/sessions/user']" },
+        { "type": "wait", "ms": 2500 }
+      ]
+    },
+    {
+      "id": "purge",
+      "narration": { "en": "And the danger zone — Purge deletes the session and all its data from inSign. No undo." },
+      "actions": [
+        { "type": "mouse-to", "selector": "button[onclick*='purgeSession']" },
+        { "type": "highlight", "selector": "button[onclick*='purgeSession']", "ms": 3000 },
+        { "type": "wait", "ms": 4000 }
+      ]
+    },
+    {
+      "id": "outro",
+      "narration": { "en": "Clone, run, integrate. Swap the insign-client profile for spring-client to use the pluggable Spring REST client, or plug in your own." },
+      "actions": [
+        { "type": "scroll-into-view", "selector": ".navbar-brand" },
+        { "type": "mouse-to", "selector": ".navbar-brand" },
+        { "type": "highlight", "selector": ".navbar-brand", "ms": 4000 },
+        { "type": "wait", "ms": 5500 }
+      ]
+    }
+  ]
+}
