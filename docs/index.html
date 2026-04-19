@@ -613,6 +613,7 @@
             <source src="video/java-quickstart.webm" type="video/webm">
         </video>
         <p>Full backend integration demonstrating session creation, document upload, external signing invitations, real-time status tracking, webhook handling, and document download. Features a pluggable API client architecture - swap implementations by changing one Maven dependency.</p>
+        <p style="font-size:0.7rem;color:#b86f1a;margin-bottom:0.5rem"><i class="bi bi-exclamation-triangle me-1"></i><strong>Sandbox — test data only.</strong> Public sandbox; documents are readable by anyone. Never enter real personal data.</p>
         <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
             <strong>Key concepts:</strong> Pluggable API clients, convention-based JSON mapping, forward-compatible POJO model, SSE real-time events, webhook integration
         </div>
@@ -639,7 +640,7 @@ mvn spring-boot:run -Pinsign-client    # Option B: Java API client
             <source src="video/funnel.webm" type="video/webm">
         </video>
         <p>A realistic broker-mandate signing flow. The user fills in personal data, the server generates a mandate PDF on the fly, creates an inSign session, and the signature pad is rendered inline - all without leaving the page.</p>
-        <p style="font-size:0.78rem;color:#b86f1a;background:rgba(247,179,35,0.08);border-left:3px solid #f7b323;padding:0.4rem 0.6rem;margin-bottom:0.75rem;border-radius:4px"><i class="bi bi-exclamation-triangle me-1"></i><strong>Sandbox — test data only.</strong> Connects to the public inSign sandbox; anyone can read documents stored there. Never enter real personal data.</p>
+        <p style="font-size:0.7rem;color:#b86f1a;margin-bottom:0.5rem"><i class="bi bi-exclamation-triangle me-1"></i><strong>Sandbox — test data only.</strong> Public sandbox; documents are readable by anyone. Never enter real personal data.</p>
         <div style="font-size:0.82rem;color:var(--insign-text-muted);margin-bottom:0.75rem">
             <strong>Key concepts:</strong> Embedded mode, JWT authentication, <code>##SIG{...}</code> tags, cookieless browser-to-server communication, dynamic PDF generation with signature fields
         </div>
