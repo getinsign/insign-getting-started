@@ -21,7 +21,10 @@ import { chromium } from 'playwright';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..', '..');
-const OUT_DIR = path.join(REPO, 'docs', 'video');
+// Terminal pre-rolls are intermediate artifacts — they get muxed into the
+// final docs/video/*.webm by scripts/stitch-video.mjs, so they live under
+// .target/ (gitignored) rather than in the tracked docs/video/ tree.
+const OUT_DIR = path.join(REPO, '.target', 'video');
 const TMP_BASE = path.join(REPO, '.target', 'terminal-recording');
 const VIEWPORT = { width: 1920, height: 1080 };
 

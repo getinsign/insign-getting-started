@@ -33,7 +33,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..', '..');
 const APP = path.join(REPO, 'src', 'sign-widget-demo-application');
 const RESULTS = path.join(APP, '.target', 'test-results');
-const OUT_DIR = path.join(REPO, 'docs', 'video');
+// App-only walkthroughs are intermediate — the final docs/video/funnel*.webm
+// is built by scripts/stitch-video.mjs joining the terminal pre-roll with
+// these recordings. Keep the raw outputs under .target/ (gitignored).
+const OUT_DIR = path.join(REPO, '.target', 'video');
 
 const LANGS = (process.env.LANGS || 'en,de').split(',').map(s => s.trim()).filter(Boolean);
 

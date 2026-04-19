@@ -22,7 +22,9 @@ import { installDemoOverlays, runStoryboard, createMarkers, loadStoryboard } fro
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(__dirname, '..', '..');
 const STORYBOARD = path.join(REPO, 'docs', 'video', 'java-app-narration.json');
-const OUT_DIR = path.join(REPO, 'docs', 'video');
+// App-only walkthrough is intermediate; final docs/video/java-quickstart.webm
+// is built by scripts/stitch-video.mjs joining terminal-java.webm with this.
+const OUT_DIR = path.join(REPO, '.target', 'video');
 const OUT_FILE = path.join(OUT_DIR, 'java-app-demo.webm');
 const TIMINGS_FILE = path.join(OUT_DIR, 'java-app-timings.json');
 const TMP = path.join(REPO, '.target', 'java-app-recording');
