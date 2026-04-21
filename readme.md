@@ -54,7 +54,7 @@ Both connect to the free sandbox out of the box. Clone, run, adapt.
 | [**API Explorer**](https://getinsign.github.io/insign-getting-started/explorer.html) | Interactive playground, code generation, API reference | All developers |
 | [**Signature Pad Demo**](src/sign-widget-demo-application/) | Embedded signature pad in a broker-mandate flow | Frontend / fullstack |
 | [**Java Sample App**](src/java/) | Spring Boot backend with pluggable API clients | Backend / Java |
-| **Postman Collection** | Pre-built requests for the sandbox ([collection](docs/data/Getting%20started%20with%20inSign%20API%20Sandbox.postman_collection.json), [environment](docs/data/inSign%20environment%20sandbox.postman_environment.json)) | Quick API testing |
+| [**Postman Collection**](docs/data/Getting%20started%20with%20inSign%20API%20Sandbox.postman_collection.json) | Pre-built requests for the sandbox, [environment](docs/data/inSign%20environment%20sandbox.postman_environment.json)) | Quick API testing |
 
 ---
 
