@@ -325,30 +325,45 @@ function _updateFeatureChangedCount() {
 
 /** Reset all feature toggles back to default */
 function resetAllFeatures() {
+    // Capture which keys the user actually set before clearing — only these
+    // should be stripped from the JSON body. Root-level session fields like
+    // displayname/foruser/callbackURL are rendered as "uncovered" toggles but
+    // are not feature-managed and must be preserved.
+    const savedKeys = Object.keys(loadFeatureSettings());
     saveFeatureSettings({});
     // Reset all toggle radios to "default"
     $('input[type="radio"][id$="-default"]').prop('checked', true);
     // Reset all text/select inputs
     $('.feature-input').val('');
     $('select[id^="ft-"]').each(function() { this.selectedIndex = 0; });
-    // Remove feature keys from JSON body
-    if (state.editors['create-session']) {
+    // Remove only the feature keys the user explicitly set, at their known paths
+    if (state.editors['create-session'] && savedKeys.length) {
         const body = getEditorValue('create-session');
         if (typeof body === 'object') {
-            delete body.guiProperties;
-            delete body.signConfig;
-            delete body.deliveryConfig;
-            // Remove root-level feature keys
+            const featureByKey = {};
             for (const group of FEATURE_GROUPS) {
-                for (const f of group.features) {
-                    if (f.path === 'root') delete body[f.key];
+                for (const f of group.features) featureByKey[f.key] = f;
+            }
+            for (const f of UNCOVERED_FEATURES) featureByKey[f.key] = f;
+
+            for (const key of savedKeys) {
+                const f = featureByKey[key];
+                const path = f ? f.path : 'root';
+                if (path === 'guiProperties' && body.guiProperties) {
+                    delete body.guiProperties[key];
+                    if (Object.keys(body.guiProperties).length === 0) delete body.guiProperties;
+                } else if (path === 'signConfig' && body.signConfig) {
+                    delete body.signConfig[key];
+                    if (Object.keys(body.signConfig).length === 0) delete body.signConfig;
+                } else if (path === 'deliveryConfig' && body.deliveryConfig) {
+                    delete body.deliveryConfig[key];
+                    if (Object.keys(body.deliveryConfig).length === 0) delete body.deliveryConfig;
+                } else if (path === 'doc' && body.documents && body.documents[0]) {
+                    delete body.documents[0][key];
+                } else {
+                    delete body[key];
                 }
             }
-            // Remove any uncovered root-level keys that were set
-            $('#uncovered-properties input[id^="ft-"], #uncovered-properties select[id^="ft-"]').each(function() {
-                const key = this.id.substring(3);
-                delete body[key];
-            });
             setEditorValue('create-session', body);
         }
     }
