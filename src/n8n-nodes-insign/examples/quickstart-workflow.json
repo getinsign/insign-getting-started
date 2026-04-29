@@ -1,0 +1,192 @@
+{
+  "name": "inSign Quickstart",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trig-manual",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-600, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/getinsign/insign-getting-started/main/docs/data/sample.pdf",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "id": "http-download",
+      "name": "Download Sample PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-380, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "const cid = `demo-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;\nreturn [{ json: { correlationId: cid }, binary: $input.item.binary }];"
+      },
+      "id": "set-cid",
+      "name": "Assign Correlation ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-160, 0]
+    },
+    {
+      "parameters": {
+        "operation": "createSession",
+        "displayName": "={{ 'n8n demo ' + $json.correlationId }}",
+        "binaryPropertyName": "data",
+        "documentDisplayName": "sample.pdf",
+        "scanSigTags": true,
+        "allowFormEditing": true,
+        "uploadEnabled": false,
+        "correlationId": "={{ $json.correlationId }}",
+        "callbackURL": "http://localhost:5678/webhook/signed-thanks",
+        "serverSidecallbackURL": "PASTE_YOUR_TRIGGER_PRODUCTION_URL_HERE",
+        "workflowFinishAfterLastSign": true,
+        "additionalFields": "{}",
+        "requestOptions": { "includeMeta": true }
+      },
+      "id": "insign-create",
+      "name": "inSign: Create Session",
+      "type": "n8n-nodes-insign.insign",
+      "typeVersion": 1,
+      "position": [60, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\ndata.sessions = data.sessions || {};\nconst cid = $('Assign Correlation ID').item.json.correlationId;\ndata.sessions[cid] = {\n  sessionid: $json.sessionid,\n  correlationId: cid,\n  finished: false,\n  createdAt: new Date().toISOString(),\n  accessURL: $json.accessURL ?? null\n};\nreturn [{ json: { correlationId: cid, sessionid: $json.sessionid, accessURL: $json.accessURL ?? null, tracked: true } }];"
+      },
+      "id": "track-session",
+      "name": "Track Session",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [280, 0]
+    },
+
+    {
+      "parameters": {
+        "verifyHmac": true,
+        "eventIdFilter": "VORGANGABGESCHLOSSEN",
+        "sessionIdFilter": ""
+      },
+      "id": "insign-trigger",
+      "name": "inSign Trigger",
+      "type": "n8n-nodes-insign.insignTrigger",
+      "typeVersion": 1,
+      "position": [-600, 300],
+      "webhookId": "insign-quickstart"
+    },
+
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "signed-thanks",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "thanks-webhook",
+      "name": "Thanks Page Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-600, 600],
+      "webhookId": "signed-thanks"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<!doctype html><html><head><meta charset=\"utf-8\"><title>Thanks for signing</title><style>body{font-family:system-ui,sans-serif;max-width:560px;margin:80px auto;padding:0 24px;color:#1a1a1a;text-align:center}h1{color:#f29400;font-size:32px;margin-bottom:8px}p{color:#555;font-size:18px;line-height:1.5}.mark{display:inline-flex;width:64px;height:64px;border-radius:50%;background:#f29400;color:#fff;align-items:center;justify-content:center;font-size:32px;margin-bottom:24px}</style></head><body><div class=\"mark\">&check;</div><h1>Thanks for signing!</h1><p>You can close this window. We will email you a copy of the signed documents shortly.</p></body></html>",
+        "options": { "responseCode": 200, "responseHeaders": { "entries": [{ "name": "Content-Type", "value": "text/html; charset=utf-8" }] } }
+      },
+      "id": "thanks-respond",
+      "name": "Thanks Page HTML",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [-380, 600]
+    },
+    {
+      "parameters": {
+        "operation": "getStatus",
+        "sessionId": "={{ $json.sessionid }}",
+        "requestOptions": {}
+      },
+      "id": "insign-status",
+      "name": "inSign: Get Status",
+      "type": "n8n-nodes-insign.insign",
+      "typeVersion": 1,
+      "position": [-380, 300]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "sessionId": "={{ $json.sessionid }}",
+        "downloadOutputMode": "files",
+        "outputBinaryProperty": "data",
+        "requestOptions": {}
+      },
+      "id": "insign-download",
+      "name": "inSign: Download Signed",
+      "type": "n8n-nodes-insign.insign",
+      "typeVersion": 1,
+      "position": [-160, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\ndata.sessions = data.sessions || {};\nconst cid = $('inSign Trigger').first().json.correlationId;\nif (cid && data.sessions[cid]) {\n  data.sessions[cid].finished = true;\n  data.sessions[cid].finishedAt = new Date().toISOString();\n}\nreturn [{ json: { correlationId: cid, cleaned: true } }];"
+      },
+      "id": "mark-finished",
+      "name": "Mark Finished",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [60, 300]
+    },
+    {
+      "parameters": {
+        "operation": "purge",
+        "sessionId": "={{ $('inSign: Get Status').item.json.sessionid }}",
+        "requestOptions": {}
+      },
+      "id": "insign-purge",
+      "name": "inSign: Purge",
+      "type": "n8n-nodes-insign.insign",
+      "typeVersion": 1,
+      "position": [280, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $getWorkflowStaticData('global');\nconst cid = $('inSign Trigger').first().json.correlationId;\nif (cid && data.sessions && data.sessions[cid]) delete data.sessions[cid];\nreturn [{ json: { correlationId: cid, removed: true, remaining: Object.keys(data.sessions || {}).length } }];"
+      },
+      "id": "remove-tracker",
+      "name": "Remove From Tracker",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Start": { "main": [[{ "node": "Download Sample PDF", "type": "main", "index": 0 }]] },
+    "Download Sample PDF": { "main": [[{ "node": "Assign Correlation ID", "type": "main", "index": 0 }]] },
+    "Assign Correlation ID": { "main": [[{ "node": "inSign: Create Session", "type": "main", "index": 0 }]] },
+    "inSign: Create Session": { "main": [[{ "node": "Track Session", "type": "main", "index": 0 }]] },
+
+    "inSign Trigger": { "main": [[{ "node": "inSign: Get Status", "type": "main", "index": 0 }]] },
+    "Thanks Page Webhook": { "main": [[{ "node": "Thanks Page HTML", "type": "main", "index": 0 }]] },
+    "inSign: Get Status": { "main": [[{ "node": "inSign: Download Signed", "type": "main", "index": 0 }]] },
+    "inSign: Download Signed": { "main": [[{ "node": "Mark Finished", "type": "main", "index": 0 }]] },
+    "Mark Finished": { "main": [[{ "node": "inSign: Purge", "type": "main", "index": 0 }]] },
+    "inSign: Purge": { "main": [[{ "node": "Remove From Tracker", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "active": false,
+  "meta": {},
+  "tags": [],
+  "pinData": {},
+  "staticData": null,
+  "triggerCount": 0
+}
