@@ -844,6 +844,119 @@ function assert(condition, testName, details) {
                     `  trace count: before=${traceBeforeAudit}, after=${traceAfterAudit}`
                 );
 
+                // --- /get/documents/download (Download All) ---
+                // Click the actual Download button (tests the inline onclick wiring,
+                // not just the JS function - the button was previously broken because
+                // its onclick was set to a function reference without parentheses).
+                console.log('[*] Executing /get/documents/download (Download All)...');
+
+                const downloadTabBtn = page.locator('#operation-tabs button[data-bs-target="#op-download"]');
+                if (await downloadTabBtn.isVisible()) {
+                    await downloadTabBtn.click();
+                    await page.waitForTimeout(1000);
+                }
+
+                const traceBeforeDownload = await getTraceCount(page);
+
+                // The button creates a blob: URL and clicks an <a download> - absorb
+                // the resulting browser download event so it doesn't linger.
+                const downloadAllPromise = page.waitForEvent('download', { timeout: 15000 }).catch(() => null);
+                await page.locator('#op-download .op-send-btn').click({ force: true });
+                await downloadAllPromise;
+                await page.waitForTimeout(5000);
+
+                const downloadStatus = await page.evaluate(() => {
+                    const el = document.querySelector('.response-status[data-op="download"]');
+                    return el ? el.textContent.trim() : '';
+                });
+                const downloadEditorVal = await page.evaluate(() => {
+                    if (typeof state !== 'undefined' && state.editors['op-download-response']) {
+                        return state.editors['op-download-response'].getValue();
+                    }
+                    return '';
+                });
+
+                let downloadTrace = null;
+                if (!downloadStatus.includes('200')) {
+                    downloadTrace = await page.evaluate(() => {
+                        if (typeof state === 'undefined' || !state.apiClient) return null;
+                        const log = state.apiClient.getTraceLog();
+                        return log.length > 0 ? log[log.length - 1] : null;
+                    });
+                }
+                assert(
+                    downloadStatus.includes('200'),
+                    `[${authMode}] Download All button returns 200`,
+                    downloadStatus.includes('200') ? '' :
+                        `  status: "${downloadStatus}", editor: "${downloadEditorVal.substring(0, 200)}"\n${formatTraceForFailure(downloadTrace)}`
+                );
+                assert(
+                    /Downloaded\s+[\d.]+\s*(B|KB|MB)/.test(downloadEditorVal),
+                    `[${authMode}] Download All produced a blob`,
+                    `  editor: "${downloadEditorVal.substring(0, 200)}"`
+                );
+
+                const traceAfterDownload = await getTraceCount(page);
+                assert(
+                    traceAfterDownload > traceBeforeDownload,
+                    `[${authMode}] API Trace increased after Download All`,
+                    `  trace count: before=${traceBeforeDownload}, after=${traceAfterDownload}`
+                );
+
+                // --- /get/document (Single Doc Download) ---
+                console.log('[*] Executing /get/document (Single Doc Download)...');
+
+                const singleTabBtn = page.locator('#operation-tabs button[data-bs-target="#op-document-single"]');
+                if (await singleTabBtn.isVisible()) {
+                    await singleTabBtn.click();
+                    await page.waitForTimeout(1000);
+                }
+
+                const traceBeforeSingle = await getTraceCount(page);
+
+                const singleDownloadPromise = page.waitForEvent('download', { timeout: 15000 }).catch(() => null);
+                await page.locator('#op-document-single button[onclick*="downloadDocumentSingle"]').click({ force: true });
+                await singleDownloadPromise;
+                await page.waitForTimeout(5000);
+
+                const singleStatus = await page.evaluate(() => {
+                    const el = document.querySelector('.response-status[data-op="document-single"]');
+                    return el ? el.textContent.trim() : '';
+                });
+                const singleEditorVal = await page.evaluate(() => {
+                    if (typeof state !== 'undefined' && state.editors['op-document-single-response']) {
+                        return state.editors['op-document-single-response'].getValue();
+                    }
+                    return '';
+                });
+
+                let singleTrace = null;
+                if (!singleStatus.includes('200')) {
+                    singleTrace = await page.evaluate(() => {
+                        if (typeof state === 'undefined' || !state.apiClient) return null;
+                        const log = state.apiClient.getTraceLog();
+                        return log.length > 0 ? log[log.length - 1] : null;
+                    });
+                }
+                assert(
+                    singleStatus.includes('200'),
+                    `[${authMode}] Single-doc Download button returns 200`,
+                    singleStatus.includes('200') ? '' :
+                        `  status: "${singleStatus}", editor: "${singleEditorVal.substring(0, 200)}"\n${formatTraceForFailure(singleTrace)}`
+                );
+                assert(
+                    /Received\s+[\d.]+\s*(B|KB|MB)/.test(singleEditorVal),
+                    `[${authMode}] Single-doc download produced a blob`,
+                    `  editor: "${singleEditorVal.substring(0, 200)}"`
+                );
+
+                const traceAfterSingle = await getTraceCount(page);
+                assert(
+                    traceAfterSingle > traceBeforeSingle,
+                    `[${authMode}] API Trace increased after single-doc download`,
+                    `  trace count: before=${traceBeforeSingle}, after=${traceAfterSingle}`
+                );
+
                 // ---------------------------------------------------------
                 // Step 4: Live Code Snippets - click through all tabs
                 // ---------------------------------------------------------
