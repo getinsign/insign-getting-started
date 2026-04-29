@@ -1,0 +1,64 @@
+{
+  "name": "n8n-nodes-insign",
+  "version": "0.1.0",
+  "description": "n8n community node for inSign - electronic signatures (simple, advanced, qualified / eIDAS, EU-hosted).",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "insign",
+    "signature",
+    "esignature",
+    "eidas",
+    "qes",
+    "pdf"
+  ],
+  "license": "MIT",
+  "homepage": "https://www.getinsign.com/",
+  "author": {
+    "name": "inSign GmbH",
+    "url": "https://www.getinsign.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getinsign/insign-getting-started.git",
+    "directory": "src/n8n-nodes-insign"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "lint": "eslint nodes credentials --ext .ts",
+    "lintfix": "eslint nodes credentials --ext .ts --fix",
+    "test": "npm run build && node --test test/helpers.test.js test/trigger.test.js test/download-zip.test.js test/error-handling.test.js test/url-signing.test.js",
+    "test:e2e": "npm run build && INSIGN_E2E=1 node --test test/sandbox.e2e.test.js test/node-integration.test.js test/error-handling.test.js",
+    "prepublishOnly": "npm run build && npm run lint"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/InsignApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Insign/Insign.node.js",
+      "dist/nodes/InsignTrigger/InsignTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.0",
+    "gulp": "^4.0.2",
+    "n8n-workflow": "^1.64.0",
+    "typescript": "^5.4.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1"
+  }
+}
