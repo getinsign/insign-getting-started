@@ -67,7 +67,8 @@ function generateOperationTabs(tabOrder) {
 
         // Send button
         var $sendBtn = $root.find('.op-send-btn');
-        var handler = op.handler || "executeOperation('" + key + "')";
+        var handler = op.handler ? (op.handler.indexOf('(') === -1 ? op.handler + '()' : op.handler)
+            : "executeOperation('" + key + "')";
         $sendBtn.attr('onclick', 'window.app.' + handler);
         if (op.buttonIcon) $sendBtn.find('i').attr('class', 'bi ' + op.buttonIcon);
         if (op.buttonLabel) $sendBtn.find('span').text(op.buttonLabel);
