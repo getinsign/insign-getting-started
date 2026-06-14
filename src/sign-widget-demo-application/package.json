@@ -14,7 +14,7 @@
     "axios": "^1.16.0",
     "express": "^5.2.1",
     "form-data": "^4.0.0",
-    "pdfkit": "^0.18.0"
+    "pdfkit": "^0.19.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
