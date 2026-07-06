@@ -82,7 +82,7 @@ jobs:
         reporter: java-junit
 
     - name: JaCoCo Coverage Report
-      uses: madrapps/jacoco-report@v1.7.2
+      uses: madrapps/jacoco-report@v1.8.0
       if: always()
       with:
         paths: src/java/**/target/site/jacoco/jacoco.xml
