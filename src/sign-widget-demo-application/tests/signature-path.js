@@ -15,6 +15,7 @@
 
 const opentype = require('opentype.js');
 const nodePath = require('path');
+const fs = require('fs');
 
 const DEFAULT_FONT = nodePath.join(__dirname, 'fonts', 'DancingScript.ttf');
 
@@ -170,7 +171,11 @@ function buildSignaturePath(text, opts = {}) {
   const pointsPerGlyph = opts.pointsPerGlyph || 30;
   const smoothRadius = opts.smoothRadius != null ? opts.smoothRadius : 3;
 
-  const font = opentype.loadSync(fontPath);
+  // opentype.js 2.x deprecated the synchronous loadSync(path) helper (it now
+  // returns undefined). Read the file ourselves and parse the ArrayBuffer,
+  // which works on both v1 and v2.
+  const buf = fs.readFileSync(fontPath);
+  const font = opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
 
   // Auto-size to fit the padded canvas area
   const availW = box.width - padding * 2;
