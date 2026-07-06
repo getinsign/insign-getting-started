@@ -11,6 +11,9 @@
     "serve": "^14.2.0",
     "typescript": "^6.0.3"
   },
+  "overrides": {
+    "dompurify": "^3.4.11"
+  },
   "scripts": {
     "build:vendor": "node scripts/build-vendor.js",
     "build:screenshots": "node docs/screenshots/take-screenshots.mjs",
