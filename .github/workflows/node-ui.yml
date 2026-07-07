@@ -1,0 +1,77 @@
+name: UI Integration Tests
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'scripts/**'
+      - 'test/**'
+      - 'docs/**'
+      - '.github/workflows/node-ui.yml'
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  ui-tests:
+    name: UI integration tests (root)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Mint a short-lived token for the vendor-rebuild App. Pushes made with
+      # this token trigger downstream workflows (unlike pushes by the default
+      # GITHUB_TOKEN, which GitHub suppresses to prevent loops).
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: 3413260
+          private-key: ${{ secrets.VENDOR_REBUILD_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build vendor assets
+        run: npm run build:vendor
+
+      - name: Commit updated vendor assets if changed
+        env:
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+        run: |
+          if git diff --quiet docs/vendor/; then
+            echo "docs/vendor/ is up-to-date."
+          else
+            git config user.name "${APP_SLUG}[bot]"
+            git config user.email "${APP_SLUG}[bot]@users.noreply.github.com"
+            git add docs/vendor/
+            git commit -m "chore: rebuild docs/vendor/ after dependency update"
+            git push
+            echo "::notice::docs/vendor/ was out of date and has been updated automatically."
+          fi
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run UI integration tests
+        run: npm run test:ui

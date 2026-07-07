@@ -1,0 +1,86 @@
+name: Sign Widget Tests
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'src/sign-widget-demo-application/**'
+      - '.github/workflows/node-sign-widget.yml'
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  sign-widget-demo:
+    name: sign-widget-demo-application tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/sign-widget-demo-application
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/sign-widget-demo-application/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npm test
+
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: sign-widget-playwright-results
+          path: src/sign-widget-demo-application/.target/test-results/
+          retention-days: 7
+
+  docker:
+    name: Docker build & push (sign-widget-demo)
+    needs: sign-widget-demo
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}/sig-funnel
+          tags: |
+            type=sha,prefix=
+            type=raw,value=latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: src/sign-widget-demo-application
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

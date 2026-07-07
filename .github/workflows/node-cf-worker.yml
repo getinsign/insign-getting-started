@@ -1,0 +1,35 @@
+name: Cloudflare Worker Tests
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'docs/data/cf-webhook-worker.js'
+      - 'test/cf-worker-test.js'
+      - 'test/cf-worker-local.js'
+      - '.github/workflows/node-cf-worker.yml'
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  cf-worker:
+    name: Cloudflare Worker tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Run CF worker integration tests
+        run: node test/cf-worker-test.js
