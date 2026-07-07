@@ -8,6 +8,7 @@
 
 var childProcess = require('child_process');
 var path = require('path');
+var http = require('http');
 
 var REMOTE_URL = process.argv[2] || null;
 var LOCAL_PORT = 8787;
@@ -41,7 +42,7 @@ async function fetchJSON(url, opts) {
     return { status: res.status, headers: res.headers, body: body, json: function() { return JSON.parse(body); } };
 }
 
-async function run() {
+async function run(echoBase) {
     console.log('Testing worker at: ' + WORKER_URL + '\n');
 
     // =========================================================================
@@ -127,7 +128,11 @@ async function run() {
     });
 
     await test('POST multiple callbacks and poll returns all', async function() {
+        // Space the POSTs out so each callback lands in a distinct millisecond;
+        // the ?since= filter below is strictly greater-than and would otherwise
+        // be non-deterministic when two callbacks share a timestamp.
         await fetch(channelUrl, { method: 'POST', body: 'callback-2' });
+        await new Promise(function(r) { setTimeout(r, 5); });
         await fetch(channelUrl, { method: 'POST', body: 'callback-3' });
         var res = await fetchJSON(pollUrl);
         var data = res.json();
@@ -168,21 +173,24 @@ async function run() {
     });
 
     // =========================================================================
-    // 4. CORS Proxy (via httpbin.org)
+    // 4. CORS Proxy (via a local echo server, httpbin-compatible)
     // =========================================================================
+    // NB: the proxy target is a local echo server started by this test, not a
+    // public service. Depending on httpbin.org here used to flake the whole
+    // node.yml workflow (and both README badges) whenever httpbin was down.
     console.log('\n--- CORS Proxy ---');
-    await test('GET /?<url> proxies to target (httpbin)', async function() {
-        var target = 'https://httpbin.org/get?foo=bar';
+    await test('GET /?<url> proxies to target (echo)', async function() {
+        var target = echoBase + '/get?foo=bar';
         var res = await fetchJSON(WORKER_URL + '/?' + encodeURIComponent(target));
         assertEqual(res.status, 200, 'status');
         assertEqual(res.headers.get('access-control-allow-origin'), '*', 'CORS header');
         var data = res.json();
-        assert(data.args, 'should have args from httpbin');
+        assert(data.args, 'should have args from echo server');
         assertEqual(data.args.foo, 'bar', 'args.foo');
     });
 
     await test('POST /?<url> proxies POST body to target', async function() {
-        var target = 'https://httpbin.org/post';
+        var target = echoBase + '/post';
         var payload = JSON.stringify({ test: 'proxy-post' });
         var res = await fetchJSON(WORKER_URL + '/?' + encodeURIComponent(target), {
             method: 'POST',
@@ -196,7 +204,7 @@ async function run() {
     });
 
     await test('Proxy with non-encoded URL also works', async function() {
-        var res = await fetchJSON(WORKER_URL + '/?https://httpbin.org/get?test=raw');
+        var res = await fetchJSON(WORKER_URL + '/?' + echoBase + '/get?test=raw');
         assertEqual(res.status, 200, 'status');
         var data = res.json();
         assertEqual(data.args.test, 'raw', 'args.test');
@@ -261,17 +269,59 @@ function stopLocal() {
     }
 }
 
+// Minimal httpbin-compatible echo server used as the CORS-proxy target, so the
+// tests don't depend on the public httpbin.org (a former source of flakiness).
+//   GET  /get  -> { args: <query params> }
+//   POST /post -> { data: <raw request body> }
+var echoServer = null;
+function startEcho() {
+    return new Promise(function(resolve, reject) {
+        echoServer = http.createServer(function(req, res) {
+            var chunks = [];
+            req.on('data', function(c) { chunks.push(c); });
+            req.on('end', function() {
+                var u = new URL(req.url, 'http://localhost');
+                var out;
+                if (u.pathname === '/get') {
+                    out = { args: Object.fromEntries(u.searchParams) };
+                } else if (u.pathname === '/post') {
+                    out = { data: Buffer.concat(chunks).toString('utf8') };
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'not found' }));
+                    return;
+                }
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(out));
+            });
+        });
+        echoServer.on('error', reject);
+        echoServer.listen(0, '127.0.0.1', function() {
+            resolve('http://127.0.0.1:' + echoServer.address().port);
+        });
+    });
+}
+
+function stopEcho() {
+    if (echoServer) {
+        echoServer.close();
+        echoServer = null;
+    }
+}
+
 (async function() {
     try {
         if (!REMOTE_URL) {
             console.log('Starting local worker harness on port ' + LOCAL_PORT + '...');
             await startLocal();
         }
-        await run();
+        var echoBase = await startEcho();
+        await run(echoBase);
     } catch (e) {
         console.error('Fatal: ' + e);
         process.exitCode = 2;
     } finally {
+        stopEcho();
         stopLocal();
         process.exit(pass > 0 && fail === 0 ? 0 : 1);
     }
