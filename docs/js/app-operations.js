@@ -237,7 +237,7 @@ async function openInSign() {
     try {
         const jwt = await getSSOJwt();
         if (jwt) {
-            postToNewTab(baseUrl + '/index', { jwt: jwt, sessionid: state.sessionId });
+            postToNewTab(baseUrl + '/index', { startjwttoken: jwt, sessionid: state.sessionId });
             return;
         }
     } catch (e) { /* fallback to stored accessURL */ }
@@ -249,7 +249,7 @@ async function openSessionManager() {
     try {
         const jwt = await getSSOJwt();
         if (jwt) {
-            postToNewTab(baseUrl + '/start', { jwt: jwt });
+            postToNewTab(baseUrl + '/start', { startjwttoken: jwt });
             return;
         }
     } catch (e) { /* fallback to stored URL */ }
