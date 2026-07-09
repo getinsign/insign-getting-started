@@ -203,7 +203,7 @@
         "icon": "bi-key",
         "label": "SSO Token",
         "title": "Create SSO JWT token",
-        "description": "Creates a JWT token for a user to access the inSign start module (gallery/process manager). Body is a <code>UserInfo</code> object with at least <code>id</code> (the user identifier). Returns a plain-text JWT. To open the process manager (Vorgangsverwaltung), submit the JWT via an HTTP POST to <code>/start</code> with the token in a form field named <code>jwt</code> &mdash; this is what the toolbar's <em>Session Manager</em> button does. To open a specific session, POST <code>jwt</code> plus <code>sessionid</code> to <code>/index</code>.",
+        "description": "Creates a JWT token for a user to access the inSign start module (gallery/process manager). Body is a <code>UserInfo</code> object with at least <code>id</code> (the user identifier). Returns a plain-text JWT. To open the process manager (Vorgangsverwaltung), submit the JWT via an HTTP POST to <code>/start</code> with the token in a form field named <code>startjwttoken</code> &mdash; this is what the toolbar's <em>Session Manager</em> button does. To open a specific session, POST <code>startjwttoken</code> plus <code>sessionid</code> to <code>/index</code>.",
         "bodyFn": "getSSOBody",
         "schemaKey": null,
         "accept": "text/plain"
