@@ -9,7 +9,7 @@
     "pdfjs-dist": "^6.1.200",
     "playwright": "^1.61.1",
     "serve": "^14.2.0",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "dompurify": "^3.4.11"
