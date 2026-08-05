@@ -85,40 +85,49 @@ function setupMitmProxy(page) {
         statusCallCount++;
         const injectSignature = injectSignatures;
 
-        // Forward the request to the real sandbox
-        const response = await route.fetch();
-        const status = response.status();
-        let body = await response.text();
+        try {
+            // Forward the request to the real sandbox
+            const response = await route.fetch();
+            const status = response.status();
+            let body = await response.text();
 
-        if (injectSignature && status === 200) {
-            try {
-                const data = JSON.parse(body);
-                // Bump numberOfSignatures on every document
-                if (Array.isArray(data.documentData)) {
-                    for (const doc of data.documentData) {
-                        doc.numberOfSignatures = Math.max(doc.numberOfSignatures || 0, 1);
+            if (injectSignature && status === 200) {
+                try {
+                    const data = JSON.parse(body);
+                    // Bump numberOfSignatures on every document
+                    if (Array.isArray(data.documentData)) {
+                        for (const doc of data.documentData) {
+                            doc.numberOfSignatures = Math.max(doc.numberOfSignatures || 0, 1);
+                        }
                     }
-                }
-                // Mark all signature fields as signed
-                if (Array.isArray(data.signaturFieldsStatusList)) {
-                    for (const field of data.signaturFieldsStatusList) {
-                        field.signed = true;
+                    // Mark all signature fields as signed
+                    if (Array.isArray(data.signaturFieldsStatusList)) {
+                        for (const field of data.signaturFieldsStatusList) {
+                            field.signed = true;
+                        }
                     }
+                    body = JSON.stringify(data);
+                    console.log(`[MITM] /get/status (call #${statusCallCount}) -> injected signature`);
+                } catch {
+                    console.log(`[MITM] /get/status (call #${statusCallCount}) -> forwarded (parse error)`);
                 }
-                body = JSON.stringify(data);
-                console.log(`[MITM] /get/status (call #${statusCallCount}) -> injected signature`);
-            } catch {
-                console.log(`[MITM] /get/status (call #${statusCallCount}) -> forwarded (parse error)`);
+            } else {
+                console.log(`[MITM] /get/status (call #${statusCallCount}) -> forwarded (${status})`);
             }
-        } else {
-            console.log(`[MITM] /get/status (call #${statusCallCount}) -> forwarded (${status})`);
-        }
 
-        route.fulfill({
-            status,
-            headers: response.headers(),
-            body,
-        });
+            await route.fulfill({
+                status,
+                headers: response.headers(),
+                body,
+            });
+        } catch (err) {
+            // A background /get/status poll can fire while the browser is closing,
+            // which disposes the request context mid-flight. That is teardown
+            // timing, not a test failure - swallow it so it doesn't surface as an
+            // unhandled rejection and crash the run. See page.unrouteAll() below.
+            const reason = String(err && err.message || err).split('\n')[0];
+            console.log(`[MITM] /get/status (call #${statusCallCount}) -> skipped (${reason})`);
+        }
     });
 
     // Everything else passes through to the real sandbox untouched
@@ -252,11 +261,18 @@ async function waitForConfettiEnd(page, timeoutMs = 20000) {
         page.on('console', msg => {
             if (isConsoleError(msg)) {
                 const text = msg.text();
+                const loc = msg.location();
                 // Ignore known noise (favicon, font loading, MITM'd endpoints, etc.)
                 if (text.includes('favicon') || text.includes('ERR_CONNECTION_REFUSED')) return;
                 if (text.includes('/version')) return; // expected 404 from MITM
-                const loc = msg.location();
                 if (loc && loc.url && loc.url.includes('/version')) return; // 404 resource error
+                // Ignore transient egress timeouts to the external sandbox. HTTP 599
+                // is a connect/read-timeout on the sandbox polling endpoints
+                // (/get/status, /persistence/purge) - network flakiness between the
+                // test host and the sandbox, not an app error. Non-deterministic
+                // across runs; real app/client errors don't carry this status.
+                if (text.includes('Failed to load resource') && text.includes('status of 599') &&
+                    loc && loc.url && loc.url.startsWith(SANDBOX_ORIGIN)) return;
                 results.consoleErrors.push({
                     text,
                     location: msg.location(),
@@ -386,7 +402,10 @@ async function waitForConfettiEnd(page, timeoutMs = 20000) {
         // Find the Step 1 send button (onclick="sendStep(1)")
         const sendBtn = page.locator('#step1 button[onclick*="sendStep(1)"]').first();
         if (await sendBtn.isVisible()) {
-            await sendBtn.click({ timeout: 5000 });
+            // The button is enabled asynchronously once the app finishes
+            // initialising; click() auto-waits for the enabled state, so give it
+            // enough room rather than racing a short timeout on a slow load.
+            await sendBtn.click({ timeout: 15000 });
             results.clickedButtons.push('[Flow] Send to Sandbox (sendStep 1)');
             console.log('[Flow] sendStep(1) triggered');
 
@@ -460,6 +479,11 @@ async function waitForConfettiEnd(page, timeoutMs = 20000) {
 
         // --- Final wait for any delayed errors ---
         await page.waitForTimeout(1000);
+
+        // Stop intercepting before teardown so any in-flight route callback
+        // (e.g. the recurring /get/status poll) doesn't race with browser.close()
+        // and reject with "Request context disposed".
+        await page.unrouteAll({ behavior: 'ignoreErrors' });
 
         // --- Close browser ---
         await browser.close();
