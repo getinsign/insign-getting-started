@@ -1,15 +1,15 @@
 {
   "devDependencies": {
     "@fontsource/roboto": "^5.3.0",
-    "@fontsource/roboto-mono": "^5.2.9",
+    "@fontsource/roboto-mono": "^5.3.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "jquery": "^4.0.0",
-    "monaco-editor": "^0.55.1",
+    "monaco-editor": "^0.56.0",
     "pdfjs-dist": "^6.1.200",
-    "playwright": "^1.61.1",
+    "playwright": "^1.62.0",
     "serve": "^14.2.0",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "dompurify": "^3.4.11"
