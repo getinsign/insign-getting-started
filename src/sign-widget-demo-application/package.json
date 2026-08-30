@@ -11,7 +11,7 @@
     "test:debug": "npx playwright test --config=tests/playwright.config.js --debug"
   },
   "dependencies": {
-    "axios": "^1.19.0",
+    "axios": "^1.20.0",
     "express": "^5.2.1",
     "form-data": "^4.0.6",
     "pdfkit": "^0.20.1"
