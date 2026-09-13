@@ -17,7 +17,7 @@
     "pdfkit": "^0.20.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.62.1",
+    "@playwright/test": "^1.63.0",
     "opentype.js": "^2.0.0"
   }
 }
