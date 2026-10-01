@@ -12,7 +12,9 @@
     "typescript": "^7.0.2"
   },
   "overrides": {
-    "dompurify": "^3.4.11"
+    "dompurify": "^3.4.16",
+    "brace-expansion": "^1.1.21",
+    "fast-uri": "^3.1.8"
   },
   "scripts": {
     "build:vendor": "node scripts/build-vendor.js",
