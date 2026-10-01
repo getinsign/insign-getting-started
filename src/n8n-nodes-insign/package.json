@@ -28,7 +28,7 @@
     "node": ">=18.10"
   },
   "scripts": {
-    "build": "tsc && gulp build:icons",
+    "build": "tsc && node scripts/copy-icons.mjs",
     "dev": "tsc --watch",
     "lint": "eslint nodes credentials --ext .ts",
     "lintfix": "eslint nodes credentials --ext .ts --fix",
@@ -49,12 +49,14 @@
       "dist/nodes/InsignTrigger/InsignTrigger.node.js"
     ]
   },
+  "overrides": {
+    "form-data": "^4.0.6"
+  },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.0",
-    "gulp": "^4.0.2",
     "n8n-workflow": "^1.64.0",
     "typescript": "^5.4.0"
   },
