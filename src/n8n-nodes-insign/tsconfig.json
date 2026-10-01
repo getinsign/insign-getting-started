@@ -15,6 +15,6 @@
     "noImplicitAny": true,
     "useUnknownInCatchVariables": false
   },
-  "include": ["credentials/**/*", "nodes/**/*"],
+  "include": ["index.ts", "credentials/**/*", "nodes/**/*"],
   "exclude": ["dist", "node_modules"]
 }

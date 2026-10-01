@@ -48,7 +48,7 @@
 ## 30-second quickstart
 
 1. Install `n8n-nodes-insign` from **Settings → Community Nodes** in your n8n instance.
-2. Add an **inSign API** credential — leave the defaults (sandbox, Basic auth with `controller` / `pwd.insign.sandbox.4561`). Click **Test** → you should see "Connection successful".
+2. Add an **inSign API** credential — leave the defaults (sandbox OAuth2 client credentials, `controller` / `pwd.insign.sandbox.4561`). Click **Test** → you should see "Connection successful".
 3. Drop an **inSign** node into a workflow, set **Operation = Create Session**, feed it a PDF from an HTTP Request / Read Binary File / Form Trigger node.
 4. Run the workflow. The output contains `sessionid`, `accessURL`, and `jwt`. Open `accessURL` in a browser to sign. Done.
 
@@ -99,7 +99,7 @@ Credential name: **inSign API**. Authentication uses **OAuth2 Client Credentials
 
 The node requests a token via `POST /oauth2/token` with `grant_type=client_credentials` and sends it back on every call as `Authorization: Bearer <token>`. n8n caches the token and refreshes automatically when it expires (typically 30 min).
 
-The credential's **Test** button calls `GET /version` — if that returns 200, both the token fetch and bearer auth are working.
+The credential's **Test** button calls `POST /oauth2/token` directly — if it returns an `access_token` (rather than `error=invalid_client`), the client credentials are valid.
 
 ## Node: inSign (actions)
 

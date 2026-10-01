@@ -12,6 +12,7 @@
 # Build
 target/
 .target/
+src/n8n-nodes-insign/dist/
 *.class
 test/generated/
 test/run/
