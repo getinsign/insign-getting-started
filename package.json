@@ -5,7 +5,7 @@
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "jquery": "^4.0.0",
-    "monaco-editor": "^0.56.0",
+    "monaco-editor": "^0.57.0",
     "pdfjs-dist": "^6.4.299",
     "playwright": "^1.64.0",
     "serve": "^14.2.0",
