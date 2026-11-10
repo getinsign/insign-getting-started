@@ -333,53 +333,30 @@ async function drawSignatureOnCanvas(page) {
     fontPath: SIGNATURE_FONT,
     canvasBox: box,
   });
-  await canvas.evaluate((el, pts) => {
-    function fire(type, x, y) {
-      el.dispatchEvent(new PointerEvent(type, {
-        pointerId: 1,
-        pointerType: 'pen',
-        clientX: x,
-        clientY: y,
-        pageX: x + window.scrollX,
-        pageY: y + window.scrollY,
-        screenX: x,
-        screenY: y,
-        pressure: type === 'pointerup' ? 0 : 0.5,
-        bubbles: true,
-        cancelable: true,
-        isPrimary: true,
-      }));
+  // Draw with REAL (trusted) pointer input via Playwright's mouse API, not
+  // synthetic dispatched PointerEvents. The inSign signature pad (loaded from
+  // the sandbox) ignores untrusted events that carry no `buttons` state, so
+  // synthetic dispatch only registered the initial pointerdown — leaving a
+  // single dot and a "0 / N signed" pad that makes the Finish step hang. Real
+  // input emits trusted pointerdown/move/up with the button held, which the
+  // pad records as a proper stroke. Points are in viewport coordinates (the
+  // path was built from the canvas bounding box), matching page.mouse.
+  const mouse = page.mouse;
+  let penDown = false;
+  for (const p of points) {
+    if (p === null) {
+      if (penDown) { await mouse.up(); penDown = false; } // stroke break
+    } else if (typeof p === 'number') {
+      await page.waitForTimeout(Math.min(p, 40)); // pacing hint, kept short
+    } else if (!penDown) {
+      await mouse.move(p.x, p.y);
+      await mouse.down();
+      penDown = true;
+    } else {
+      await mouse.move(p.x, p.y);
     }
-    return new Promise((resolve) => {
-      let i = 0;
-      let penDown = false;
-      function step() {
-        if (i >= pts.length) {
-          if (penDown) fire('pointerup', pts[i - 1].x, pts[i - 1].y);
-          resolve();
-          return;
-        }
-        const p = pts[i];
-        i++;
-        if (p === null) {
-          if (penDown) fire('pointerup', pts[i - 2].x, pts[i - 2].y);
-          penDown = false;
-          setTimeout(step, 80);
-        } else if (typeof p === 'number') {
-          setTimeout(step, p);
-          return;
-        } else if (!penDown) {
-          fire('pointerdown', p.x, p.y);
-          penDown = true;
-          setTimeout(step, 8);
-        } else {
-          fire('pointermove', p.x, p.y);
-          setTimeout(step, 8);
-        }
-      }
-      step();
-    });
-  }, points);
+  }
+  if (penDown) await mouse.up();
   const confirmBtn = page.locator('.btn-confirm').first();
   if (await confirmBtn.isVisible().catch(() => false)) {
     await confirmBtn.click();
