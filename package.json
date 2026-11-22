@@ -8,7 +8,7 @@
     "monaco-editor": "^0.57.0",
     "pdfjs-dist": "^6.5.438",
     "playwright": "^1.65.0",
-    "serve": "^14.2.7",
+    "serve": "^14.2.8",
     "typescript": "^7.0.2"
   },
   "overrides": {
